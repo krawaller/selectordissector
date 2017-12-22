@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "css-what": "2.1.0"
+  },
+  "devDependencies": {
+    "@types/tape": "^4.2.31",
+    "tap-diff": "^0.1.1",
+    "tape": "^4.8.0",
+    "ts-loader": "^3.2.0",
+    "ts-node": "^4.0.2",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2"
+  },
+  "scripts": {
+    "test": "ts-node node_modules/tape/bin/tape test/**/*.spec.ts | tap-diff"
+  }
+}
