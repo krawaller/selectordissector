@@ -1,8 +1,9 @@
 import * as test from 'tape';
 
 import {VirtualElement, PseudoToken} from '../../types';
-import {div,span} from '../../helpers';
-import {testElement} from '../../matcher';
+import {div,span, getDescendantPaths} from '../../helpers';
+import {testElement, testCollection} from '../../matcher';
+import parser from '../../parser';
 
 test('Element tester returns correct result for first-of-type comparison', t => {
   type TestCase = [VirtualElement, number[], boolean, string];
@@ -102,6 +103,39 @@ test('Element tester returns correct result for last-child comparison', t => {
   lastChildComparisons.forEach(([tree, path, result, description]) => t.deepEqual(
     testElement(tree, path, lastChild),
     result,
+    description
+  ));
+  t.end();
+});
+
+const tree = (
+  div([
+    div([
+      div(),
+      div(),
+      div([
+        div()
+      ])
+    ]),
+    div([
+      div([
+        div()
+      ])
+    ])
+  ])
+)
+
+const allInTree = getDescendantPaths(tree, []);
+
+test('Collection tester returns correct result for nth-child comparison', t => {
+  type TestCase = [string, number[][], string];
+  const nthCases: TestCase[] = [
+    [':nth-child(2)', [ [0,1], [1] ], ':nth-child(2) gives correct result'],
+    [':nth-child(1)', [ [], [0], [0,0], [0,2,0], [1,0], [1,0,0] ], ':nth-child(1) includes all oldest sibling, including pyramid top']
+  ];
+  nthCases.forEach(([query, collection, description]) => t.deepEqual(
+    testCollection(tree, allInTree, parser(query)[0][0]),
+    collection,
     description
   ));
   t.end();
