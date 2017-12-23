@@ -11,7 +11,7 @@ export type TagToken = {
 
 export type PseudoToken = {
   type: 'pseudo'
-  name: 'first-of-type' | 'last-of-type' | 'only-of-type' | 'empty' | 'is' | 'has' | 'first-child' | 'last-child'
+  name: 'first-of-type' | 'last-of-type' | 'only-of-type' | 'empty' | 'is' | 'has' | 'first-child' | 'last-child' | 'nth-of-type'
   data?: any
 }
 
