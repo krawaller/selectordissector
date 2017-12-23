@@ -1,29 +1,11 @@
-import {VirtualElement, QueryToken, CombinatorToken, ElementToken} from '../types';
+import {VirtualElement, QueryToken, CombinatorToken, ElementToken, PseudoToken} from '../types';
 
-export function travelTree(tree: VirtualElement, path: number[]){
-  const remaining = path.slice();
-  let elem = tree;
-  while(remaining.length){
-    elem = elem.children[ remaining.shift() ];
-  }
-  return elem;
-}
-
-export function getDescendantPaths(tree, path, notTop = false){
-  let elem = travelTree(tree, path);
-  if (!elem.children || !elem.children.length){
-    return notTop ? [path] : [];
-  } else {
-    return elem.children.reduce((mem, child, i) => {
-      return mem.concat(getDescendantPaths(tree, path.concat(i), true));
-    }, notTop ? [path] : []);
-  }
-}
+import {isCombinator, getDescendantPaths, travelTree} from '../helpers';
 
 export function combineFromPath(tree: VirtualElement, path: number[], token: CombinatorToken){
   switch(token.type){
     case 'descendant': {
-      return getDescendantPaths(tree, path);
+      return getDescendantPaths(tree, path, true);
     }
     case 'child': {
       return (travelTree(tree, path).children || []).map((c,i) => path.concat(i))
@@ -88,6 +70,21 @@ export function testElement(tree: VirtualElement, path: number[], token: Element
           }
         }
         case 'empty': return !elem.children || elem.children.length === 0;
+        case 'nth-child': {
+          let n = parseInt((<PseudoToken>token).data);
+          let pos = path.length ? path[path.length-1] : 0;
+          return pos === n - 1;
+          // TODO - odd, even, negative, -n+3
+        }
       }
   }
+}
+
+export function testCollection(tree: VirtualElement, collection: number[][], token: QueryToken){
+  return isCombinator(token)
+    ? collection.reduce((mem, path) => {
+        let res = combineFromPath(tree, path, token as CombinatorToken);
+        return mem.concat(res);
+      }, [])
+    : collection.filter(path => testElement(tree, path, token as ElementToken));
 }
