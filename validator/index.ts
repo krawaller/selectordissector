@@ -1,5 +1,6 @@
 import parser from '../parser';
 import {QueryToken, QueryError, TokenType} from '../types';
+import {isCombinator} from '../helpers';
 
 export const parseError: QueryError = 'parseError';
 export const parentCombinator: QueryError = 'parentCombinator';
@@ -9,6 +10,7 @@ export const leadingCombinator: QueryError = 'leadingCombinator';
 export const isPseudoSelector: QueryError = 'isPseudoSelector';
 export const hasPseudoSelector: QueryError = 'hasPseudoSelector';
 export const unknownPseudoSelector: QueryError = 'unknownPseudoSelector';
+export const nthOfTypeDataError: QueryError = 'nthOfTypeDataError';
 
 type Context = {
   path: number[],
@@ -17,14 +19,6 @@ type Context = {
   remaining: QueryToken[]
 }
 
-function isCombinator(token: QueryToken){
-  return token && !!{
-    parent: 1,
-    child: 1,
-    adjacent: 1,
-    sibling: 1
-  }[token.type];
-}
 
 function val(context: Context){
   if (context.remaining.length === 0) {
@@ -32,7 +26,7 @@ function val(context: Context){
   }
   const token = context.remaining[0];
 
-  console.log(token);
+  //console.log(token);
 
   if (token.type === 'parent' as TokenType){
     return [parentCombinator, context.path.concat(context.pos)];
@@ -44,6 +38,12 @@ function val(context: Context){
 
   if (token.type === 'pseudo' && token.name === 'has'){
     return [hasPseudoSelector, context.path.concat(context.pos)];
+  }
+
+  if (token.type === 'pseudo' && token.name === 'nth-of-type'){
+    if (token.data === null || token.data === '0' || !(!isNaN(token.data) || token.data === 'odd' || token.data === 'even')){
+      return [nthOfTypeDataError, context.path.concat(context.pos)];
+    }
   }
 
   if (context.remaining.length === 1 && isCombinator(token)){
