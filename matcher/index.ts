@@ -1,6 +1,6 @@
 import {VirtualElement, QueryToken, CombinatorToken, ElementToken, PseudoToken} from '../types';
 
-import {isCombinator, getDescendantPaths, travelTree} from '../helpers';
+import {isCombinator, getDescendantPaths, travelTree, matchPosition} from '../helpers';
 
 export function combineFromPath(tree: VirtualElement, path: number[], token: CombinatorToken){
   switch(token.type){
@@ -71,10 +71,9 @@ export function testElement(tree: VirtualElement, path: number[], token: Element
         }
         case 'empty': return !elem.children || elem.children.length === 0;
         case 'nth-child': {
-          let n = parseInt((<PseudoToken>token).data);
+          let formula = (<PseudoToken>token).data; //parseInt((<PseudoToken>token).data);
           let pos = path.length ? path[path.length-1] : 0;
-          return pos === n - 1;
-          // TODO - odd, even, negative, -n+3
+          return matchPosition(pos, formula);
         }
       }
   }
