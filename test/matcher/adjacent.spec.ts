@@ -1,7 +1,7 @@
 import * as test from 'tape';
 
 import {VirtualElement, AdjacentToken, Path, Collection, TokenType} from '../../src/types';
-import {div} from '../../src/helpers';
+import {div} from '../../src/builder';
 import matcher from '../../src/matcher';
 
 const tree = (

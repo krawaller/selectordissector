@@ -1,7 +1,8 @@
 import * as test from 'tape';
 
 import {VirtualElement, PseudoToken, PseudoName, Path, Collection, TokenType} from '../../src/types';
-import {div,span, getDescendantPaths} from '../../src/helpers';
+import {getDescendantPaths} from '../../src/helpers';
+import {div,span} from '../../src/builder';
 import matcher from '../../src/matcher';
 import parser from '../../src/parser';
 

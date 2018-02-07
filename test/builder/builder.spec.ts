@@ -1,7 +1,7 @@
 import * as test from 'tape';
 
 import {VirtualElement} from '../../src/types';
-import {builderFactory} from '../../src/helpers';
+import {builderFactory} from '../../src/builder';
 
 test('The builder factory', t => {
   const p = builderFactory('p');

@@ -2,7 +2,7 @@ import * as test from 'tape';
 
 import parser from '../../src/parser';
 import {VirtualElement, ElementToken, Path} from '../../src/types';
-import {div, span} from '../../src/helpers';
+import {div, span} from '../../src/builder';
 import matcher from '../../src/matcher';
 
 test('Element tester returns correct result for class selector', t => {

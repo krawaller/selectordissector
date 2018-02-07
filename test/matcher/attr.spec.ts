@@ -1,7 +1,7 @@
 import * as test from 'tape';
 
 import {VirtualElement, AttributeToken, AttributeAction, TokenType} from '../../src/types';
-import {div} from '../../src/helpers';
+import {div} from '../../src/builder';
 import matcher from '../../src/matcher';
 
 test('Element tester returns correct result for attributes with exists action', t => {

@@ -1,7 +1,7 @@
 import * as test from 'tape';
 
 import {VirtualElement, ElementToken, Path, TokenType} from '../../src/types';
-import {div, span} from '../../src/helpers';
+import {div, span} from '../../src/builder';
 import matcher from '../../src/matcher';
 
 test('Element tester returns correct result for tag comparison', t => {
