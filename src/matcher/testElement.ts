@@ -1,4 +1,4 @@
-import {ElementToken, PseudoToken, VirtualElement, Path, TokenType, PseudoName} from '../types';
+import {ElementToken, PseudoToken, VirtualElement, Path, TokenType, PseudoName, AttributeAction} from '../types';
 import {travelTree} from '../helpers';
 
 export default function testElement(tree: VirtualElement, path: Path, token: ElementToken){
@@ -12,11 +12,11 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
       }
       const value = elem.attrs[token.name];
       switch(token.action){
-        case 'exists': return true;
-        case 'equals': return value === token.value;
-        case 'start': return !!(value && (value.substr(0, token.value.length) === token.value));
-        case 'end': return !!(value && (value.substr(-token.value.length) === token.value));
-        case 'element': { // means querying for class!
+        case AttributeAction.exists: return true;
+        case AttributeAction.equals: return value === token.value;
+        case AttributeAction.start: return !!(value && (value.substr(0, token.value.length) === token.value));
+        case AttributeAction.end: return !!(value && (value.substr(-token.value.length) === token.value));
+        case AttributeAction.element: { // means querying for class!
           return typeof value === 'string' && !!value.match(new RegExp(`^${token.value} |^${token.value}$| ${token.value} | ${token.value}$`));
         }
       }
