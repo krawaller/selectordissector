@@ -31,7 +31,6 @@ test(`nth-of-type data must be correct`, t => {
   t.end();
 });
 
-
 test(`unrecognized pseudo selectors are called out`, t => {
   type TestCase = [string, number[], string];
   const nthCases: TestCase[] = [
@@ -42,6 +41,19 @@ test(`unrecognized pseudo selectors are called out`, t => {
   nthCases.forEach(([query, position, description]) => t.deepEqual(
     validator(query),
     [QueryError.unknownPseudoSelector, position],
+    description
+  ));
+  t.end();
+});
+
+test(`unimplemented pseudo selectors are called out`, t => {
+  type TestCase = [string, number[], string];
+  const nthCases: TestCase[] = [
+    ['div span:not', [3], 'unimplemented pseudo :not is correctly called out'],
+  ];
+  nthCases.forEach(([query, position, description]) => t.deepEqual(
+    validator(query),
+    [QueryError.unImplemented, position],
     description
   ));
   t.end();

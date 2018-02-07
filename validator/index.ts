@@ -12,8 +12,10 @@ export enum QueryError {
   hasPseudoSelector = 'hasPseudoSelector',
   unknownPseudoSelector = 'unknownPseudoSelector',
   nthOfTypeDataError = 'nthOfTypeDataError',
+  unImplemented = 'unImplemented'
 }
 
+const unImplementedPseudos = ['not'];
 
 type Context = {
   path: number[],
@@ -31,6 +33,10 @@ function val(context: Context){
 
   if (token.type === 'pseudo' && Object.keys(PseudoName).map(k => PseudoName[k]).indexOf(token.name) === -1){
     return [QueryError.unknownPseudoSelector, context.path.concat(context.pos)];
+  }
+
+  if (token.type === 'pseudo' && unImplementedPseudos.indexOf(token.name) !== -1){
+    return [QueryError.unImplemented, context.path.concat(context.pos)];
   }
 
   if (token.type === 'parent' as TokenType){

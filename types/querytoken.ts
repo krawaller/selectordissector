@@ -18,7 +18,8 @@ export enum PseudoName {
   has = 'has',
   firstChild = 'first-child',
   lastChild = 'last-child',
-  nthOfType = 'nth-of-type'
+  nthOfType = 'nth-of-type',
+  not = 'not'
 }
 
 export type PseudoToken = {
