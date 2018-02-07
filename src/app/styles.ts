@@ -21,6 +21,9 @@ export const elemStyles = {
     borderRadius: '5px',
     paddingLeft: '2px',
     paddingRight: '2px'
+  },
+  ownLineEndTag: {
+    opacity: 0.4
   }
 };
 

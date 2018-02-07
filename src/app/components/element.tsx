@@ -28,7 +28,7 @@ const Element: React.StatelessComponent<ElementProps> = ({indent=0,elem,currColl
       <div style={styles}>
         <StartTag elem={elem} matched={matched} mayMatch/>
           {elem.children.map((child,n) => <Element key={path.concat(n).join('-')} elem={child} indent={indent+1} path={path.concat(n)} currColl={currColl} />)}
-          <EndTag elem={elem} matched={matched} mayMatch/>
+          <EndTag elem={elem} matched={matched} mayMatch ownLine/>
       </div>
     )
   }
@@ -42,11 +42,15 @@ type TagType = {
   mayMatch?: boolean
 }
 
+type EndTagType = TagType & {
+  ownLine?: boolean
+}
+
 const StartTag: React.StatelessComponent<TagType> = ({elem, matched, mayMatch}) => {
   let attrs = Object.keys(elem.attrs).map(name => ' ' + (elem.attrs[name] === 'null' ? name : `${name}="${elem.attrs[name]}"`)).join('');
   return <span style={merge(s.tag, mayMatch && s.mayMatch, matched && s.matched)}>{`<${elem.type}${attrs}>`}</span>;
 };
 
-const EndTag: React.StatelessComponent<TagType> = ({elem, matched, mayMatch}) => {
-  return <span style={merge(s.tag, mayMatch && s.mayMatch, matched && s.matched)}>{`</${elem.type}>`}</span>;
+const EndTag: React.StatelessComponent<EndTagType> = ({elem, matched, mayMatch, ownLine}) => {
+  return <span style={merge(s.tag, ownLine && s.ownLineEndTag, mayMatch && s.mayMatch, matched && s.matched)}>{`</${elem.type}>`}</span>;
 };
