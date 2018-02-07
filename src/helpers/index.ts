@@ -19,7 +19,7 @@ export const span = elemFactory('span');
 
 export function isCombinator(token: QueryToken): token is CombinatorToken {
   return token && [
-    TokenType.adjacent, TokenType.sibling, TokenType.child, TokenType.descendant
+    TokenType.adjacent, TokenType.sibling, TokenType.child, TokenType.descendant, TokenType.parent
   ].indexOf(token.type) > -1;
 }
 

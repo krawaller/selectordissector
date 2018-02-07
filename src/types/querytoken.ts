@@ -1,6 +1,7 @@
 export enum TokenType {
   descendant = 'descendant',
   child = 'child',
+  parent = 'parent',
   sibling = 'sibling',
   adjacent = 'adjacent',
   tag = 'tag',
@@ -72,6 +73,10 @@ export type AdjacentToken = {
   type: TokenType.adjacent
 }
 
-export type CombinatorToken = DescendantToken | ChildToken | SiblingToken | AdjacentToken;
+export type ParentToken = {
+  type: TokenType.parent
+}
+
+export type CombinatorToken = DescendantToken | ChildToken | SiblingToken | AdjacentToken | ParentToken;
 
 export type QueryToken = CombinatorToken | ElementToken;

@@ -42,7 +42,7 @@ function val(context: Context){
     return fail(QueryError.unImplemented, context);
   }
 
-  if (token.type === 'parent' as TokenType){
+  if (token.type === TokenType.parent){
     return fail(QueryError.parentCombinator, context);
   }
 
