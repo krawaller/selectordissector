@@ -3,5 +3,6 @@ export type VirtualElement = {
   attrs?: {
     [attrName: string]: string | null
   }
-  children?: VirtualElement[]
+  children?: VirtualElement[],
+  content?: string
 }

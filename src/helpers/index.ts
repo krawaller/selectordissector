@@ -2,20 +2,25 @@ import {VirtualElement, QueryToken, CombinatorToken, Path, Collection, TokenType
 
 type Attrs = {[key:string]: string};
 
-const elemFactory = type => (attrsOrChildren?: Attrs | VirtualElement[], childrenParam?: VirtualElement[]) => {
+export const builderFactory = type => (attrParam: Attrs | VirtualElement[] | string = {}, childrenParam: VirtualElement[] | string = []) => {
   let children: VirtualElement[];
-  let attrs: Attrs;
-  if (Array.isArray(attrsOrChildren)){
-    children = attrsOrChildren;
-  } else {
-    attrs = attrsOrChildren || {};
-    children = childrenParam || [];
+  let content: string;
+  if (Array.isArray(attrParam) || typeof attrParam === 'string'){
+    childrenParam = attrParam;
+    attrParam = {};
   }
-  return { type, attrs, children };
+  if (typeof childrenParam === 'string'){
+    content = childrenParam;
+    children = [];
+  } else {
+    children = childrenParam;
+    content = '';
+  }
+  return { type, attrs: attrParam, children, content };
 }
 
-export const div = elemFactory('div');
-export const span = elemFactory('span');
+export const div = builderFactory('div');
+export const span = builderFactory('span');
 
 export function isCombinator(token: QueryToken): token is CombinatorToken {
   return token && [
