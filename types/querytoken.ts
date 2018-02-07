@@ -42,6 +42,7 @@ export type AttributeToken = {
   name: string
   action: 'equals' | 'exists' | 'start' | 'end' | 'element' // element means it is a class test
   value?: string
+  ignoreCase?: boolean
 }
 
 export type ElementToken = UniversalToken | TagToken | PseudoToken | AttributeToken;

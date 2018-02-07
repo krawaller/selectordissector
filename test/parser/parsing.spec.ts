@@ -1,0 +1,26 @@
+import * as test from 'tape';
+
+import {Selector, TokenType} from '../../types';
+
+import parser from '../../parser';
+
+test('Parser yields correct Selector', t => {
+  type TestCase = [string, Selector, string];
+  const selectors: TestCase[] = [
+    [
+      'div.foo',
+      [
+        {type: TokenType.tag, name: 'div'},
+        {type: TokenType.attribute, name: 'class', action: 'element', value: 'foo', ignoreCase: false}
+      ],
+      'we can parse a tag name and a class correctly'
+    ]
+  ];
+  selectors.forEach(([input, selector, description]) => t.deepEqual(
+    parser(input),
+    [selector],
+    description
+  ));
+  t.end();
+});
+
