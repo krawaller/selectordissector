@@ -10,6 +10,16 @@ export const elemStyles = {
   child: {
     marginLeft: '2em'
   }
-}
+};
+
+export const formStyles = {
+  container: {},
+  input: {},
+  button: {}
+};
+
+export const mainStyles = {
+  container: {}
+};
 
 export const merge = (curr, toAdd) => Object.assign({},curr,toAdd);
