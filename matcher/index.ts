@@ -1,6 +1,6 @@
 import {VirtualElement, QueryToken, CombinatorToken, ElementToken, PseudoToken, Path, Collection} from '../types';
 
-import {isCombinator, getDescendantPaths, travelTree, matchPosition} from '../helpers';
+import {isCombinator} from '../helpers';
 
 import testElement from './testElement';
 import combineFromPath from './combineFromPath';
