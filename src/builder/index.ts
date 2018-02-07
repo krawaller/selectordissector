@@ -56,3 +56,6 @@ export function isBuilder(func): func is Builder {
 
 export const div = builderFactory('div');
 export const span = builderFactory('span');
+export const p = builderFactory('p');
+export const strong = builderFactory('strong');
+export const h1 = builderFactory('h1');
