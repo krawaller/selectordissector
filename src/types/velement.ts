@@ -1,3 +1,4 @@
+
 export type VirtualElement = {
   type: string
   attrs?: {

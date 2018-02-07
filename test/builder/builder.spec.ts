@@ -1,7 +1,13 @@
 import * as test from 'tape';
 
 import {VirtualElement} from '../../src/types';
-import {builderFactory} from '../../src/builder';
+import builderFactory, {isElem, div} from '../../src/builder';
+
+test('The isElem factory', t => {
+  t.equal(isElem({foo:'bar'}), false, 'returns false for regular object');
+  t.equal(isElem(div()), true, 'returns true for elem object');
+  t.end();
+});
 
 test('The builder factory', t => {
   const p = builderFactory('p');
