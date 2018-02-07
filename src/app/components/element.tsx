@@ -9,12 +9,11 @@ type ElementProps = {
   elem: VirtualElement,
   path?: Path,
   currColl?: Collection,
-  prevColl?: Collection
 };
 
-const Element: React.StatelessComponent<ElementProps> = ({indent=0,elem,currColl=[],prevColl=[],path=[]}) => {
+const Element: React.StatelessComponent<ElementProps> = ({indent=0,elem,currColl=[],path=[]}) => {
   let styles = elemStyles.element;
-  if (collContainsPath(prevColl, path)) styles = merge(styles,elemStyles.matched);
+  if (collContainsPath(currColl, path)) styles = merge(styles, elemStyles.matched);
   if (indent > 0) styles = merge(styles, elemStyles.child);
   const startTag = StartTag(elem);
   const endTag = EndTag(elem);
@@ -30,7 +29,7 @@ const Element: React.StatelessComponent<ElementProps> = ({indent=0,elem,currColl
     return (
       <div style={styles}>
         {startTag}
-          {elem.children.map((child,n) => <Element key={path.concat(n).join('-')} elem={child} indent={indent+1} path={path.concat(n)} currColl={currColl} prevColl={prevColl} />)}
+          {elem.children.map((child,n) => <Element key={path.concat(n).join('-')} elem={child} indent={indent+1} path={path.concat(n)} currColl={currColl} />)}
         {endTag}
       </div>
     )
