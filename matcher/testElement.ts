@@ -1,5 +1,5 @@
 import {ElementToken, PseudoToken, VirtualElement, Path} from '../types';
-import {travelTree, matchPosition} from '../helpers';
+import {travelTree} from '../helpers';
 
 export default function testElement(tree: VirtualElement, path: Path, token: ElementToken){
   let elem = travelTree(tree, path);
@@ -58,5 +58,41 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
           return matchPosition(pos, formula);
         }
       }
+  }
+}
+
+function matchPosition(pos: number, formula: string){
+  let match;
+  if ((match = formula.match(/^-n\+([0-9]+)$/))){
+    let max = match[1];
+    return pos < max;
+  } else if ((match = formula.match(/^[0-9]+$/))){
+    let n = +formula;
+    return pos === n - 1;
+  } else if ((match = formula.match(/^([0-9]+)n\+([0-9]+)$/))){
+    let multiplier = +match[1];
+    let offset = +match[2];
+    let n = (pos + 1 - offset) / multiplier;
+    return n === Math.floor(n);
+  } else if ((match = formula.match(/^([0-9]+)n\-([0-9]+)$/))){
+    let multiplier = +match[1];
+    let offset = +match[2] * -1;
+    let n = (pos + 1 - offset) / multiplier;
+    return n === Math.floor(n);
+  } else if ((match = formula.match(/^([0-9]+)n$/))){
+    let multiplier = +match[1];
+    let n = (pos + 1) / multiplier;
+    return n === Math.floor(n);
+  } else if (formula === 'even'){
+    let multiplier = 2;
+    let n = (pos + 1) / multiplier;
+    return n === Math.floor(n);
+  } else if (formula === 'odd'){
+    let multiplier = 2;
+    let offset = 1;
+    let n = (pos + 1 + offset) / multiplier;
+    return n === Math.floor(n);
+  } else {
+    throw "Unknown formula! " + formula;
   }
 }
