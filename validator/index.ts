@@ -1,5 +1,5 @@
 import parser from '../parser';
-import {QueryToken, TokenType} from '../types';
+import {QueryToken, TokenType, PseudoName} from '../types';
 import {isCombinator} from '../helpers';
 
 export enum QueryError {
@@ -29,7 +29,9 @@ function val(context: Context){
   }
   const token = context.remaining[0];
 
-  //console.log(token);
+  if (token.type === 'pseudo' && Object.keys(PseudoName).map(k => PseudoName[k]).indexOf(token.name) === -1){
+    return [QueryError.unknownPseudoSelector, context.path.concat(context.pos)];
+  }
 
   if (token.type === 'parent' as TokenType){
     return [QueryError.parentCombinator, context.path.concat(context.pos)];
