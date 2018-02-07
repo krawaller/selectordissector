@@ -25,3 +25,7 @@ export function travelTree(tree: VirtualElement, path: Path){
   }
   return elem;
 }
+
+export function collContainsPath(coll: Collection, path: Path): boolean {
+  return coll.map(p => p.join('-')).indexOf(path.join('-')) > -1;
+}
