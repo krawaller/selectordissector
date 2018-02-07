@@ -1,8 +1,8 @@
 import * as test from 'tape';
 
-import {Selector, TokenType, AttributeAction} from '../../types';
+import {Selector, TokenType, AttributeAction} from '../../src/types';
 
-import parser from '../../parser';
+import parser from '../../src/parser';
 
 test('Parser yields correct Selector', t => {
   type TestCase = [string, Selector, string];

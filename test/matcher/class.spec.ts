@@ -1,9 +1,9 @@
 import * as test from 'tape';
 
-import parser from '../../parser';
-import {VirtualElement, ElementToken, Path} from '../../types';
-import {div, span} from '../../helpers';
-import matcher from '../../matcher';
+import parser from '../../src/parser';
+import {VirtualElement, ElementToken, Path} from '../../src/types';
+import {div, span} from '../../src/helpers';
+import matcher from '../../src/matcher';
 
 test('Element tester returns correct result for class selector', t => {
   const tree = div([

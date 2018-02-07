@@ -1,8 +1,8 @@
 import * as test from 'tape';
 
-import {VirtualElement, ElementToken, Path, TokenType} from '../../types';
-import {div, span} from '../../helpers';
-import matcher from '../../matcher';
+import {VirtualElement, ElementToken, Path, TokenType} from '../../src/types';
+import {div, span} from '../../src/helpers';
+import matcher from '../../src/matcher';
 
 test('Element tester returns correct result for tag comparison', t => {
   type TestCase = [Path, boolean, string];

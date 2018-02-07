@@ -1,6 +1,6 @@
 import * as test from 'tape';
 
-import validator, {parseError} from '../../validator';
+import validator, {QueryError} from '../../src/validator';
 
 test(`Correct queries don't yield error`, t => {
   const ok = ['div > p.foo', '*','p:first-of-type'];

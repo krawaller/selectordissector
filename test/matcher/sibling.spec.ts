@@ -1,8 +1,8 @@
 import * as test from 'tape';
 
-import {VirtualElement, SiblingToken, Path, Collection, TokenType} from '../../types';
-import {div} from '../../helpers';
-import matcher from '../../matcher';
+import {VirtualElement, SiblingToken, Path, Collection, TokenType} from '../../src/types';
+import {div} from '../../src/helpers';
+import matcher from '../../src/matcher';
 
 const tree = (
   div([

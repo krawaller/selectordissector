@@ -1,8 +1,8 @@
 import * as test from 'tape';
 
-import {VirtualElement, AttributeToken, AttributeAction, TokenType} from '../../types';
-import {div} from '../../helpers';
-import matcher from '../../matcher';
+import {VirtualElement, AttributeToken, AttributeAction, TokenType} from '../../src/types';
+import {div} from '../../src/helpers';
+import matcher from '../../src/matcher';
 
 test('Element tester returns correct result for attributes with exists action', t => {
   type TestCase = [VirtualElement, boolean, string];

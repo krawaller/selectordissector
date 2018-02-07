@@ -1,12 +1,12 @@
-import {ElementToken, PseudoToken, VirtualElement, Path} from '../types';
+import {ElementToken, PseudoToken, VirtualElement, Path, TokenType, PseudoName} from '../types';
 import {travelTree} from '../helpers';
 
 export default function testElement(tree: VirtualElement, path: Path, token: ElementToken){
   let elem = travelTree(tree, path);
   switch(token.type){
-    case 'universal': return true;
-    case 'tag': return elem.type === token.name;
-    case 'attribute': {
+    case TokenType.universal: return true;
+    case TokenType.tag: return elem.type === token.name;
+    case TokenType.attribute: {
       if (!elem.attrs || !elem.attrs.hasOwnProperty(token.name)){
         return false;
       }
@@ -21,11 +21,11 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
         }
       }
     }
-    case 'pseudo':
+    case TokenType.pseudo:
       switch(token.name){
-        case 'first-child': return path.length === 0 || path[path.length-1] === 0;
-        case 'last-child': return path.length === 0 || path[path.length-1] === travelTree(tree, path.slice(0, path.length - 1)).children.length - 1;
-        case 'first-of-type': {
+        case PseudoName.firstChild: return path.length === 0 || path[path.length-1] === 0;
+        case PseudoName.lastChild: return path.length === 0 || path[path.length-1] === travelTree(tree, path.slice(0, path.length - 1)).children.length - 1;
+        case PseudoName.firstOfType: {
           if (!path.length) {
             return true;
           } else {
@@ -34,7 +34,7 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
             return olderSiblings.filter(s => s.type === elem.type).length === 0;
           }
         }
-        case 'last-of-type': {
+        case PseudoName.lastOfType: {
           if (!path.length) {
             return true;
           } else {
@@ -43,7 +43,7 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
             return youngerSiblings.filter(s => s.type === elem.type).length === 0;
           }
         }
-        case 'only-of-type': {
+        case PseudoName.onlyOfType: {
           if (!path.length) {
             return true;
           } else {
@@ -51,8 +51,8 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
             return siblings.filter(s => s.type === elem.type).length === 1;
           }
         }
-        case 'empty': return !elem.children || elem.children.length === 0;
-        case 'nth-child': {
+        case PseudoName.empty: return !elem.children || elem.children.length === 0;
+        case PseudoName.nthChild: {
           let formula = (<PseudoToken>token).data; //parseInt((<PseudoToken>token).data);
           let pos = path.length ? path[path.length-1] : 0;
           return matchPosition(pos, formula);

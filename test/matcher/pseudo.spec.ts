@@ -1,9 +1,9 @@
 import * as test from 'tape';
 
-import {VirtualElement, PseudoToken, PseudoName, Path, Collection, TokenType} from '../../types';
-import {div,span, getDescendantPaths} from '../../helpers';
-import matcher from '../../matcher';
-import parser from '../../parser';
+import {VirtualElement, PseudoToken, PseudoName, Path, Collection, TokenType} from '../../src/types';
+import {div,span, getDescendantPaths} from '../../src/helpers';
+import matcher from '../../src/matcher';
+import parser from '../../src/parser';
 
 test('Element tester returns correct result for first-of-type comparison', t => {
   type TestCase = [VirtualElement, Path, boolean, string];

@@ -28,6 +28,7 @@ export enum PseudoName {
   firstChild = 'first-child',
   lastChild = 'last-child',
   nthOfType = 'nth-of-type',
+  nthChild = 'nthChild',
   not = 'not'
 }
 

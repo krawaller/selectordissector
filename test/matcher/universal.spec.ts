@@ -1,8 +1,8 @@
 import * as test from 'tape';
 
-import {VirtualElement, UniversalToken, TokenType} from '../../types';
-import {div,span} from '../../helpers';
-import matcher from '../../matcher';
+import {VirtualElement, UniversalToken, TokenType} from '../../src/types';
+import {div,span} from '../../src/helpers';
+import matcher from '../../src/matcher';
 
 test('Element tester returns true for universal token', t => {
   const tagComps: VirtualElement[] = [div(), span()];
