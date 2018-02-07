@@ -1,4 +1,4 @@
-import {VirtualElement, QueryToken, CombinatorToken, Path, Collection} from '../types';
+import {VirtualElement, QueryToken, CombinatorToken, Path, Collection, TokenType} from '../types';
 
 type Attrs = {[key:string]: string};
 
@@ -18,13 +18,9 @@ export const div = elemFactory('div');
 export const span = elemFactory('span');
 
 export function isCombinator(token: QueryToken): token is CombinatorToken {
-  return token && !!{
-    parent: 1,
-    child: 1,
-    adjacent: 1,
-    sibling: 1,
-    descendant: 1,
-  }[token.type];
+  return token && [
+    TokenType.adjacent, TokenType.sibling, TokenType.child, TokenType.descendant
+  ].indexOf(token.type) > -1;
 }
 
 export function getDescendantPaths(tree, path: Path, skipStart = false): Collection {
