@@ -1,16 +1,19 @@
 import parser from '../parser';
-import {QueryToken, QueryError, TokenType} from '../types';
+import {QueryToken, TokenType} from '../types';
 import {isCombinator} from '../helpers';
 
-export const parseError: QueryError = 'parseError';
-export const parentCombinator: QueryError = 'parentCombinator';
-export const adjacentCombinators: QueryError = 'adjacentCombinators';
-export const endingCombinator: QueryError = 'endingCombinator';
-export const leadingCombinator: QueryError = 'leadingCombinator';
-export const isPseudoSelector: QueryError = 'isPseudoSelector';
-export const hasPseudoSelector: QueryError = 'hasPseudoSelector';
-export const unknownPseudoSelector: QueryError = 'unknownPseudoSelector';
-export const nthOfTypeDataError: QueryError = 'nthOfTypeDataError';
+export enum QueryError {
+  parseError = 'parseError',
+  parentCombinator = 'parentCombinator',
+  adjacentCombinators = 'adjacentCombinators',
+  endingCombinator = 'endingCombinator',
+  leadingCombinator = 'leadingCombinator',
+  isPseudoSelector = 'isPseudoSelector',
+  hasPseudoSelector = 'hasPseudoSelector',
+  unknownPseudoSelector = 'unknownPseudoSelector',
+  nthOfTypeDataError = 'nthOfTypeDataError',
+}
+
 
 type Context = {
   path: number[],
@@ -29,33 +32,33 @@ function val(context: Context){
   //console.log(token);
 
   if (token.type === 'parent' as TokenType){
-    return [parentCombinator, context.path.concat(context.pos)];
+    return [QueryError.parentCombinator, context.path.concat(context.pos)];
   }
 
   if (token.type === 'pseudo' && token.name === 'is'){
-    return [isPseudoSelector, context.path.concat(context.pos)];
+    return [QueryError.isPseudoSelector, context.path.concat(context.pos)];
   }
 
   if (token.type === 'pseudo' && token.name === 'has'){
-    return [hasPseudoSelector, context.path.concat(context.pos)];
+    return [QueryError.hasPseudoSelector, context.path.concat(context.pos)];
   }
 
   if (token.type === 'pseudo' && token.name === 'nth-of-type'){
     if (token.data === null || token.data === '0' || !(!isNaN(token.data) || token.data === 'odd' || token.data === 'even')){
-      return [nthOfTypeDataError, context.path.concat(context.pos)];
+      return [QueryError.nthOfTypeDataError, context.path.concat(context.pos)];
     }
   }
 
   if (context.remaining.length === 1 && isCombinator(token)){
-    return [endingCombinator, context.path.concat(context.pos)];
+    return [QueryError.endingCombinator, context.path.concat(context.pos)];
   }
 
   if (context.pos === 0 && isCombinator(token)){
-    return [leadingCombinator, context.path.concat(context.pos)];
+    return [QueryError.leadingCombinator, context.path.concat(context.pos)];
   }
 
   if (isCombinator(token) && isCombinator(context.previous)){
-    return [adjacentCombinators, context.path.concat(context.pos)];
+    return [QueryError.adjacentCombinators, context.path.concat(context.pos)];
   }
 
   return val({
@@ -76,6 +79,6 @@ export default function validate(query: string){
       remaining: q
     });
   } catch(e) {
-    return [parseError];
+    return [QueryError.parseError];
   }
 }
