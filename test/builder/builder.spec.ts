@@ -46,6 +46,13 @@ test('The builder factory', t => {
         {type: 'strong', attrs: {}, content: '', children: []}
       ]},
       'b(child) gives the child in children array correctly'
+    ],[
+      p([strong('baz'),strong]),
+      {type: 'p', attrs: {}, content: '', children: [
+        {type: 'strong', attrs: {}, content: 'baz', children: []},
+        {type: 'strong', attrs: {}, content: '', children: []}
+      ]},
+      'b([...children]) can include builder funcs'
     ]
   ];
   builds.forEach(([input,output,desc]) => t.deepEqual(input,output,desc));

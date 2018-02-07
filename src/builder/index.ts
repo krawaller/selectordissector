@@ -5,18 +5,20 @@ type Attrs = {[key:string]: string};
 const elemProto = {};
 const builderWatermark = Symbol('builder');
 
-type ChildrenType = VirtualElement[] | string | VirtualElement | Builder;
+type Child = VirtualElement | Builder;
+type ChildList = Child[];
+type ChildrenType = Child[] | Child | string;
 
 type Builder = {
   (a?: Attrs | ChildrenType, c?: ChildrenType): VirtualElement
-  watermark?: Symbol
+  watermark?: Symbol // For identification as a builder function. "Optional" since we add it to the func after creation
 };
 
 type Factory = (type: string) => Builder;
 
 const builderFactory: Factory = type => {
   const builder: Builder = (attrParam = {}, childrenParam = []) => {
-    let children: VirtualElement[];
+    let children: Child[];
     let content: string;
     if (Array.isArray(attrParam) || typeof attrParam === 'string' || isElem(attrParam) || isBuilder(attrParam)){
       childrenParam = attrParam;
@@ -33,6 +35,7 @@ const builderFactory: Factory = type => {
       children = childrenParam;
     }
     content = content || '';
+    children = children.map(c => isBuilder(c) ? c() : c);
     // add elemProto so that we can identify objects as elements in the isElem function
     return Object.assign(Object.create(elemProto),{ type, attrs: attrParam, children, content });
   }
