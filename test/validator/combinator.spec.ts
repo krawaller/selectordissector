@@ -1,12 +1,11 @@
 import * as test from 'tape';
 
-import {QueryError} from '../../types';
-import validator, {parentCombinator, adjacentCombinators, endingCombinator, leadingCombinator} from '../../validator';
+import validator, {QueryError} from '../../validator';
 
 test(`Experimental combinators aren't allowed`, t => {
   type TestCase = [string, QueryError, number[]];
   const experimental: TestCase[] = [
-    ['div < span > p', parentCombinator, [1]]
+    ['div < span > p', QueryError.parentCombinator, [1]]
   ];
   experimental.forEach(([query, error, position]) => t.deepEqual(
     validator(query),
@@ -24,7 +23,7 @@ test(`Adjacent combinators aren't allowed`, t => {
   ];
   adjacent.forEach(([query, position]) => t.deepEqual(
     validator(query),
-    [adjacentCombinators, position],
+    [QueryError.adjacentCombinators, position],
     `Query ${query} gives adjacent combinator error for position ${position}`
   ));
   t.end();
@@ -38,7 +37,7 @@ test(`Combinators are not allowed at end of queries`, t => {
   ];
   ending.forEach(([query, position]) => t.deepEqual(
     validator(query),
-    [endingCombinator, position],
+    [QueryError.endingCombinator, position],
     `Query ${query} gives ending combinator error for position ${position}`
   ));
   t.end();
@@ -52,7 +51,7 @@ test(`Combinators are not allowed at beginning of queries`, t => {
   ];
   ending.forEach(([query, position]) => t.deepEqual(
     validator(query),
-    [leadingCombinator, position],
+    [QueryError.leadingCombinator, position],
     `Query ${query} gives leading combinator error for position ${position}`
   ));
   t.end();

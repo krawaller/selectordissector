@@ -1,13 +1,12 @@
 import * as test from 'tape';
 
-import {QueryError} from '../../types';
-import validator, {isPseudoSelector, hasPseudoSelector, unknownPseudoSelector, nthOfTypeDataError} from '../../validator';
+import validator, {QueryError} from '../../validator';
 
 test(`Experimental pseudo selectors aren't allowed`, t => {
   type TestCase = [string, QueryError, number[]];
   const experimental: TestCase[] = [
-    ['div p span:is(.foo)', isPseudoSelector, [5]],
-    ['p > span:has(.foo)', hasPseudoSelector, [3]]
+    ['div p span:is(.foo)', QueryError.isPseudoSelector, [5]],
+    ['p > span:has(.foo)', QueryError.hasPseudoSelector, [3]]
   ];
   experimental.forEach(([query, error, position]) => t.deepEqual(
     validator(query),
@@ -26,7 +25,7 @@ test(`nth-of-type data must be correct`, t => {
   ];
   nthCases.forEach(([query, position, description]) => t.deepEqual(
     validator(query),
-    [nthOfTypeDataError, position],
+    [QueryError.nthOfTypeDataError, position],
     description
   ));
   t.end();
