@@ -28,9 +28,11 @@ export const elemStyles = {
 };
 
 export const formStyles = {
-  container: {},
+  container: {
+    display: 'inline-block',
+  },
   input: {},
-  button: {}
+  button: {},
 };
 
 export const mainStyles = {

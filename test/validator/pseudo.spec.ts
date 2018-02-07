@@ -25,7 +25,7 @@ test(`nth-of-type data must be correct`, t => {
   ];
   nthCases.forEach(([query, position, description]) => t.deepEqual(
     validator(query),
-    [QueryError.nthOfTypeDataError, position],
+    [QueryError.faultyFormula, position],
     description
   ));
   t.end();

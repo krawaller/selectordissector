@@ -16,7 +16,7 @@ export enum QueryError {
   faultyFormula = 'faultyFormula'
 }
 
-const usesFormula = [PseudoName.nthChild];
+const usesFormula = [PseudoName.nthChild, PseudoName.nthOfType];
 
 const unImplementedPseudos = [PseudoName.not];
 
@@ -57,12 +57,6 @@ function val(context: Context){
     return fail(QueryError.hasPseudoSelector, context);
   }
 
-  if (token.type === TokenType.pseudo && token.name === PseudoName.nthOfType){
-    if (token.data === null || token.data === '0' || !(!isNaN(token.data) || token.data === 'odd' || token.data === 'even')){
-      return fail(QueryError.nthOfTypeDataError, context);
-    }
-  }
-
   if (context.remaining.length === 1 && isCombinator(token)){
     return fail(QueryError.endingCombinator, context);
   }
@@ -79,6 +73,9 @@ function val(context: Context){
     try {
       matchPosition(0, token.data);
     } catch(e) {
+      return fail(QueryError.faultyFormula, context);
+    }
+    if (token.data === '0'){
       return fail(QueryError.faultyFormula, context);
     }
   }

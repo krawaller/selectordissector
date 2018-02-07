@@ -112,15 +112,15 @@ test('Element tester returns correct result for last-child comparison', t => {
 const tree = (
   div([
     div([
+      span,
       div,
-      div,
-      div(
+      span(
         div
       )
     ]),
-    div(
+    span(
       div(
-        div
+        span
       )
     )
   ])
@@ -141,6 +141,20 @@ test('Collection tester returns correct result for nth-child comparison', t => {
     [':nth-child(2n+2)', [ [0,1], [1] ], ':nth-child(2n+2) includes every even sibling'],
     [':nth-child(2n-6)', [ [0,1], [1] ], ':nth-child(n2-6) includes every even sibling'],
     [':nth-child(even)', [ [0,1], [1] ], ':nth-child(even) includes every even sibling'],
+  ];
+  nthCases.forEach(([query, collection, description]) => t.deepEqual(
+    matcher(tree, allInTree, parser(query)[0][0]),
+    collection,
+    description
+  ));
+  t.end();
+});
+
+test('Collection tester returns correct result for nth-of-type comparison', t => {
+  type TestCase = [string, Collection, string];
+  const nthCases: TestCase[] = [
+    [':nth-of-type(2)', [ [0,2] ], ':nth-of-type(2) gives correct result'],
+    [':nth-of-type(1)', [ [], [0], [0,0], [0,1], [0,2,0], [1], [1,0], [1,0,0] ], ':nth-of-type(1) includes all relevant oldest sibling']
   ];
   nthCases.forEach(([query, collection, description]) => t.deepEqual(
     matcher(tree, allInTree, parser(query)[0][0]),

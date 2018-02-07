@@ -57,6 +57,15 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
           let pos = path.length ? path[path.length-1] : 0;
           return matchPosition(pos, formula);
         }
+        case PseudoName.nthOfType: {
+          let formula = (<PseudoToken>token).data;
+          let pos = 0;
+          if (path.length){
+            let parent = travelTree(tree, path.slice(0, path.length-1))
+            pos = travelTree(tree, path.slice(0, path.length-1)).children.filter(c => c.type === elem.type).indexOf(elem);
+          }
+          return matchPosition(pos, formula);
+        }
         default: throw "Unknown pseudo name: " + token.name;
       }
   }
