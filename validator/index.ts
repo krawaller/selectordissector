@@ -24,6 +24,9 @@ type Context = {
   remaining: QueryToken[]
 }
 
+function fail(error: QueryError, context: Context){
+  return [error, context.path.concat(context.pos)];
+}
 
 function val(context: Context){
   if (context.remaining.length === 0) {
@@ -32,41 +35,41 @@ function val(context: Context){
   const token = context.remaining[0];
 
   if (token.type === 'pseudo' && Object.keys(PseudoName).map(k => PseudoName[k]).indexOf(token.name) === -1){
-    return [QueryError.unknownPseudoSelector, context.path.concat(context.pos)];
+    return fail(QueryError.unknownPseudoSelector, context);
   }
 
   if (token.type === 'pseudo' && unImplementedPseudos.indexOf(token.name) !== -1){
-    return [QueryError.unImplemented, context.path.concat(context.pos)];
+    return fail(QueryError.unImplemented, context);
   }
 
   if (token.type === 'parent' as TokenType){
-    return [QueryError.parentCombinator, context.path.concat(context.pos)];
+    return fail(QueryError.parentCombinator, context);
   }
 
   if (token.type === 'pseudo' && token.name === 'is'){
-    return [QueryError.isPseudoSelector, context.path.concat(context.pos)];
+    return fail(QueryError.isPseudoSelector, context);
   }
 
   if (token.type === 'pseudo' && token.name === 'has'){
-    return [QueryError.hasPseudoSelector, context.path.concat(context.pos)];
+    return fail(QueryError.hasPseudoSelector, context);
   }
 
   if (token.type === 'pseudo' && token.name === 'nth-of-type'){
     if (token.data === null || token.data === '0' || !(!isNaN(token.data) || token.data === 'odd' || token.data === 'even')){
-      return [QueryError.nthOfTypeDataError, context.path.concat(context.pos)];
+      return fail(QueryError.nthOfTypeDataError, context);
     }
   }
 
   if (context.remaining.length === 1 && isCombinator(token)){
-    return [QueryError.endingCombinator, context.path.concat(context.pos)];
+    return fail(QueryError.endingCombinator, context);
   }
 
   if (context.pos === 0 && isCombinator(token)){
-    return [QueryError.leadingCombinator, context.path.concat(context.pos)];
+    return fail(QueryError.leadingCombinator, context);
   }
 
   if (isCombinator(token) && isCombinator(context.previous)){
-    return [QueryError.adjacentCombinators, context.path.concat(context.pos)];
+    return fail(QueryError.adjacentCombinators, context);
   }
 
   return val({
