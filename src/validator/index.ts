@@ -1,5 +1,5 @@
 import parser from '../parser';
-import {QueryToken, TokenType, PseudoName} from '../types';
+import {QueryToken, TokenType, PseudoName, Path} from '../types';
 import {isCombinator} from '../helpers';
 
 export enum QueryError {
@@ -80,7 +80,7 @@ function val(context: Context){
   });
 }
 
-export default function validate(query: string){
+export default function validate(query: string) : [QueryError] | [QueryError, Path] | null {
   try {
     const q = parser(query)[0]; // TODO - handle multiple!
     return val({
