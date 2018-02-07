@@ -1,9 +1,9 @@
 import * as test from 'tape';
 
 import parser from '../../parser';
-import {VirtualElement, ElementToken} from '../../types';
+import {VirtualElement, ElementToken, Path} from '../../types';
 import {div, span} from '../../helpers';
-import {testElement} from '../../matcher';
+import matcher from '../../matcher';
 
 test('Element tester returns correct result for class selector', t => {
   const tree = div([
@@ -15,7 +15,7 @@ test('Element tester returns correct result for class selector', t => {
     span({class:"foo barb baz"}),
     span({class:"foo gbar"})
   ]);
-  type TestCase = [number[], boolean, string];
+  type TestCase = [Path, boolean, string];
   const classComps: TestCase[] = [
     [[], false, 'we return false if element has no class attribute'],
     [[0], true, 'we return true if element class attribute has the class in the end'],
@@ -27,9 +27,9 @@ test('Element tester returns correct result for class selector', t => {
     [[6], false, 'we return false if element class attribute lacks the class, even though last class resembles'],
   ];
   const hasBarClass = <ElementToken>parser('.bar')[0][0];
-  classComps.forEach(([path, result, description]) => t.deepEqual(
-    testElement(tree, path, hasBarClass),
-    result,
+  classComps.forEach(([path, shouldMatch, description]) => t.deepEqual(
+    matcher(tree, [path], hasBarClass),
+    shouldMatch ? [path] : [],
     description
   ));
   t.end();

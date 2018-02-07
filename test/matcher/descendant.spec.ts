@@ -1,8 +1,8 @@
 import * as test from 'tape';
 
-import {VirtualElement, DescendantToken, ChildToken} from '../../types';
+import {VirtualElement, DescendantToken, ChildToken, Path, Collection} from '../../types';
 import {div} from '../../helpers';
-import {combineFromPath} from '../../matcher';
+import matcher from '../../matcher';
 
 const tree = (
   div([
@@ -22,7 +22,7 @@ const tree = (
 )
 
 test('Descendant combinator yields correct matches', t => {
-  type TestCase = [number[], number[][], string];
+  type TestCase = [Path, Collection, string];
   const descendantComps: TestCase[] = [
     [
       [],
@@ -56,7 +56,7 @@ test('Descendant combinator yields correct matches', t => {
   ];
   const descendantCombinator: DescendantToken = {type:'descendant'};
   descendantComps.forEach(([path, result, description]) => t.deepEqual(
-    combineFromPath(tree, path, descendantCombinator),
+    matcher(tree, [path], descendantCombinator),
     result,
     description
   ));
