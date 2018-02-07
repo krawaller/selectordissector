@@ -9,9 +9,21 @@ export type TagToken = {
   name: string
 };
 
+export enum PseudoName {
+  firstOfType = 'first-of-type',
+  lastOfType = 'last-of-type',
+  onlyOfType = 'only-of-type',
+  empty = 'empty',
+  is = 'is',
+  has = 'has',
+  firstChild = 'first-child',
+  lastChild = 'last-child',
+  nthOfType = 'nth-of-type'
+}
+
 export type PseudoToken = {
   type: 'pseudo'
-  name: 'first-of-type' | 'last-of-type' | 'only-of-type' | 'empty' | 'is' | 'has' | 'first-child' | 'last-child' | 'nth-of-type'
+  name: PseudoName
   data?: any
 }
 
