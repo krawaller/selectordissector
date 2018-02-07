@@ -1,14 +1,26 @@
 export const elemStyles = {
   matched: {
-    color: 'green'
+    color: 'white',
+    backgroundColor: 'green'
+  },
+  mayMatch: {
+    transition: 'color 1s ease, background-color 1s ease',
   },
   element: {
-    transition: 'color 1s ease',
     fontFamily: 'monospace',
-    color: 'black'
+    marginBottom: '1px',
+    borderRadius: '5px'
+  },
+  singleLine: {
+    display: 'inline-block'
   },
   child: {
     marginLeft: '2em'
+  },
+  tag: {
+    borderRadius: '5px',
+    paddingLeft: '2px',
+    paddingRight: '2px'
   }
 };
 
@@ -22,4 +34,4 @@ export const mainStyles = {
   container: {}
 };
 
-export const merge = (curr, toAdd) => Object.assign({},curr,toAdd);
+export const merge = (...objs) => Object.assign.apply(Object,[{}].concat(objs));

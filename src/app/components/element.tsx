@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import {VirtualElement, Path, Collection} from '../../types';
 import {collContainsPath} from '../../helpers';
-import {elemStyles, merge} from '../styles';
+import {elemStyles as s, merge} from '../styles';
 
 type ElementProps = {
   indent?: number
@@ -12,25 +12,23 @@ type ElementProps = {
 };
 
 const Element: React.StatelessComponent<ElementProps> = ({indent=0,elem,currColl=[],path=[]}) => {
-  let styles = elemStyles.element;
-  if (collContainsPath(currColl, path)) styles = merge(styles, elemStyles.matched);
-  if (indent > 0) styles = merge(styles, elemStyles.child);
-  const startTag = StartTag(elem);
-  const endTag = EndTag(elem);
+  let styles = s.element;
+  if (indent > 0) styles = merge(styles, s.child);
+  const matched = collContainsPath(currColl, path);
   if (elem.content){
     return (
-      <div style={styles}>{startTag}{elem.content}{endTag}</div>
+      <div><div style={merge(styles, s.singleLine, s.mayMatch, matched && s.matched)}><StartTag elem={elem}/>{elem.content}<EndTag elem={elem}/></div></div>
     );
   } else if (!elem.children || !elem.children.length){
     return (
-      <div style={styles}>{startTag}{endTag}</div>
+      <div><div style={merge(styles, s.singleLine, s.mayMatch, matched && s.matched)}><StartTag elem={elem}/><EndTag elem={elem}/></div></div>
     );
   } else {
     return (
       <div style={styles}>
-        {startTag}
+        <StartTag elem={elem} matched={matched} mayMatch/>
           {elem.children.map((child,n) => <Element key={path.concat(n).join('-')} elem={child} indent={indent+1} path={path.concat(n)} currColl={currColl} />)}
-        {endTag}
+          <EndTag elem={elem} matched={matched} mayMatch/>
       </div>
     )
   }
@@ -38,9 +36,17 @@ const Element: React.StatelessComponent<ElementProps> = ({indent=0,elem,currColl
 
 export default Element;
 
-const StartTag = (elem: VirtualElement) => {
+type TagType = {
+  elem: VirtualElement
+  matched?: boolean
+  mayMatch?: boolean
+}
+
+const StartTag: React.StatelessComponent<TagType> = ({elem, matched, mayMatch}) => {
   let attrs = Object.keys(elem.attrs).map(name => ' ' + (elem.attrs[name] === 'null' ? name : `${name}="${elem.attrs[name]}"`)).join('');
-  return `<${elem.type}${attrs}>`;
+  return <span style={merge(s.tag, mayMatch && s.mayMatch, matched && s.matched)}>{`<${elem.type}${attrs}>`}</span>;
 };
 
-const EndTag = (elem: VirtualElement) => `</${elem.type}>`;
+const EndTag: React.StatelessComponent<TagType> = ({elem, matched, mayMatch}) => {
+  return <span style={merge(s.tag, mayMatch && s.mayMatch, matched && s.matched)}>{`</${elem.type}>`}</span>;
+};
