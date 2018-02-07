@@ -11,14 +11,19 @@ test('The builder factory', t => {
     [
       p('moop'),
       {type: 'p', attrs: {}, content: 'moop', children: []},
-      'p(string) gives elem with textnode'
+      'b(str) gives an element with a text node'
     ], [
       p([strong('moo')]),
       {type: 'p', attrs: {}, content: '', children: [
         {type: 'strong', attrs: {}, content: 'moo', children: []}
       ]},
-      'p([strong(foo)]) gives correct wrapping'
+      'b([child]) gives correct wrapping'
+    ], [
+      p({lang:'sv'}),
+      {type: 'p', attrs: {lang: 'sv'}, content: '', children: []},
+      'b(attrs) gives the attrs and no content or children'
     ]
+
   ];
   builds.forEach(([input,output,desc]) => t.deepEqual(input,output,desc));
   t.end();
