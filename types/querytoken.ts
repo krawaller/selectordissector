@@ -1,11 +1,20 @@
-export type TokenType = 'tag' | 'descendant' | 'child' | 'sibling' | 'adjacent' | 'universal';
+export enum TokenType {
+  descendant = 'descendant',
+  child = 'child',
+  sibling = 'sibling',
+  adjacent = 'adjacent',
+  tag = 'tag',
+  universal = 'universal',
+  pseudo = 'pseudo',
+  attribute = 'attribute'
+}
 
 export type UniversalToken = {
-  type: 'universal'
+  type: TokenType.universal
 };
 
 export type TagToken = {
-  type: 'tag'
+  type: TokenType.tag
   name: string
 };
 
@@ -23,13 +32,13 @@ export enum PseudoName {
 }
 
 export type PseudoToken = {
-  type: 'pseudo'
+  type: TokenType.pseudo
   name: PseudoName
   data?: any
 }
 
 export type AttributeToken = {
-  type: 'attribute'
+  type: TokenType.attribute,
   name: string
   action: 'equals' | 'exists' | 'start' | 'end' | 'element' // element means it is a class test
   value?: string
@@ -38,19 +47,19 @@ export type AttributeToken = {
 export type ElementToken = UniversalToken | TagToken | PseudoToken | AttributeToken;
 
 export type DescendantToken = {
-  type: 'descendant'
+  type: TokenType.descendant
 };
 
 export type ChildToken = {
-  type: 'child'
+  type: TokenType.child
 }
 
 export type SiblingToken = {
-  type: 'sibling'
+  type: TokenType.sibling
 }
 
 export type AdjacentToken = {
-  type: 'adjacent'
+  type: TokenType.adjacent
 }
 
 export type CombinatorToken = DescendantToken | ChildToken | SiblingToken | AdjacentToken;
