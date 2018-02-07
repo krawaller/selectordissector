@@ -112,19 +112,19 @@ test('Element tester returns correct result for last-child comparison', t => {
 const tree = (
   div([
     div([
-      div(),
-      div(),
-      div([
-        div()
-      ])
+      div,
+      div,
+      div(
+        div
+      )
     ]),
-    div([
-      div([
-        div()
-      ])
-    ])
+    div(
+      div(
+        div
+      )
+    )
   ])
-)
+);
 
 const allInTree = getDescendantPaths(tree, []);
 

@@ -7,19 +7,19 @@ import matcher from '../../src/matcher';
 const tree = (
   div([
     div([
-      div(),
-      div(),
-      div([
-        div()
-      ])
+      div,
+      div,
+      div(
+        div
+      )
     ]),
-    div([
-      div([
-        div()
-      ])
-    ])
+    div(
+      div(
+        div
+      )
+    )
   ])
-)
+);
 
 test('Sibling combinator yields correct matches', t => {
   type TestCase = [Path, Collection, string];
