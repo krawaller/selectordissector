@@ -57,6 +57,7 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
           let pos = path.length ? path[path.length-1] : 0;
           return matchPosition(pos, formula);
         }
+        default: throw "Unknown pseudo name: " + token.name;
       }
   }
 }
