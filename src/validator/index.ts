@@ -1,6 +1,6 @@
 import parser from '../parser';
 import {QueryToken, TokenType, PseudoName, Path} from '../types';
-import {isCombinator} from '../helpers';
+import {isCombinator, matchPosition} from '../helpers';
 
 export enum QueryError {
   parseError = 'parseError',
@@ -12,10 +12,13 @@ export enum QueryError {
   hasPseudoSelector = 'hasPseudoSelector',
   unknownPseudoSelector = 'unknownPseudoSelector',
   nthOfTypeDataError = 'nthOfTypeDataError',
-  unImplemented = 'unImplemented'
+  unImplemented = 'unImplemented',
+  faultyFormula = 'faultyFormula'
 }
 
-const unImplementedPseudos = ['not'];
+const usesFormula = [PseudoName.nthChild];
+
+const unImplementedPseudos = [PseudoName.not];
 
 type Context = {
   path: number[],
@@ -54,7 +57,7 @@ function val(context: Context){
     return fail(QueryError.hasPseudoSelector, context);
   }
 
-  if (token.type === TokenType.pseudo && token.name === 'nth-of-type'){
+  if (token.type === TokenType.pseudo && token.name === PseudoName.nthOfType){
     if (token.data === null || token.data === '0' || !(!isNaN(token.data) || token.data === 'odd' || token.data === 'even')){
       return fail(QueryError.nthOfTypeDataError, context);
     }
@@ -70,6 +73,14 @@ function val(context: Context){
 
   if (isCombinator(token) && isCombinator(context.previous)){
     return fail(QueryError.adjacentCombinators, context);
+  }
+
+  if (token.type === TokenType.pseudo && usesFormula.indexOf(token.name) > -1){
+    try {
+      matchPosition(0, token.data);
+    } catch(e) {
+      return fail(QueryError.faultyFormula, context);
+    }
   }
 
   return val({

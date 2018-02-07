@@ -58,3 +58,17 @@ test(`unimplemented pseudo selectors are called out`, t => {
   ));
   t.end();
 });
+
+test(`erroneous pseudo formulas are called out`, t => {
+  type TestCase = [string, number[], string];
+  const weirdFormulas: TestCase[] = [
+    // TODO - add nth-of-type?
+    ['div span:nth-child(foobar)', [3], 'erroneous formula "foobar" for nth-child correctly called out'],
+  ];
+  weirdFormulas.forEach(([query, position, description]) => t.deepEqual(
+    validator(query),
+    [QueryError.faultyFormula, position],
+    description
+  ));
+  t.end();
+});
