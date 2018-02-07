@@ -37,10 +37,18 @@ export type PseudoToken = {
   data?: any
 }
 
+export enum AttributeAction {
+  equals = 'equals',
+  exists = 'exists',
+  start = 'start',
+  end = 'end',
+  element = 'element'  // element means it is a class test
+}
+
 export type AttributeToken = {
   type: TokenType.attribute,
   name: string
-  action: 'equals' | 'exists' | 'start' | 'end' | 'element' // element means it is a class test
+  action: AttributeAction
   value?: string
   ignoreCase?: boolean
 }

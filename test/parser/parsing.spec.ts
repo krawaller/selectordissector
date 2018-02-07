@@ -1,6 +1,6 @@
 import * as test from 'tape';
 
-import {Selector, TokenType} from '../../types';
+import {Selector, TokenType, AttributeAction} from '../../types';
 
 import parser from '../../parser';
 
@@ -11,7 +11,7 @@ test('Parser yields correct Selector', t => {
       'div.foo',
       [
         {type: TokenType.tag, name: 'div'},
-        {type: TokenType.attribute, name: 'class', action: 'element', value: 'foo', ignoreCase: false}
+        {type: TokenType.attribute, name: 'class', action: AttributeAction.element, value: 'foo', ignoreCase: false}
       ],
       'we can parse a tag name and a class correctly'
     ]
