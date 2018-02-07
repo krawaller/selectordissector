@@ -1,6 +1,6 @@
 import * as test from 'tape';
 
-import {VirtualElement, PseudoToken, PseudoName, Path, Collection} from '../../types';
+import {VirtualElement, PseudoToken, PseudoName, Path, Collection, TokenType} from '../../types';
 import {div,span, getDescendantPaths} from '../../helpers';
 import matcher from '../../matcher';
 import parser from '../../parser';
@@ -12,7 +12,7 @@ test('Element tester returns correct result for first-of-type comparison', t => 
     [div([div(),div()]), [1], false, 'first-of-type is false if earlier sibling has same type'],
     [div([span(),div()]), [1], true, 'first-of-type is true if no earlier sibling has same type']
   ];
-  const firstOfType: PseudoToken = {type:'pseudo', name: PseudoName.firstOfType};
+  const firstOfType: PseudoToken = {type: TokenType.pseudo, name: PseudoName.firstOfType};
   firstOfTypeComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
     matcher(tree, [path], firstOfType),
     shouldMatch ? [path] : [],
@@ -29,7 +29,7 @@ test('Element tester returns correct result for last-of-type comparison', t => {
     [div([div(),span()]), [0], true, 'last-of-type is true if no later sibling has same type'],
     [div([div(),div(),span()]), [1], true, 'last-of-type is true if no later sibling has same type, even if earlier is same']
   ];
-  const lastOfType: PseudoToken = {type:'pseudo', name: PseudoName.lastOfType};
+  const lastOfType: PseudoToken = {type: TokenType.pseudo, name: PseudoName.lastOfType};
   lastOfTypeComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
     matcher(tree, [path], lastOfType),
     shouldMatch ? [path] : [],
@@ -46,7 +46,7 @@ test('Element tester returns correct result for only-of-type comparison', t => {
     [div([div(),span(),div()]), [1], true, 'only-of-type is true if no sibling has same type'],
     [div([div()]), [0], true, 'only-of-type is true when we have no siblings']
   ];
-  const lastOfType: PseudoToken = {type:'pseudo', name: PseudoName.lastOfType};
+  const lastOfType: PseudoToken = {type: TokenType.pseudo, name: PseudoName.lastOfType};
   lastOfTypeComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
     matcher(tree, [path], lastOfType),
     shouldMatch ? [path] : [],
@@ -63,7 +63,7 @@ test('Element tester returns correct result for :empty pseudo selector', t => {
     [tree, [], false, ':empty returns false if we have children'],
     [tree, [0], true, ':empty returns true if we dont have children'],
   ];
-  const empty: PseudoToken = {type:'pseudo', name: PseudoName.empty};
+  const empty: PseudoToken = {type: TokenType.pseudo, name: PseudoName.empty};
   emptyComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
     matcher(tree, [path], empty),
     shouldMatch ? [path] : [],
@@ -81,7 +81,7 @@ test('Element tester returns correct result for first-child comparison', t => {
     [tree, [1], false, 'middle sibling isnt first-child'],
     [tree, [2], false, 'youngest sibling isnt first-child']
   ];
-  const firstChild: PseudoToken = {type:'pseudo', name: PseudoName.firstChild};
+  const firstChild: PseudoToken = {type: TokenType.pseudo, name: PseudoName.firstChild};
   firstChildComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
     matcher(tree, [path], firstChild),
     shouldMatch ? [path] : [],
@@ -99,7 +99,7 @@ test('Element tester returns correct result for last-child comparison', t => {
     [tree, [1], false, 'middle sibling isnt last-child'],
     [tree, [2], true, 'youngest sibling is last-child']
   ];
-  const lastChild: PseudoToken = {type:'pseudo', name: PseudoName.lastChild};
+  const lastChild: PseudoToken = {type: TokenType.pseudo, name: PseudoName.lastChild};
   lastChildComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
     matcher(tree, [path], lastChild),
     shouldMatch ? [path] : [],

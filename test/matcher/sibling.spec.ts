@@ -1,6 +1,6 @@
 import * as test from 'tape';
 
-import {VirtualElement, SiblingToken, Path, Collection} from '../../types';
+import {VirtualElement, SiblingToken, Path, Collection, TokenType} from '../../types';
 import {div} from '../../helpers';
 import matcher from '../../matcher';
 
@@ -43,7 +43,7 @@ test('Sibling combinator yields correct matches', t => {
       'oldest sibling yields nothing '
     ]
   ];
-  const siblingCombinator: SiblingToken = {type:'sibling'};
+  const siblingCombinator: SiblingToken = {type: TokenType.sibling};
   siblingComps.forEach(([path, result, description]) => t.deepEqual(
     matcher(tree, [path], siblingCombinator),
     result,

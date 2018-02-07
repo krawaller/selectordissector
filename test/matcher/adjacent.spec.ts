@@ -1,6 +1,6 @@
 import * as test from 'tape';
 
-import {VirtualElement, AdjacentToken, Path, Collection} from '../../types';
+import {VirtualElement, AdjacentToken, Path, Collection, TokenType} from '../../types';
 import {div} from '../../helpers';
 import matcher from '../../matcher';
 
@@ -42,7 +42,7 @@ test('Adjacent combinator yields correct matches', t => {
       'oldest sibling yields nothing '
     ]
   ];
-  const adjacentCombinator: AdjacentToken = {type:'adjacent'};
+  const adjacentCombinator: AdjacentToken = {type: TokenType.adjacent};
   adjacentComps.forEach(([path, result, description]) => t.deepEqual(
     matcher(tree, [path], adjacentCombinator),
     result,

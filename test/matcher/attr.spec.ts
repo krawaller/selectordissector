@@ -1,6 +1,6 @@
 import * as test from 'tape';
 
-import {VirtualElement, AttributeToken} from '../../types';
+import {VirtualElement, AttributeToken, TokenType} from '../../types';
 import {div} from '../../helpers';
 import matcher from '../../matcher';
 
@@ -10,7 +10,7 @@ test('Element tester returns correct result for attributes with exists action', 
     [div({foo:null}), true, 'we return true if asked-for attribute exists'],
     [div(), false, 'we return false if element does not have attribute']
   ];
-  const fooExists: AttributeToken = {type:'attribute',name:'foo',action:'exists'};
+  const fooExists: AttributeToken = {type: TokenType.attribute,name:'foo',action:'exists'};
   attrComps.forEach(([elem, shouldMatch, description]) => t.deepEqual(
     matcher(elem, [[]], fooExists),
     shouldMatch ? [[]] : [],
@@ -27,7 +27,7 @@ test('Element tester returns correct result for attributes with equals action', 
     [div({baz:'bar'}), false, 'we return false if element does not have attribute'],
     [div({foo:'bar'}), true, 'we return true if element has attribute with correct value']
   ];
-  const fooIsBar: AttributeToken = {type:'attribute',name:'foo',action:'equals', value: 'bar'};
+  const fooIsBar: AttributeToken = {type: TokenType.attribute, name:'foo',action:'equals', value: 'bar'};
   attrComps.forEach(([elem, shouldMatch, description]) => t.deepEqual(
     matcher(elem, [[]], fooIsBar),
     shouldMatch ? [[]] : [],
@@ -45,7 +45,7 @@ test('Element tester returns correct result for attributes with start action', t
     [div({foo:'bar'}), true, 'we return true if attribute equals value'],
     [div({foo:'barbaz'}), true, 'we return true if attribute begins with value'],
   ];
-  const fooBeginsWithBar: AttributeToken = {type:'attribute',name:'foo',action:'start', value: 'bar'};
+  const fooBeginsWithBar: AttributeToken = {type: TokenType.attribute, name:'foo',action:'start', value: 'bar'};
   attrComps.forEach(([elem, shouldMatch, description]) => t.deepEqual(
     matcher(elem, [[]], fooBeginsWithBar),
     shouldMatch ? [[]] : [],
@@ -63,7 +63,7 @@ test('Element tester returns correct result for attributes with end action', t =
     [div({foo:'bar'}), true, 'we return true if attribute equals value'],
     [div({foo:'bazbar'}), true, 'we return true if attribute ends with value'],
   ];
-  const fooEndsWithBar: AttributeToken = {type:'attribute',name:'foo',action:'end', value: 'bar'};
+  const fooEndsWithBar: AttributeToken = {type: TokenType.attribute, name:'foo',action:'end', value: 'bar'};
   attrComps.forEach(([elem, shouldMatch, description]) => t.deepEqual(
     matcher(elem, [[]], fooEndsWithBar),
     shouldMatch ? [[]] : [],

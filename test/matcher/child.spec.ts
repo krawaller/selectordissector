@@ -1,6 +1,6 @@
 import * as test from 'tape';
 
-import {VirtualElement, DescendantToken, ChildToken, Path, Collection} from '../../types';
+import {VirtualElement, DescendantToken, ChildToken, Path, Collection, TokenType} from '../../types';
 import {div} from '../../helpers';
 import matcher from '../../matcher';
 
@@ -47,7 +47,7 @@ test('Child combinator yields correct matches', t => {
       'leaf node yields empty array'
     ]
   ];
-  const childCombinator: ChildToken = {type:'child'};
+  const childCombinator: ChildToken = {type: TokenType.child};
   childComps.forEach(([path, result, description]) => t.deepEqual(
     matcher(tree, [path], childCombinator),
     result,
