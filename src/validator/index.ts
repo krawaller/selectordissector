@@ -34,11 +34,11 @@ function val(context: Context){
   }
   const token = context.remaining[0];
 
-  if (token.type === 'pseudo' && Object.keys(PseudoName).map(k => PseudoName[k]).indexOf(token.name) === -1){
+  if (token.type === TokenType.pseudo && Object.keys(PseudoName).map(k => PseudoName[k]).indexOf(token.name) === -1){
     return fail(QueryError.unknownPseudoSelector, context);
   }
 
-  if (token.type === 'pseudo' && unImplementedPseudos.indexOf(token.name) !== -1){
+  if (token.type === TokenType.pseudo && unImplementedPseudos.indexOf(token.name) !== -1){
     return fail(QueryError.unImplemented, context);
   }
 
@@ -46,15 +46,15 @@ function val(context: Context){
     return fail(QueryError.parentCombinator, context);
   }
 
-  if (token.type === 'pseudo' && token.name === 'is'){
+  if (token.type === TokenType.pseudo && token.name === 'is'){
     return fail(QueryError.isPseudoSelector, context);
   }
 
-  if (token.type === 'pseudo' && token.name === 'has'){
+  if (token.type === TokenType.pseudo && token.name === 'has'){
     return fail(QueryError.hasPseudoSelector, context);
   }
 
-  if (token.type === 'pseudo' && token.name === 'nth-of-type'){
+  if (token.type === TokenType.pseudo && token.name === 'nth-of-type'){
     if (token.data === null || token.data === '0' || !(!isNaN(token.data) || token.data === 'odd' || token.data === 'even')){
       return fail(QueryError.nthOfTypeDataError, context);
     }
