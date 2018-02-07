@@ -1,4 +1,4 @@
-import {VirtualElement, QueryToken} from '../types';
+import {VirtualElement, QueryToken, CombinatorToken, Path, Collection} from '../types';
 
 type Attrs = {[key:string]: string};
 
@@ -17,16 +17,17 @@ const elemFactory = type => (attrsOrChildren?: Attrs | VirtualElement[], childre
 export const div = elemFactory('div');
 export const span = elemFactory('span');
 
-export function isCombinator(token: QueryToken){
+export function isCombinator(token: QueryToken): token is CombinatorToken {
   return token && !!{
     parent: 1,
     child: 1,
     adjacent: 1,
-    sibling: 1
+    sibling: 1,
+    descendant: 1,
   }[token.type];
 }
 
-export function getDescendantPaths(tree, path, skipStart = false){
+export function getDescendantPaths(tree, path: Path, skipStart = false): Collection {
   let elem = travelTree(tree, path);
   if (!elem.children || !elem.children.length){
     return skipStart ? [] : [path];
@@ -37,7 +38,7 @@ export function getDescendantPaths(tree, path, skipStart = false){
   }
 }
 
-export function travelTree(tree: VirtualElement, path: number[]){
+export function travelTree(tree: VirtualElement, path: Path){
   const remaining = path.slice();
   let elem = tree;
   while(remaining.length){
