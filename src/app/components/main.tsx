@@ -83,6 +83,7 @@ export default class Main extends React.Component<{}, MainState> {
           history.length > 0 && (
             <React.Fragment>
               <hr/>
+              <h3>Click the buttons to see selection result during the various steps of the selection!</h3>
               {history.map((h,n) => <HistoryStep key={n} token={h.token} coll={h.coll} idx={n} selIdx={this.state.idx} callback={this.updateIdx} />)}
             </React.Fragment>
           ) 
