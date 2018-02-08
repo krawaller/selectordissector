@@ -1,13 +1,7 @@
 import * as test from 'tape';
 
 import {VirtualElement} from '../../src/types';
-import builderFactory, {isElem, isBuilder, div} from '../../src/builder';
-
-test('The isBuilder tester', t => {
-  t.equal(isBuilder(()=>{}), false, 'returns false for regular func');
-  t.equal(isBuilder(div), true, 'returns true for builder func');
-  t.end();
-});
+import builderFactory, {isElem, div} from '../../src/builder';
 
 test('The isElem tester', t => {
   t.equal(isElem({foo:'bar'}), false, 'returns false for regular object');
