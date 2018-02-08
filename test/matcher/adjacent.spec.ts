@@ -10,7 +10,7 @@ const tree = (
       div,
       div,
       div(
-        div
+        div()
       )
     ]),
     div(
