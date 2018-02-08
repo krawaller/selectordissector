@@ -1,4 +1,5 @@
 export enum TokenType {
+  start = 'start',
   descendant = 'descendant',
   child = 'child',
   parent = 'parent',
@@ -58,6 +59,10 @@ export type AttributeToken = {
 
 export type ElementToken = UniversalToken | TagToken | PseudoToken | AttributeToken;
 
+export type StartToken = {
+  type: TokenType.start
+}
+
 export type DescendantToken = {
   type: TokenType.descendant
 };
@@ -80,4 +85,4 @@ export type ParentToken = {
 
 export type CombinatorToken = DescendantToken | ChildToken | SiblingToken | AdjacentToken | ParentToken;
 
-export type QueryToken = CombinatorToken | ElementToken;
+export type QueryToken = CombinatorToken | ElementToken | StartToken;
