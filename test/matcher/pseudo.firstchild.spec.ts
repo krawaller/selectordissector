@@ -11,7 +11,8 @@ test('Element tester returns correct result for first-child comparison', t => {
     [tree, [], true, 'top of pyramid is always first-child'],
     [tree, [0], true, 'oldest sibling is first-child'],
     [tree, [1], false, 'middle sibling isnt first-child'],
-    [tree, [2], false, 'youngest sibling isnt first-child']
+    [tree, [2], false, 'youngest sibling isnt first-child'],
+    [div(['foo',span]), [1], true, 'older text nodes dont count']
   ];
   const firstChild: PseudoToken = {type: TokenType.pseudo, name: PseudoName.firstChild};
   firstChildComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(

@@ -46,3 +46,27 @@ test('Collection tester returns correct result for nth-child comparison', t => {
   ));
   t.end();
 });
+
+test('nth-child doesnt count text nodes', t => {
+  type TestCase = [VirtualElement, string, Collection, string];
+  const ignoreTextNodes: TestCase[] = [
+    [
+      div(['foo', span, 'bar', div]),
+      ':nth-child(2)',
+      [ [3] ],
+      'the inner div is child 2 if we dont count text nodes'
+    ],
+    [
+      div(['foo','bar','baz']),
+      ':nth-child(2)',
+      [],
+      'text nodes are never selected'
+    ]
+  ];
+  ignoreTextNodes.forEach(([tree, query, collection, description]) => t.deepEqual(
+    matcher(tree, collection, parser(query)[0][0]),
+    collection,
+    description
+  ));
+  t.end();
+});

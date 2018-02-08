@@ -1,8 +1,16 @@
-import {ElementToken, PseudoToken, VirtualElement, Path, TokenType, PseudoName, AttributeAction, FormulaType} from '../types';
+import {ElementToken, PseudoToken, VirtualElement, Path, TokenType, PseudoName, AttributeAction, FormulaType, TextNode, HTMLElement} from '../types';
 import {travelTree, classifyFormula} from '../helpers';
+import {TEXTNODE} from '../builder';
+
+function isTextNode(elem): elem is TextNode {
+  return elem.type === TEXTNODE;
+}
 
 export default function testElement(tree: VirtualElement, path: Path, token: ElementToken){
   let elem = travelTree(tree, path);
+  if (isTextNode(elem)){
+    return false;
+  }
   switch(token.type){
     case TokenType.universal: return true;
     case TokenType.tag: return elem.type === token.name;
@@ -21,16 +29,19 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
         }
       }
     }
-    case TokenType.pseudo:
+    case TokenType.pseudo: {
+      const parent = path.length > 0 ? travelTree(tree, path.slice(0, path.length - 1)) as HTMLElement : null;
+      const nonTextIndexes = parent ? parent.children.map((c,n) => n).filter(n => parent.children[n].type !== TEXTNODE) : [0];
+      const elemPos = path.length === 0 ? 0 : path[path.length-1];
+      const elemNonTextPos = nonTextIndexes.indexOf(elemPos);
       switch(token.name){
-        case PseudoName.firstChild: return path.length === 0 || path[path.length-1] === 0;
-        case PseudoName.lastChild: return path.length === 0 || path[path.length-1] === travelTree(tree, path.slice(0, path.length - 1)).children.length - 1;
+        case PseudoName.firstChild: return nonTextIndexes[0] === elemPos;
+        case PseudoName.lastChild: return nonTextIndexes[nonTextIndexes.length-1] === elemPos;
         case PseudoName.firstOfType: {
           if (!path.length) {
             return true;
           } else {
-            const siblingPos = path[path.length - 1];
-            const olderSiblings = travelTree(tree, path.slice(0, path.length - 1)).children.slice(0,siblingPos);
+            const olderSiblings = parent.children.slice(0,elemPos);
             return olderSiblings.filter(s => s.type === elem.type).length === 0;
           }
         }
@@ -39,7 +50,7 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
             return true;
           } else {
             const siblingPos = path[path.length - 1];
-            const youngerSiblings = travelTree(tree, path.slice(0, path.length - 1)).children.slice(siblingPos + 1);
+            const youngerSiblings = parent.children.slice(siblingPos + 1);
             return youngerSiblings.filter(s => s.type === elem.type).length === 0;
           }
         }
@@ -47,27 +58,26 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
           if (!path.length) {
             return true;
           } else {
-            const siblings = travelTree(tree, path.slice(0, path.length - 1)).children;
+            const siblings = parent.children;
             return siblings.filter(s => s.type === elem.type).length === 1;
           }
         }
         case PseudoName.empty: return !elem.children || elem.children.length === 0;
         case PseudoName.nthChild: {
           let formula = (<PseudoToken>token).data;
-          let pos = path.length ? path[path.length-1] : 0;
-          return matchPosition(pos, formula);
+          return matchPosition(elemNonTextPos, formula);
         }
         case PseudoName.nthOfType: {
           let formula = (<PseudoToken>token).data;
           let pos = 0;
           if (path.length){
-            let parent = travelTree(tree, path.slice(0, path.length-1))
-            pos = travelTree(tree, path.slice(0, path.length-1)).children.filter(c => c.type === elem.type).indexOf(elem);
+            pos = parent.children.filter(c => c.type === elem.type).indexOf(elem);
           }
           return matchPosition(pos, formula);
         }
         default: throw "Unknown pseudo name: " + token.name;
       }
+    }
   }
 }
 
