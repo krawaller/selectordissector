@@ -42,7 +42,7 @@ export const formStyles = {
 export const historyStyles = {
   container: {},
   button: {
-    width: '100px',
+    width: '120px',
     display: 'inline-block'
   },
   activeButton: {
