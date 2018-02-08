@@ -31,16 +31,23 @@ test('Sibling combinator yields correct matches', t => {
     ],
     [
       [0,2],
-      [
-        [0,0],
-        [0,1],
-      ],
-      'youngest sibling yields all older siblings'
+      [],
+      'youngest sibling yields nothing'
     ],
     [
       [0,0],
-      [],
-      'oldest sibling yields nothing '
+      [
+        [0,1],
+        [0,2],
+      ],
+      'oldest sibling yields all younger sibling '
+    ],
+    [
+      [0,1],
+      [
+        [0,2]
+      ],
+      'middle sibling yields younger sibling'
     ]
   ];
   const siblingCombinator: SiblingToken = {type: TokenType.sibling};

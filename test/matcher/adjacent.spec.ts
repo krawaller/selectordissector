@@ -31,15 +31,15 @@ test('Adjacent combinator yields correct matches', t => {
     ],
     [
       [0,2],
-      [
-        [0,1],
-      ],
-      'youngest sibling yields closest older siblings'
+      [],
+      'youngest sibling yields nothing'
     ],
     [
       [0,0],
-      [],
-      'oldest sibling yields nothing '
+      [
+        [0,1]
+      ],
+      'oldest sibling yields middle sibling '
     ]
   ];
   const adjacentCombinator: AdjacentToken = {type: TokenType.adjacent};

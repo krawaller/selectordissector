@@ -10,10 +10,28 @@ export default function combineFromPath(tree: VirtualElement, path: number[], to
       return (travelTree(tree, path).children || []).map((c,i) => path.concat(i))
     }
     case TokenType.adjacent: {
-      return path[path.length-1] ? [path.slice(0,path.length-1).concat( path[path.length-1] - 1)] : [];
+      if (!path.length){
+        return [];
+      } else {
+        const pos = path[path.length-1];
+        const tail = path.slice(0,path.length-1);
+        const siblingCount = travelTree(tree, tail).children.length; // TODO - filter textnodes?
+        if (siblingCount === pos + 1){
+          return [];
+        } else {
+          return [tail.concat(pos+1)];
+        }
+      }
     }
     case TokenType.sibling: {
-      return Array.from(Array(path[path.length-1]||0).keys()).map(n => path.slice(0,path.length-1).concat(n));
+      if (!path.length){
+        return [];
+      } else {
+        const pos = path[path.length-1];
+        const tail = path.slice(0,path.length-1);
+        const youngerSiblings = travelTree(tree, tail).children.slice(pos+1); // TODO - filter textnodes?
+        return youngerSiblings.map((c,n) => tail.concat(n+pos+1));
+      }
     }
   }
 }
