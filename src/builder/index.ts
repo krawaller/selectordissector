@@ -59,3 +59,5 @@ export const span = builderFactory('span');
 export const p = builderFactory('p');
 export const strong = builderFactory('strong');
 export const h1 = builderFactory('h1');
+export const ul = builderFactory('ul');
+export const li = builderFactory('li');

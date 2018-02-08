@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Factory, {div, span, p, strong, h1} from '../../builder';
+import Factory, {div, span, p, strong, h1, ul, li} from '../../builder';
 import Element from './element';
 import Form from './form';
 import {mainStyles} from '../styles';
@@ -14,7 +14,12 @@ const tree = div({lang:'sv'},[
   h1('Wow this is cool'),
   div([
     p('yeah, well, hihi!'),
-    p('etc etc.')
+    p('etc etc.'),
+    ul([
+      li('make the bed'),
+      li({class:'important'}, strong('DO THE DISHES')),
+      li('take out trash')
+    ])
   ])
 ]);
 
