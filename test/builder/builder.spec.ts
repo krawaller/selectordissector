@@ -1,6 +1,6 @@
 import * as test from 'tape';
 
-import {VirtualElement} from '../../src/types';
+import {VirtualElement, ContentNode} from '../../src/types';
 import builderFactory, {isElem, TEXTNODE, div} from '../../src/builder';
 
 test('The isElem tester', t => {
@@ -14,7 +14,7 @@ const txt = str => ({type: TEXTNODE, content: str});
 test('The builder factory', t => {
   const p = builderFactory('p');
   const strong = builderFactory('strong');
-  type TestCase = [VirtualElement, VirtualElement, string];
+  type TestCase = [ContentNode, ContentNode, string];
   const builds: TestCase[] = [
     [
       p('moop'),

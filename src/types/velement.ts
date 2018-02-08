@@ -1,11 +1,11 @@
 import {TEXTNODE} from '../builder';
 
-export type HTMLElement = {
+export type ContentNode = {
   type: string
   attrs?: {
     [attrName: string]: string | null
   }
-  children?: VirtualElement[],
+  children?: VirtualElement[]
 };
 
 export type TextNode = {
@@ -13,4 +13,4 @@ export type TextNode = {
   content: string
 };
 
-export type VirtualElement = HTMLElement | TextNode;
+export type VirtualElement = ContentNode | TextNode;

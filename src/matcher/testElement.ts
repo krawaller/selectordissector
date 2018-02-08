@@ -1,12 +1,8 @@
-import {ElementToken, PseudoToken, VirtualElement, Path, TokenType, PseudoName, AttributeAction, FormulaType, TextNode, HTMLElement} from '../types';
+import {ElementToken, PseudoToken, VirtualElement, Path, TokenType, PseudoName, AttributeAction, FormulaType, TextNode, ContentNode} from '../types';
 import {travelTree, classifyFormula} from '../helpers';
-import {TEXTNODE} from '../builder';
+import {TEXTNODE, isTextNode} from '../builder';
 
-function isTextNode(elem): elem is TextNode {
-  return elem.type === TEXTNODE;
-}
-
-export default function testElement(tree: VirtualElement, path: Path, token: ElementToken){
+export default function testElement(tree: ContentNode, path: Path, token: ElementToken){
   let elem = travelTree(tree, path);
   if (isTextNode(elem)){
     return false;
@@ -30,7 +26,7 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
       }
     }
     case TokenType.pseudo: {
-      const parent = path.length > 0 ? travelTree(tree, path.slice(0, path.length - 1)) as HTMLElement : null;
+      const parent = path.length > 0 ? travelTree(tree, path.slice(0, path.length - 1)) as ContentNode : null;
       const nonTextIndexes = parent ? parent.children.map((c,n) => n).filter(n => parent.children[n].type !== TEXTNODE) : [0];
       const elemPos = path.length === 0 ? 0 : path[path.length-1];
       const elemNonTextPos = nonTextIndexes.indexOf(elemPos);

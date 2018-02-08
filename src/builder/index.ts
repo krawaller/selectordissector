@@ -1,4 +1,4 @@
-import {VirtualElement} from '../types';
+import {VirtualElement,TextNode,ContentNode} from '../types';
 
 const elemProto = {};
 
@@ -8,11 +8,15 @@ type ChildList = Child[];
 type AttrParamType = {[key:string]: string};
 type ChildrenParamType = Child[] | Child | string;
 
-type Builder = (a?: AttrParamType | ChildrenParamType, c?: ChildrenParamType) => VirtualElement;
+type Builder = (a?: AttrParamType | ChildrenParamType, c?: ChildrenParamType) => ContentNode;
 
 type Factory = (type: string) => Builder;
 
-export const TEXTNODE = Symbol('textnode');
+export const TEXTNODE: '__TEXTNODE__' = '__TEXTNODE__'; // Used to have symbol, but TypeScript isnt good with those
+
+export function isTextNode(elem): elem is TextNode {
+  return elem.type === TEXTNODE;
+}
 
 const builderFactory: Factory = type => (attrParam = {}, childrenParam = []) => {
   let children: Child[];
@@ -30,9 +34,12 @@ const builderFactory: Factory = type => (attrParam = {}, childrenParam = []) => 
   } else {
     children = childrenParam;
   }
-  children = children.map(c => typeof c === 'function' ? c() : typeof c === 'string' ? {type: TEXTNODE, content: c} : c);
   // add elemProto so that we can identify objects as elements in the isElem function
-  return Object.assign(Object.create(elemProto),{ type, attrs: attrParam, children });
+  return Object.assign(Object.create(elemProto),{
+    type,
+    attrs: attrParam,
+    children: children.map(c => typeof c === 'function' ? c() : typeof c === 'string' ? {type: TEXTNODE, content: c} : c)
+  });
 };
 
 export default builderFactory;

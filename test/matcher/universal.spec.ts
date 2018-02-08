@@ -1,6 +1,6 @@
 import * as test from 'tape';
 
-import {VirtualElement, UniversalToken, TokenType} from '../../src/types';
+import {VirtualElement, UniversalToken, TokenType, ContentNode} from '../../src/types';
 import {div,span} from '../../src/builder';
 import matcher from '../../src/matcher';
 

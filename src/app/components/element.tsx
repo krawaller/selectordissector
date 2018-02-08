@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import {VirtualElement, Path, Collection} from '../../types';
+import {ContentNode, VirtualElement, TextNode, Path, Collection} from '../../types';
 import {collContainsPath} from '../../helpers';
+import {isTextNode} from '../../builder';
 import {elemStyles as s, merge} from '../styles';
 
 type ElementProps = {
@@ -15,9 +16,14 @@ const Element: React.StatelessComponent<ElementProps> = ({indent=0,elem,currColl
   let styles = s.element;
   if (indent > 0) styles = merge(styles, s.child);
   const matched = collContainsPath(currColl, path);
-  if (elem.content){
+  if (isTextNode(elem)){
     return (
-      <div><div style={merge(styles, s.singleLine, s.mayMatch, matched && s.matched)}><StartTag elem={elem}/>{elem.content}<EndTag elem={elem}/></div></div>
+      <div><div style={merge(styles, s.singleLine)}>{elem.content}</div></div>
+    );
+  } else if(elem.children.length === 1 && isTextNode(elem.children[0])) {
+    const child = elem.children[0] as TextNode;
+    return (
+      <div><div style={merge(styles, s.singleLine, s.mayMatch, matched && s.matched)}><StartTag elem={elem}/>{child.content}<EndTag elem={elem}/></div></div>
     );
   } else if (!elem.children || !elem.children.length){
     return (
@@ -37,7 +43,7 @@ const Element: React.StatelessComponent<ElementProps> = ({indent=0,elem,currColl
 export default Element;
 
 type TagType = {
-  elem: VirtualElement
+  elem: ContentNode
   matched?: boolean
   mayMatch?: boolean
 }

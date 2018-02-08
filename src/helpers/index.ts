@@ -1,4 +1,6 @@
-import {VirtualElement, QueryToken, CombinatorToken, Path, Collection, TokenType, FormulaType, FormulaClassification} from '../types';
+import {VirtualElement, ContentNode, QueryToken, CombinatorToken, Path, Collection, TokenType, FormulaType, FormulaClassification} from '../types';
+
+import {isTextNode} from '../builder';
 
 export function isCombinator(token: QueryToken): token is CombinatorToken {
   return token && [
@@ -8,7 +10,7 @@ export function isCombinator(token: QueryToken): token is CombinatorToken {
 
 export function getDescendantPaths(tree, path: Path, skipStart = false): Collection {
   let elem = travelTree(tree, path);
-  if (!elem.children || !elem.children.length){
+  if (isTextNode(elem) || !elem.children.length){
     return skipStart ? [] : [path];
   } else {
     return elem.children.reduce((mem, child, i) => {
@@ -17,11 +19,11 @@ export function getDescendantPaths(tree, path: Path, skipStart = false): Collect
   }
 }
 
-export function travelTree(tree: VirtualElement, path: Path){
+export function travelTree(tree: ContentNode, path: Path){
   const remaining = path.slice();
   let elem = tree;
   while(remaining.length){
-    elem = elem.children[ remaining.shift() ];
+    elem = elem.children[ remaining.shift() ] as ContentNode;
   }
   return elem;
 }
