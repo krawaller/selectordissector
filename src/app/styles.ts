@@ -39,6 +39,18 @@ export const formStyles = {
   button: {},
 };
 
+export const historyStyles = {
+  container: {},
+  button: {
+    width: '100px',
+    display: 'inline-block'
+  },
+  activeButton: {
+    boxShadow: 'inset 1px 1px 10px #333'
+  },
+  description: {}
+};
+
 export const mainStyles = {
   container: {}
 };
