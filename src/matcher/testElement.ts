@@ -1,5 +1,5 @@
-import {ElementToken, PseudoToken, VirtualElement, Path, TokenType, PseudoName, AttributeAction} from '../types';
-import {travelTree, matchPosition} from '../helpers';
+import {ElementToken, PseudoToken, VirtualElement, Path, TokenType, PseudoName, AttributeAction, FormulaType} from '../types';
+import {travelTree, classifyFormula} from '../helpers';
 
 export default function testElement(tree: VirtualElement, path: Path, token: ElementToken){
   let elem = travelTree(tree, path);
@@ -68,5 +68,48 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
         }
         default: throw "Unknown pseudo name: " + token.name;
       }
+  }
+}
+
+export function matchPosition(pos: number, formula: string){
+  const classification = classifyFormula(formula);
+  switch(classification[0]){
+    case FormulaType.negAndOffset: {
+      let max = +classification[1];
+      return pos < max;
+    }
+    case FormulaType.exact: {
+      let n = +classification[1];
+      return pos === n - 1;
+    }
+    case FormulaType.multAndPosOffset: {
+      let multiplier = +classification[1];
+      let offset = +classification[2];
+      let n = (pos + 1 - offset) / multiplier;
+      return n === Math.floor(n);
+    }
+    case FormulaType.multAndNegOffset: {
+      let multiplier = +classification[1];
+      let offset = +classification[2] * -1;
+      let n = (pos + 1 - offset) / multiplier;
+      return n === Math.floor(n);
+    }
+    case FormulaType.mult: {
+      let multiplier = +classification[1];
+      let n = (pos + 1) / multiplier;
+      return n === Math.floor(n);
+    }
+    case FormulaType.even: {
+      let multiplier = 2;
+      let n = (pos + 1) / multiplier;
+      return n === Math.floor(n);
+    }
+    case FormulaType.odd: {
+      let multiplier = 2;
+      let offset = 1;
+      let n = (pos + 1 + offset) / multiplier;
+      return n === Math.floor(n);
+    }
+    default: throw "Unknown formula type: " + FormulaType;
   }
 }

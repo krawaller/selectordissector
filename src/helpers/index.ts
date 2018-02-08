@@ -1,4 +1,4 @@
-import {VirtualElement, QueryToken, CombinatorToken, Path, Collection, TokenType} from '../types';
+import {VirtualElement, QueryToken, CombinatorToken, Path, Collection, TokenType, FormulaType, FormulaClassification} from '../types';
 
 export function isCombinator(token: QueryToken): token is CombinatorToken {
   return token && [
@@ -30,38 +30,29 @@ export function collContainsPath(coll: Collection, path: Path): boolean {
   return coll.map(p => p.join('-')).indexOf(path.join('-')) > -1;
 }
 
-export function matchPosition(pos: number, formula: string){
+export function classifyFormula(formula: string): FormulaClassification {
   let match;
-  if ((match = formula.match(/^-n\+([0-9]+)$/))){
-    let max = match[1];
-    return pos < max;
-  } else if ((match = formula.match(/^[0-9]+$/))){
-    let n = +formula;
-    return pos === n - 1;
-  } else if ((match = formula.match(/^([0-9]+)n\+([0-9]+)$/))){
+  if ((match = formula.match(/^-n\+([0-9]+)$/))){ // -n+2
+    let max = +match[1];
+    return [FormulaType.negAndOffset, match[1]];
+  } else if ((match = formula.match(/^[1-9][0-9]*$/))){ // 5
+    return [FormulaType.exact, +formula];
+  } else if ((match = formula.match(/^([0-9]+)n\+([0-9]+)$/))){ // 2n+3
     let multiplier = +match[1];
     let offset = +match[2];
-    let n = (pos + 1 - offset) / multiplier;
-    return n === Math.floor(n);
-  } else if ((match = formula.match(/^([0-9]+)n\-([0-9]+)$/))){
+    return [FormulaType.multAndPosOffset, multiplier, offset];
+  } else if ((match = formula.match(/^([0-9]+)n\-([0-9]+)$/))){ // 2n-3
     let multiplier = +match[1];
     let offset = +match[2] * -1;
-    let n = (pos + 1 - offset) / multiplier;
-    return n === Math.floor(n);
-  } else if ((match = formula.match(/^([0-9]+)n$/))){
+    return [FormulaType.multAndNegOffset, multiplier, offset];
+  } else if ((match = formula.match(/^([0-9]+)n$/))){ // 5n
     let multiplier = +match[1];
-    let n = (pos + 1) / multiplier;
-    return n === Math.floor(n);
+    return [FormulaType.mult, multiplier];
   } else if (formula === 'even'){
-    let multiplier = 2;
-    let n = (pos + 1) / multiplier;
-    return n === Math.floor(n);
+    return [FormulaType.even];
   } else if (formula === 'odd'){
-    let multiplier = 2;
-    let offset = 1;
-    let n = (pos + 1 + offset) / multiplier;
-    return n === Math.floor(n);
+    return [FormulaType.odd];
   } else {
-    throw "Unknown formula! " + formula;
+    return [FormulaType.unknown];
   }
 }

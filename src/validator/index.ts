@@ -1,6 +1,6 @@
 import parser from '../parser';
-import {QueryToken, TokenType, PseudoName, Path} from '../types';
-import {isCombinator, matchPosition} from '../helpers';
+import {QueryToken, TokenType, PseudoName, Path, FormulaType} from '../types';
+import {isCombinator, classifyFormula} from '../helpers';
 
 export enum QueryError {
   parseError = 'parseError',
@@ -13,10 +13,13 @@ export enum QueryError {
   unknownPseudoSelector = 'unknownPseudoSelector',
   nthOfTypeDataError = 'nthOfTypeDataError',
   unImplemented = 'unImplemented',
-  faultyFormula = 'faultyFormula'
+  faultyFormula = 'faultyFormula',
+  missingParens = 'missingParens',
+  extraneousParens = 'extraneousParens'
 }
 
 const usesFormula = [PseudoName.nthChild, PseudoName.nthOfType];
+const needsParens = [PseudoName.nthChild, PseudoName.nthOfType];
 
 const unImplementedPseudos = [PseudoName.not];
 
@@ -69,13 +72,16 @@ function val(context: Context){
     return fail(QueryError.adjacentCombinators, context);
   }
 
+  if (token.type === TokenType.pseudo && needsParens.indexOf(token.name) > -1 && token.data === null){
+    return fail(QueryError.missingParens, context);
+  }
+
+  if (token.type === TokenType.pseudo && needsParens.indexOf(token.name) === -1 && token.data !== null){
+    return fail(QueryError.extraneousParens, context);
+  }
+
   if (token.type === TokenType.pseudo && usesFormula.indexOf(token.name) > -1){
-    try {
-      matchPosition(0, token.data);
-    } catch(e) {
-      return fail(QueryError.faultyFormula, context);
-    }
-    if (token.data === '0'){
+    if (classifyFormula(token.data)[0] === FormulaType.unknown){
       return fail(QueryError.faultyFormula, context);
     }
   }
