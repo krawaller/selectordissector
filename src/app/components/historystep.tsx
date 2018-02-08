@@ -35,7 +35,7 @@ function print(token: QueryToken): string {
   switch(token.type){
     case TokenType.tag: return (token as TagToken).name;
     case TokenType.universal: return '*';
-    case TokenType.start: return 'S';
+    case TokenType.start: return 'START';
     case TokenType.child: return '>';
     case TokenType.descendant: return '_';
     case TokenType.attribute: {
@@ -49,23 +49,23 @@ function print(token: QueryToken): string {
     }
     case TokenType.adjacent: return '+';
     case TokenType.sibling: return '~';
-    case TokenType.pseudo: return `:${token.name}`;
+    case TokenType.pseudo: return `:${token.name}` + (token.data ? `(${token.data})` : '')
   }
 }
 
 function describe(token: QueryToken): string {
   switch(token.type){
     case TokenType.start: return `Start with all elements in the entire document.`;
-    case TokenType.tag: return `Keep only the elements where the type is "${(token as TagToken).name}.`
+    case TokenType.tag: return `Keep only the elements where the type is "${(token as TagToken).name}".`
     case TokenType.universal: return `Keep all of those elements.`;
     case TokenType.child: return `Now take all children of those elements.`;
     case TokenType.descendant: return `Now take all descendants of those elements.`;
     case TokenType.attribute: {
       let t = token as AttributeToken;
       switch(t.action){
-        case AttributeAction.element: return `Keep all elements that have the class "${t.name}".`;
+        case AttributeAction.element: return `Keep all elements where the "class" attribute contains the word "${t.value}".`;
         case AttributeAction.exists: return `Keep all elements that have the attribute "${t.name}".`;
-        case AttributeAction.equals: return `Keep all elements where the attribute "${t.name}" equals "${t.value}]".`;
+        case AttributeAction.equals: return `Keep all elements where the attribute "${t.name}" equals "${t.value}".`;
         default: `[[[ description for this type not created yet, sorry ]]]`
       }
     }
