@@ -43,7 +43,8 @@ export const historyStyles = {
   container: {},
   button: {
     width: '120px',
-    display: 'inline-block'
+    display: 'inline-block',
+    marginRight: '5px'
   },
   activeButton: {
     boxShadow: 'inset 1px 1px 10px #333'
