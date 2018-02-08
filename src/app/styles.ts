@@ -23,7 +23,11 @@ export const elemStyles = {
     paddingRight: '2px'
   },
   ownLineEndTag: {
-    opacity: 0.4
+    //opacity: 0.4
+  },
+  text: {
+    //fontStyle: 'italic' as 'italic',
+    //color: '#777'
   }
 };
 

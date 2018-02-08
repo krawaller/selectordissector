@@ -18,12 +18,12 @@ const Element: React.StatelessComponent<ElementProps> = ({indent=0,elem,currColl
   const matched = collContainsPath(currColl, path);
   if (isTextNode(elem)){
     return (
-      <div><div style={merge(styles, s.singleLine)}>{elem.content}</div></div>
+      <div><div style={merge(styles, s.singleLine)}><span style={s.text}>{elem.content}</span></div></div>
     );
   } else if(elem.children.length === 1 && isTextNode(elem.children[0])) {
     const child = elem.children[0] as TextNode;
     return (
-      <div><div style={merge(styles, s.singleLine, s.mayMatch, matched && s.matched)}><StartTag elem={elem}/>{child.content}<EndTag elem={elem}/></div></div>
+      <div><div style={merge(styles, s.singleLine, s.mayMatch, matched && s.matched)}><StartTag elem={elem}/><span style={s.text}>{child.content}</span><EndTag elem={elem}/></div></div>
     );
   } else if (!elem.children || !elem.children.length){
     return (

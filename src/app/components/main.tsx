@@ -14,7 +14,8 @@ const tree = div({lang:'sv'},[
   h1('Wow this is cool'),
   div([
     p('yeah, well, hihi!'),
-    p('etc etc.'),
+    p(['This is',strong('really'),'dumb!']),
+    Factory('hr')(),
     ul([
       li('make the bed'),
       li({class:'important'}, strong('DO THE DISHES')),
