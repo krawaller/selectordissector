@@ -1,17 +1,18 @@
 import {VirtualElement} from '../types';
 
-type Attrs = {[key:string]: string};
-
 const elemProto = {};
-const builderWatermark = Symbol('builder');
 
-type Child = VirtualElement | Builder;
+type Child = VirtualElement | Builder | string;
 type ChildList = Child[];
-type ChildrenType = Child[] | Child | string;
 
-type Builder = (a?: Attrs | ChildrenType, c?: ChildrenType) => VirtualElement;
+type AttrParamType = {[key:string]: string};
+type ChildrenParamType = Child[] | Child | string;
+
+type Builder = (a?: AttrParamType | ChildrenParamType, c?: ChildrenParamType) => VirtualElement;
 
 type Factory = (type: string) => Builder;
+
+export const TEXTNODE = Symbol('textnode');
 
 const builderFactory: Factory = type => (attrParam = {}, childrenParam = []) => {
   let children: Child[];
@@ -21,8 +22,7 @@ const builderFactory: Factory = type => (attrParam = {}, childrenParam = []) => 
     attrParam = {};
   }
   if (typeof childrenParam === 'string'){
-    content = childrenParam;
-    children = [];
+    children = [{type: TEXTNODE, content: childrenParam}];
   } else if(isElem(childrenParam)) {
     children = [childrenParam];
   } else if (typeof childrenParam === 'function') {
@@ -30,10 +30,9 @@ const builderFactory: Factory = type => (attrParam = {}, childrenParam = []) => 
   } else {
     children = childrenParam;
   }
-  content = content || '';
-  children = children.map(c => typeof c === 'function' ? c() : c);
+  children = children.map(c => typeof c === 'function' ? c() : typeof c === 'string' ? {type: TEXTNODE, content: c} : c);
   // add elemProto so that we can identify objects as elements in the isElem function
-  return Object.assign(Object.create(elemProto),{ type, attrs: attrParam, children, content });
+  return Object.assign(Object.create(elemProto),{ type, attrs: attrParam, children });
 };
 
 export default builderFactory;
