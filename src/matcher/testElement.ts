@@ -75,6 +75,9 @@ export default function testElement(tree: VirtualElement, path: Path, token: Ele
           }
           return matchPosition(pos, formula);
         }
+        case PseudoName.onlyChild: {
+          return nonTextIndexes.length === 1;
+        }
         default: throw "Unknown pseudo name: " + token.name;
       }
     }
