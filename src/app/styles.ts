@@ -59,7 +59,10 @@ export const historyStyles = {
 };
 
 export const mainStyles = {
-  container: {}
+  container: {},
+  link: {
+    color: 'white'
+  }
 };
 
 export const merge = (...objs) => Object.assign.apply(Object,[{}].concat(objs));

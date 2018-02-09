@@ -17,6 +17,7 @@ import {
   Toolbar,
   ToolbarRow,
   ToolbarTitle,
+  ToolbarSection
 } from 'rmwc/Toolbar';
 import { TextField } from 'rmwc/TextField';
 import { FormField } from 'rmwc/FormField';
@@ -93,6 +94,9 @@ export default class Main extends React.Component<{}, MainState> {
         <Toolbar>
           <ToolbarRow>
             <ToolbarTitle>Selector Dissector</ToolbarTitle>
+            <ToolbarSection alignEnd>
+              <Typography use="caption">Crafted with &hearts; by <a style={mainStyles.link} href="http://edument.se?ref=seldis">Edument</a></Typography>
+            </ToolbarSection>
           </ToolbarRow>
         </Toolbar>
         <div className="content">
