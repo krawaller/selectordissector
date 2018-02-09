@@ -30,7 +30,6 @@ export enum QueryError {
   isPseudoSelector = 'isPseudoSelector',
   hasPseudoSelector = 'hasPseudoSelector',
   unknownPseudoSelector = 'unknownPseudoSelector',
-  nthOfTypeDataError = 'nthOfTypeDataError',
   unImplemented = 'unImplemented',
   faultyFormula = 'faultyFormula',
   missingParens = 'missingParens',
