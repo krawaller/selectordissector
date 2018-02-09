@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import {historyStyles, merge} from '../styles';
-
 import { QueryToken, Collection, TokenType, AttributeAction, AttributeToken, TagToken, PseudoName, FormulaType } from '../../types';
 import { classifyFormula } from '../../helpers';
 
@@ -24,7 +22,6 @@ type HistoryStepProps = {
 };
 
 const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, token, coll, idx, selIdx}) => {
-  const s = historyStyles;
   const handler = ()=>{
     if (idx > selIdx) callback(idx);
     else if (idx < selIdx) callback (idx)
@@ -32,14 +29,7 @@ const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, toke
     else callback(0)
   }
   return (
-    <SimpleListItem onClick={handler} graphic={idx <= selIdx && s.activeButton ? 'check_box' : 'check_box_outline_blank'} text={print(token)} secondaryText={describe(token)} />
-
-
-
-    // <div style={s.container}>
-    //   <button onClick={handler} style={merge(s.button, idx <= selIdx && s.activeButton)}>{print(token)}</button>
-    //   <span style={s.description}>{describe(token)}</span>
-    // </div>
+    <SimpleListItem onClick={handler} graphic={idx <= selIdx ? 'check_box' : 'check_box_outline_blank'} text={print(token)} secondaryText={describe(token)} />
   );
 };
 
