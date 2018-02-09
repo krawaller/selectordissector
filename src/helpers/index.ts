@@ -33,10 +33,10 @@ export function travelTree(tree: ContentNode, path: Path){
   return elem;
 }
 
-export function travelArray(arr: any[], path: Path){
-  let ret;
+export function travelArray(arr: any[], path: Path): any{
+  let ret = arr;
   while (path.length){
-    ret = arr[path.shift()];
+    ret = ret[path.shift()];
   }
   return ret;
 }
