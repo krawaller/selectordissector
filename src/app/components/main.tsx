@@ -11,7 +11,7 @@ import {mainStyles} from '../styles';
 import parser from '../../parser';
 import matcher from '../../matcher';
 import validator from '../../validator';
-import {getDescendantPaths} from '../../helpers';
+import {getDescendantPaths, describeError} from '../../helpers';
 
 import {
   Toolbar,
@@ -70,7 +70,7 @@ export default class Main extends React.Component<{}, MainState> {
       });
     } else {
       this.setState({
-        message: 'Error! ' + valError[0] + (valError[1] ? ' (' + valError[1] + ')' : ''),
+        message: describeError(valError[0]), // 'Error! ' + valError[0] + (valError[1] ? ' (' + valError[1] + ')' : ''),
         selectorTokens: [],
         idx: 0
       });

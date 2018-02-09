@@ -5,6 +5,7 @@ import {isTextNode} from '../builder';
 export * from './describeToken';
 export * from './printToken';
 export * from './classifyFormula';
+export * from './describeError';
 
 export function isCombinatorToken(token: QueryToken): token is CombinatorToken {
   return token && [
