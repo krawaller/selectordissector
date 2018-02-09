@@ -1,6 +1,6 @@
 import parser from '../parser';
 import {QueryToken, TokenType, PseudoName, Path, FormulaType} from '../types';
-import {isCombinator, classifyFormula} from '../helpers';
+import {isCombinatorToken, classifyFormula} from '../helpers';
 
 export enum QueryError {
   parseError = 'parseError',
@@ -60,15 +60,15 @@ function val(context: Context){
     return fail(QueryError.hasPseudoSelector, context);
   }
 
-  if (context.remaining.length === 1 && isCombinator(token)){
+  if (context.remaining.length === 1 && isCombinatorToken(token)){
     return fail(QueryError.endingCombinator, context);
   }
 
-  if (context.pos === 0 && isCombinator(token)){
+  if (context.pos === 0 && isCombinatorToken(token)){
     return fail(QueryError.leadingCombinator, context);
   }
 
-  if (isCombinator(token) && isCombinator(context.previous)){
+  if (isCombinatorToken(token) && isCombinatorToken(context.previous)){
     return fail(QueryError.adjacentCombinators, context);
   }
 

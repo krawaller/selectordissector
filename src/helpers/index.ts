@@ -2,7 +2,7 @@ import {TagToken, AttributeToken, AttributeAction, PseudoName, VirtualElement, C
 
 import {isTextNode} from '../builder';
 
-export function isCombinator(token: QueryToken): token is CombinatorToken {
+export function isCombinatorToken(token: QueryToken): token is CombinatorToken {
   return token && [
     TokenType.adjacent, TokenType.sibling, TokenType.child, TokenType.descendant, TokenType.parent
   ].indexOf(token.type) > -1;

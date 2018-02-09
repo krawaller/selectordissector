@@ -1,7 +1,7 @@
 import {ContentNode, VirtualElement, QueryToken, CombinatorToken, ElementToken, PseudoToken, Path, Collection} from '../types';
 import {isTextNode} from '../builder';
 
-import {isCombinator} from '../helpers';
+import {isCombinatorToken} from '../helpers';
 
 import testElement from './testElement';
 import combineFromPath from './combineFromPath';
@@ -10,7 +10,7 @@ export default function matcher(tree: VirtualElement, collection: Collection, to
   if (isTextNode(tree)){
     return [];
   }
-  return isCombinator(token)
+  return isCombinatorToken(token)
     ? collection.reduce((mem, path) => {
         let res = combineFromPath(tree, path, token as CombinatorToken);
         return mem.concat(res);
