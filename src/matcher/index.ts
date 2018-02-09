@@ -6,7 +6,7 @@ import {isCombinator} from '../helpers';
 import testElement from './testElement';
 import combineFromPath from './combineFromPath';
 
-export default function matcher(tree: VirtualElement, collection: Collection, token: QueryToken) {
+export default function matcher(tree: VirtualElement, collection: Collection, token: QueryToken): Collection {
   if (isTextNode(tree)){
     return [];
   }
