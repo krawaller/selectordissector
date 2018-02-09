@@ -3,20 +3,6 @@ import * as test from 'tape';
 import {Path, QueryError} from '../../src/types';
 import validator from '../../src/validator';
 
-test(`Experimental pseudo selectors aren't allowed`, t => {
-  type TestCase = [string, QueryError, Path];
-  const experimental: TestCase[] = [
-    ['div p span:is(.foo)', QueryError.isPseudoSelector, [5]],
-    ['p > span:has(.foo)', QueryError.hasPseudoSelector, [3]]
-  ];
-  experimental.forEach(([query, error, position]) => t.deepEqual(
-    validator(query),
-    [error, position],
-    `Query ${query} gives experimental selector error for position ${position}`
-  ));
-  t.end();
-});
-
 test(`missing argument parens are called out`, t => {
   type TestCase = [string, Path, string];
   const missing: TestCase[] = [
@@ -67,19 +53,6 @@ test(`unrecognized pseudo selectors are called out`, t => {
   nthCases.forEach(([query, position, description]) => t.deepEqual(
     validator(query),
     [QueryError.unknownPseudoSelector, position],
-    description
-  ));
-  t.end();
-});
-
-test(`unimplemented pseudo selectors are called out`, t => {
-  type TestCase = [string, Path, string];
-  const nthCases: TestCase[] = [
-    ['div span:not', [3], 'unimplemented pseudo :not is correctly called out'],
-  ];
-  nthCases.forEach(([query, position, description]) => t.deepEqual(
-    validator(query),
-    [QueryError.unImplemented, position],
     description
   ));
   t.end();

@@ -27,10 +27,7 @@ export enum QueryError {
   adjacentCombinators = 'adjacentCombinators',
   endingCombinator = 'endingCombinator',
   leadingCombinator = 'leadingCombinator',
-  isPseudoSelector = 'isPseudoSelector',
-  hasPseudoSelector = 'hasPseudoSelector',
   unknownPseudoSelector = 'unknownPseudoSelector',
-  unImplemented = 'unImplemented',
   faultyFormula = 'faultyFormula',
   missingParens = 'missingParens',
   extraneousParens = 'extraneousParens'

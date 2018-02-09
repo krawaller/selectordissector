@@ -5,8 +5,6 @@ import {isCombinatorToken, classifyFormula} from '../helpers';
 const usesFormula = [PseudoName.nthChild, PseudoName.nthOfType];
 const needsParens = [PseudoName.nthChild, PseudoName.nthOfType];
 
-const unImplementedPseudos = [PseudoName.not];
-
 type Context = {
   path: number[],
   pos: number,
@@ -28,20 +26,8 @@ function val(context: Context){
     return fail(QueryError.unknownPseudoSelector, context);
   }
 
-  if (token.type === TokenType.pseudo && unImplementedPseudos.indexOf(token.name) !== -1){
-    return fail(QueryError.unImplemented, context);
-  }
-
   if (token.type === TokenType.parent){
     return fail(QueryError.parentCombinator, context);
-  }
-
-  if (token.type === TokenType.pseudo && token.name === 'is'){
-    return fail(QueryError.isPseudoSelector, context);
-  }
-
-  if (token.type === TokenType.pseudo && token.name === 'has'){
-    return fail(QueryError.hasPseudoSelector, context);
   }
 
   if (context.remaining.length === 1 && isCombinatorToken(token)){
