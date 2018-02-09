@@ -1,15 +1,19 @@
 export const elemStyles = {
   matched: {
     color: 'white',
-    backgroundColor: 'green'
+    backgroundColor: '#A261FF',
+    borderColor: '#7400FF'
   },
   mayMatch: {
-    transition: 'color 1s ease, background-color 1s ease',
+    transition: 'color 0.5s ease-in-out, background-color 0.5s ease-in-out, border-color 0.5s ease-in-out',
   },
   element: {
     fontFamily: 'monospace',
-    marginBottom: '1px',
-    borderRadius: '5px'
+    borderRadius: '5px',
+    margin: '1px',
+    padding: '1px',
+    border: '1px solid transparent',
+    borderColor: 'transparent'
   },
   singleLine: {
     display: 'inline-block'
@@ -19,8 +23,10 @@ export const elemStyles = {
   },
   tag: {
     borderRadius: '5px',
-    paddingLeft: '2px',
-    paddingRight: '2px'
+    margin: '1px',
+    padding: '1px',
+    border: '1px solid transparent',
+    borderColor: 'transparent'
   },
   ownLineEndTag: {
     //opacity: 0.4

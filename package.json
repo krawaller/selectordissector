@@ -2,19 +2,20 @@
   "dependencies": {
     "css-what": "2.1.0",
     "react": "16.2.0",
-    "react-dom": "16.2.0"
+    "react-dom": "16.2.0",
+    "rmwc": "^1.1.2"
   },
   "devDependencies": {
-    "@types/tape": "4.2.31",
     "@types/react": "16.0.36",
     "@types/react-dom": "16.0.3",
+    "@types/tape": "4.2.31",
+    "fs-extra": "5.0.0",
     "tap-diff": "0.1.1",
     "tape": "4.8.0",
     "ts-loader": "3.4.0",
     "ts-node": "4.1.0",
     "tslint": "5.9.1",
     "typescript": "2.7.1",
-    "fs-extra": "5.0.0",
     "webpack": "3.10.0"
   },
   "scripts": {
