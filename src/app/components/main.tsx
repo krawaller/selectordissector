@@ -70,7 +70,7 @@ export default class Main extends React.Component<{}, MainState> {
       });
     } else {
       this.setState({
-        message: describeError(valError[0]), // 'Error! ' + valError[0] + (valError[1] ? ' (' + valError[1] + ')' : ''),
+        message: describeError(valError), // 'Error! ' + valError[0] + (valError[1] ? ' (' + valError[1] + ')' : ''),
         selectorTokens: [],
         idx: 0
       });

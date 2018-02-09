@@ -33,6 +33,14 @@ export function travelTree(tree: ContentNode, path: Path){
   return elem;
 }
 
+export function travelArray(arr: any[], path: Path){
+  let ret;
+  while (path.length){
+    ret = arr[path.shift()];
+  }
+  return ret;
+}
+
 export function collContainsPath(coll: Collection, path: Path): boolean {
   return coll.map(p => p.join('-')).indexOf(path.join('-')) > -1;
 }
