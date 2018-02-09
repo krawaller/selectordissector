@@ -84,7 +84,7 @@ export default class Main extends React.Component<{}, MainState> {
       const start: QueryToken = {type: TokenType.start};
       history = this.state.selectorTokens.reduce( (acc, token) => acc.concat({
         token: token,
-        coll: matcher(tree, acc[acc.length-1].coll, token)
+        coll: matcher(tree, acc[acc.length-1].coll, token).result
       }), [{token: start, coll: getDescendantPaths(tree, [])} as HistoryStep] );
       coll = history[this.state.idx].coll;
     }

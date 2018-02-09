@@ -36,3 +36,7 @@ export enum QueryError {
 export type ValidationDetailedError = [QueryError, QueryToken[], Path];
 
 export type ValidationError = [QueryError.parseError] | ValidationDetailedError;
+
+export type MatchResult = {
+  result: Collection
+};
