@@ -1,6 +1,7 @@
 import * as test from 'tape';
 
-import validator, {QueryError} from '../../src/validator';
+import {QueryError} from '../../src/types';
+import validator from '../../src/validator';
 
 test(`Experimental combinators aren't allowed`, t => {
   type TestCase = [string, QueryError, number[]];

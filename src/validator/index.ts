@@ -1,22 +1,6 @@
 import parser from '../parser';
-import {QueryToken, TokenType, PseudoName, Path, FormulaType} from '../types';
+import {QueryToken, TokenType, PseudoName, Path, FormulaType, QueryError} from '../types';
 import {isCombinatorToken, classifyFormula} from '../helpers';
-
-export enum QueryError {
-  parseError = 'parseError',
-  parentCombinator = 'parentCombinator',
-  adjacentCombinators = 'adjacentCombinators',
-  endingCombinator = 'endingCombinator',
-  leadingCombinator = 'leadingCombinator',
-  isPseudoSelector = 'isPseudoSelector',
-  hasPseudoSelector = 'hasPseudoSelector',
-  unknownPseudoSelector = 'unknownPseudoSelector',
-  nthOfTypeDataError = 'nthOfTypeDataError',
-  unImplemented = 'unImplemented',
-  faultyFormula = 'faultyFormula',
-  missingParens = 'missingParens',
-  extraneousParens = 'extraneousParens'
-}
 
 const usesFormula = [PseudoName.nthChild, PseudoName.nthOfType];
 const needsParens = [PseudoName.nthChild, PseudoName.nthOfType];

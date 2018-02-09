@@ -20,3 +20,19 @@ export enum FormulaType {
 }
 
 export type FormulaClassification = [FormulaType] | [FormulaType, number] | [FormulaType, number, number];
+
+export enum QueryError {
+  parseError = 'parseError',
+  parentCombinator = 'parentCombinator',
+  adjacentCombinators = 'adjacentCombinators',
+  endingCombinator = 'endingCombinator',
+  leadingCombinator = 'leadingCombinator',
+  isPseudoSelector = 'isPseudoSelector',
+  hasPseudoSelector = 'hasPseudoSelector',
+  unknownPseudoSelector = 'unknownPseudoSelector',
+  nthOfTypeDataError = 'nthOfTypeDataError',
+  unImplemented = 'unImplemented',
+  faultyFormula = 'faultyFormula',
+  missingParens = 'missingParens',
+  extraneousParens = 'extraneousParens'
+}

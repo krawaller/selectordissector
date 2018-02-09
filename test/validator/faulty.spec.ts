@@ -1,6 +1,7 @@
 import * as test from 'tape';
 
-import validator, {QueryError} from '../../src/validator';
+import {QueryError} from '../../src/types';
+import validator from '../../src/validator';
 
 test('Queries with syntax error yields error message', t => {
   const faulty = ['# poop # scoop #'];

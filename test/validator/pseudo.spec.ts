@@ -1,7 +1,7 @@
 import * as test from 'tape';
 
-import {Path} from '../../src/types';
-import validator, {QueryError} from '../../src/validator';
+import {Path, QueryError} from '../../src/types';
+import validator from '../../src/validator';
 
 test(`Experimental pseudo selectors aren't allowed`, t => {
   type TestCase = [string, QueryError, Path];

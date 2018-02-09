@@ -1,6 +1,7 @@
 import * as test from 'tape';
 
-import validator, {QueryError} from '../../src/validator';
+import {QueryError} from '../../src/types';
+import validator from '../../src/validator';
 
 test(`Correct queries don't yield error`, t => {
   const ok = ['div > p.foo', '*','p:first-of-type'];
