@@ -1,5 +1,5 @@
 import parser from '../parser';
-import {QueryToken, TokenType, PseudoName, Path, FormulaType, QueryError} from '../types';
+import {QueryToken, TokenType, PseudoName, Path, FormulaType, QueryError, ValidationError, ValidationDetailedError} from '../types';
 import {isCombinatorToken, classifyFormula} from '../helpers';
 
 const usesFormula = [PseudoName.nthChild, PseudoName.nthOfType];
@@ -9,14 +9,15 @@ type Context = {
   path: number[],
   pos: number,
   previous: QueryToken | null,
-  remaining: QueryToken[]
+  remaining: QueryToken[],
+  tokens: QueryToken[]
 }
 
-function fail(error: QueryError, context: Context){
-  return [error, context.path.concat(context.pos)];
+function fail(error: QueryError, context: Context): ValidationDetailedError {
+  return [error, context.tokens, context.path.concat(context.pos)];
 }
 
-function val(context: Context){
+function val(context: Context): ValidationError{
   if (context.remaining.length === 0) {
     return null;
   }
@@ -60,18 +61,20 @@ function val(context: Context){
     path: context.path,
     pos: context.pos + 1,
     previous: token,
-    remaining: context.remaining.slice(1)
+    remaining: context.remaining.slice(1),
+    tokens: context.tokens
   });
 }
 
-export default function validate(query: string) : [QueryError] | [QueryError, Path] | null {
+export default function validate(query: string) : ValidationError | null {
   try {
     const q = parser(query)[0]; // TODO - handle multiple!
     return val({
       path: [],
       pos: 0,
       previous: null,
-      remaining: q
+      remaining: q,
+      tokens: q
     });
   } catch(e) {
     return [QueryError.parseError];

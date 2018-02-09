@@ -32,3 +32,7 @@ export enum QueryError {
   missingParens = 'missingParens',
   extraneousParens = 'extraneousParens'
 }
+
+export type ValidationDetailedError = [QueryError, QueryToken[], Path];
+
+export type ValidationError = [QueryError.parseError] | ValidationDetailedError;

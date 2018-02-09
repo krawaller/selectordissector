@@ -9,8 +9,8 @@ test(`Experimental combinators aren't allowed`, t => {
     ['div < span > p', QueryError.parentCombinator, [1]]
   ];
   experimental.forEach(([query, error, position]) => t.deepEqual(
-    validator(query),
-    [error, position],
+    validator(query)[0],
+    error,
     `Query ${query} gives experimental combinator error for position ${position}`
   ));
   t.end();
@@ -23,8 +23,8 @@ test(`Adjacent combinators aren't allowed`, t => {
     ['div + ~ span', [2]]
   ];
   adjacent.forEach(([query, position]) => t.deepEqual(
-    validator(query),
-    [QueryError.adjacentCombinators, position],
+    validator(query)[0],
+    QueryError.adjacentCombinators,
     `Query ${query} gives adjacent combinator error for position ${position}`
   ));
   t.end();
@@ -37,8 +37,8 @@ test(`Combinators are not allowed at end of queries`, t => {
     ['span +', [1]]
   ];
   ending.forEach(([query, position]) => t.deepEqual(
-    validator(query),
-    [QueryError.endingCombinator, position],
+    validator(query)[0],
+    QueryError.endingCombinator,
     `Query ${query} gives ending combinator error for position ${position}`
   ));
   t.end();
@@ -51,8 +51,8 @@ test(`Combinators are not allowed at beginning of queries`, t => {
     ['~ span', [0]]
   ];
   ending.forEach(([query, position]) => t.deepEqual(
-    validator(query),
-    [QueryError.leadingCombinator, position],
+    validator(query)[0],
+    QueryError.leadingCombinator,
     `Query ${query} gives leading combinator error for position ${position}`
   ));
   t.end();

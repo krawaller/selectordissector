@@ -9,8 +9,8 @@ test(`missing argument parens are called out`, t => {
     ['div p span:nth-of-type', [5], 'nth-of-type needs parens'],
   ];
   missing.forEach(([query, position, description]) => t.deepEqual(
-    validator(query),
-    [QueryError.missingParens, position],
+    validator(query)[0],
+    QueryError.missingParens,
     description
   ));
   t.end();
@@ -22,8 +22,8 @@ test(`extraneous argument parens are called out`, t => {
     ['div p span:last-child()', [5], ':last-child doesnt need parens'],
   ];
   extraneous.forEach(([query, position, description]) => t.deepEqual(
-    validator(query),
-    [QueryError.extraneousParens, position],
+    validator(query)[0],
+    QueryError.extraneousParens,
     description
   ));
   t.end();
@@ -36,8 +36,8 @@ test(`nth-of-type data must be correct`, t => {
     [':nth-of-type(0)', [0], 'we get error when we have 0 as data']
   ];
   nthCases.forEach(([query, position, description]) => t.deepEqual(
-    validator(query),
-    [QueryError.faultyFormula, position],
+    validator(query)[0],
+    QueryError.faultyFormula,
     description
   ));
   t.end();
@@ -51,8 +51,8 @@ test(`unrecognized pseudo selectors are called out`, t => {
     [':baz', [0], 'unknown pseudo baz is correctly called out']
   ];
   nthCases.forEach(([query, position, description]) => t.deepEqual(
-    validator(query),
-    [QueryError.unknownPseudoSelector, position],
+    validator(query)[0],
+    QueryError.unknownPseudoSelector,
     description
   ));
   t.end();
@@ -65,8 +65,8 @@ test(`erroneous pseudo formulas are called out`, t => {
     ['div span:nth-child(foobar)', [3], 'erroneous formula "foobar" for nth-child correctly called out'],
   ];
   weirdFormulas.forEach(([query, position, description]) => t.deepEqual(
-    validator(query),
-    [QueryError.faultyFormula, position],
+    validator(query)[0],
+    QueryError.faultyFormula,
     description
   ));
   t.end();
