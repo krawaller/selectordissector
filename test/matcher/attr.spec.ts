@@ -12,7 +12,7 @@ test('Element tester returns correct result for attributes with exists action', 
   ];
   const fooExists: AttributeToken = {type: TokenType.attribute, name:'foo', action: AttributeAction.exists};
   attrComps.forEach(([elem, shouldMatch, description]) => t.deepEqual(
-    matcher(elem, [[]], fooExists),
+    matcher(elem, [[]], fooExists).result,
     shouldMatch ? [[]] : [],
     description
   ));
@@ -29,7 +29,7 @@ test('Element tester returns correct result for attributes with equals action', 
   ];
   const fooIsBar: AttributeToken = {type: TokenType.attribute, name:'foo', action: AttributeAction.equals, value: 'bar'};
   attrComps.forEach(([elem, shouldMatch, description]) => t.deepEqual(
-    matcher(elem, [[]], fooIsBar),
+    matcher(elem, [[]], fooIsBar).result,
     shouldMatch ? [[]] : [],
     description
   ));
@@ -47,7 +47,7 @@ test('Element tester returns correct result for attributes with start action', t
   ];
   const fooBeginsWithBar: AttributeToken = {type: TokenType.attribute, name:'foo', action: AttributeAction.start, value: 'bar'};
   attrComps.forEach(([elem, shouldMatch, description]) => t.deepEqual(
-    matcher(elem, [[]], fooBeginsWithBar),
+    matcher(elem, [[]], fooBeginsWithBar).result,
     shouldMatch ? [[]] : [],
     description
   ));
@@ -65,7 +65,7 @@ test('Element tester returns correct result for attributes with end action', t =
   ];
   const fooEndsWithBar: AttributeToken = {type: TokenType.attribute, name:'foo', action: AttributeAction.end, value: 'bar'};
   attrComps.forEach(([elem, shouldMatch, description]) => t.deepEqual(
-    matcher(elem, [[]], fooEndsWithBar),
+    matcher(elem, [[]], fooEndsWithBar).result,
     shouldMatch ? [[]] : [],
     description
   ));

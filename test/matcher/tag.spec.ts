@@ -13,7 +13,7 @@ test('Element tester returns correct result for tag comparison', t => {
   ];
   const isDiv: ElementToken = {type: TokenType.tag, name:'div'};
   tagComps.forEach(([path, shouldMatch, description]) => t.deepEqual(
-    matcher(tree, [path], isDiv),
+    matcher(tree, [path], isDiv).result,
     shouldMatch ? [path] : [],
     description
   ));

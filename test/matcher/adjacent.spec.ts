@@ -44,7 +44,7 @@ test('Adjacent combinator yields correct matches', t => {
   ];
   const adjacentCombinator: AdjacentToken = {type: TokenType.adjacent};
   adjacentComps.forEach(([path, result, description]) => t.deepEqual(
-    matcher(tree, [path], adjacentCombinator),
+    matcher(tree, [path], adjacentCombinator).result,
     result,
     description
   ));

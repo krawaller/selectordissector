@@ -13,7 +13,7 @@ test('Element tester returns correct result for first-of-type comparison', t => 
   ];
   const firstOfType: PseudoToken = {type: TokenType.pseudo, name: PseudoName.firstOfType};
   firstOfTypeComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
-    matcher(tree, [path], firstOfType),
+    matcher(tree, [path], firstOfType).result,
     shouldMatch ? [path] : [],
     description
   ));

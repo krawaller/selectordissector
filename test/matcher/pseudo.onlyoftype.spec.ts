@@ -14,7 +14,7 @@ test('Element tester returns correct result for only-of-type comparison', t => {
   ];
   const onlyOfType: PseudoToken = {type: TokenType.pseudo, name: PseudoName.onlyOfType};
   onlyOfTypeComps.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
-    matcher(tree, [path], onlyOfType),
+    matcher(tree, [path], onlyOfType).result,
     shouldMatch ? [path] : [],
     description
   ));

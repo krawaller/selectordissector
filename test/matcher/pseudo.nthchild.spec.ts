@@ -40,7 +40,7 @@ test('Collection tester returns correct result for nth-child comparison', t => {
     [':nth-child(even)', [ [0,1], [1] ], ':nth-child(even) includes every even sibling'],
   ];
   nthCases.forEach(([query, collection, description]) => t.deepEqual(
-    matcher(tree, allInTree, parser(query)[0][0]),
+    matcher(tree, allInTree, parser(query)[0][0]).result,
     collection,
     description
   ));
@@ -64,7 +64,7 @@ test('nth-child doesnt count text nodes', t => {
     ]
   ];
   ignoreTextNodes.forEach(([tree, query, collection, description]) => t.deepEqual(
-    matcher(tree, collection, parser(query)[0][0]),
+    matcher(tree, collection, parser(query)[0][0]).result,
     collection,
     description
   ));

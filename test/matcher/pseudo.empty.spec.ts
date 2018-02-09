@@ -13,7 +13,7 @@ test('Element tester returns correct result for :empty pseudo selector', t => {
   ];
   const empty: PseudoToken = {type: TokenType.pseudo, name: PseudoName.empty};
   emptyComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
-    matcher(tree, [path], empty),
+    matcher(tree, [path], empty).result,
     shouldMatch ? [path] : [],
     description
   ));

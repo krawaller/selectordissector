@@ -14,7 +14,7 @@ test('Element tester returns correct result for last-of-type comparison', t => {
   ];
   const lastOfType: PseudoToken = {type: TokenType.pseudo, name: PseudoName.lastOfType};
   lastOfTypeComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
-    matcher(tree, [path], lastOfType),
+    matcher(tree, [path], lastOfType).result,
     shouldMatch ? [path] : [],
     description
   ));

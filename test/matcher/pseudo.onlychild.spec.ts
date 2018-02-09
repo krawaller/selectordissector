@@ -14,7 +14,7 @@ test('Element tester returns correct result for only-child comparison', t => {
   ];
   const onlyChild: PseudoToken = {type: TokenType.pseudo, name: PseudoName.onlyChild};
   onlyChildComps.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
-    matcher(tree, [path], onlyChild),
+    matcher(tree, [path], onlyChild).result,
     shouldMatch ? [path] : [],
     description
   ));

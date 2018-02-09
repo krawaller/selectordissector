@@ -32,7 +32,7 @@ test('Collection tester returns correct result for nth-of-type comparison', t =>
     [':nth-of-type(1)', [ [], [0], [0,0], [0,1], [0,2,0], [1], [1,0], [1,0,0] ], ':nth-of-type(1) includes all relevant oldest sibling']
   ];
   nthCases.forEach(([query, collection, description]) => t.deepEqual(
-    matcher(tree, allInTree, parser(query)[0][0]),
+    matcher(tree, allInTree, parser(query)[0][0]).result,
     collection,
     description
   ));

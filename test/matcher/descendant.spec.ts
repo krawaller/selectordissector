@@ -56,7 +56,7 @@ test('Descendant combinator yields correct matches', t => {
   ];
   const descendantCombinator: DescendantToken = {type: TokenType.descendant};
   descendantComps.forEach(([path, result, description]) => t.deepEqual(
-    matcher(tree, [path], descendantCombinator),
+    matcher(tree, [path], descendantCombinator).result,
     result,
     description
   ));

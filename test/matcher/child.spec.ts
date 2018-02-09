@@ -49,7 +49,7 @@ test('Child combinator yields correct matches', t => {
   ];
   const childCombinator: ChildToken = {type: TokenType.child};
   childComps.forEach(([path, result, description]) => t.deepEqual(
-    matcher(tree, [path], childCombinator),
+    matcher(tree, [path], childCombinator).result,
     result,
     description
   ));

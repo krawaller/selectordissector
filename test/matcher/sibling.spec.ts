@@ -52,7 +52,7 @@ test('Sibling combinator yields correct matches', t => {
   ];
   const siblingCombinator: SiblingToken = {type: TokenType.sibling};
   siblingComps.forEach(([path, result, description]) => t.deepEqual(
-    matcher(tree, [path], siblingCombinator),
+    matcher(tree, [path], siblingCombinator).result,
     result,
     description
   ));

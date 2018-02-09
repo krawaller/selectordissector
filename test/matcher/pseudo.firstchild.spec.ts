@@ -16,7 +16,7 @@ test('Element tester returns correct result for first-child comparison', t => {
   ];
   const firstChild: PseudoToken = {type: TokenType.pseudo, name: PseudoName.firstChild};
   firstChildComparisons.forEach(([tree, path, shouldMatch, description]) => t.deepEqual(
-    matcher(tree, [path], firstChild),
+    matcher(tree, [path], firstChild).result,
     shouldMatch ? [path] : [],
     description
   ));

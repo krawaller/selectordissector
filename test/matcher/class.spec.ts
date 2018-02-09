@@ -28,7 +28,7 @@ test('Element tester returns correct result for class selector', t => {
   ];
   const hasBarClass = <ElementToken>parser('.bar')[0][0];
   classComps.forEach(([path, shouldMatch, description]) => t.deepEqual(
-    matcher(tree, [path], hasBarClass),
+    matcher(tree, [path], hasBarClass).result,
     shouldMatch ? [path] : [],
     description
   ));
