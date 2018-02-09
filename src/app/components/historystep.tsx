@@ -66,7 +66,7 @@ function describe(token: QueryToken): string {
         case AttributeAction.element: return `Keep all elements where the "class" attribute contains the word "${t.value}".`;
         case AttributeAction.exists: return `Keep all elements that have the attribute "${t.name}".`;
         case AttributeAction.equals: return `Keep all elements where the attribute "${t.name}" equals "${t.value}".`;
-        default: `[[[ description for this type not created yet, sorry ]]]`
+        default: return `[[[ description for this type not created yet, sorry ]]]`
       }
     }
     case TokenType.adjacent: return `Now take all adjacent younger siblings of those elements.`;
@@ -88,9 +88,9 @@ function describe(token: QueryToken): string {
             case FormulaType.mult: return `Keep all elements whose position among the siblings (not counting text nodes) is a multiple of ${classification[1]}.`;
             case FormulaType.multAndNegOffset: return `Keep all elements whose position among the siblings (not counting text nodes) is ${classification[2]} less than a multiple of ${classification[1]}.`;
             case FormulaType.multAndPosOffset: return `Keep all elements whose position among the siblings (not counting text nodes) is ${classification[2]} more than a multiple of ${classification[1]}.`;
-            case FormulaType.exact: `Keep all elements whose position among the siblings (not counting text nodes) is ${classification[1]}.`;
-            case FormulaType.negAndOffset: `Keep all elements who is among the first ${classification[1]} of the siblings (not counting text nodes).`;
-            default: `[[[ description for this type not created yet, sorry ]]]`;
+            case FormulaType.exact: return `Keep all elements whose position among the siblings (not counting text nodes) is ${classification[1]}.`;
+            case FormulaType.negAndOffset: return `Keep all elements who is among the first ${classification[1]} of the siblings (not counting text nodes).`;
+            default: return `[[[ description for this type not created yet, sorry ]]]`;
           }
         }
         case PseudoName.nthOfType: {
@@ -101,9 +101,9 @@ function describe(token: QueryToken): string {
             case FormulaType.mult: return `Keep all elements whose position among the same-type siblings is a multiple of ${classification[1]}.`;
             case FormulaType.multAndNegOffset: return `Keep all elements whose position among the same-type siblings is ${classification[2]} less than a multiple of ${classification[1]}.`;
             case FormulaType.multAndPosOffset: return `Keep all elements whose position among the same-type siblings is ${classification[2]} more than a multiple of ${classification[1]}.`;
-            case FormulaType.exact: `Keep all elements whose position among the same-type siblings is ${classification[1]}.`;
-            case FormulaType.negAndOffset: `Keep all elements who is among the first ${classification[1]} of the same-type siblings.`;
-            default: `[[[ description for this type not created yet, sorry ]]]`;
+            case FormulaType.exact: return `Keep all elements whose position among the same-type siblings is ${classification[1]}.`;
+            case FormulaType.negAndOffset: return `Keep all elements who is among the first ${classification[1]} of the same-type siblings.`;
+            default: return `[[[ description for this type not created yet, sorry ]]]`;
           }
         }
         default: `[[[ description for this type not created yet, sorry ]]]`
