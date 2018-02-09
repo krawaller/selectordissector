@@ -2,7 +2,7 @@ var path = require("path");
 var WebpackNotifierPlugin = require('webpack-notifier');
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'eval-source-map',
   entry: __dirname + '/src/app/index.tsx',
   output: {
     path: __dirname + '/dist/',
