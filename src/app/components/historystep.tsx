@@ -5,6 +5,16 @@ import {historyStyles, merge} from '../styles';
 import { QueryToken, Collection, TokenType, AttributeAction, AttributeToken, TagToken, PseudoName, FormulaType } from '../../types';
 import { classifyFormula } from '../../helpers';
 
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryText,
+  ListItemGraphic,
+  ListItemMeta,
+  SimpleListItem
+} from 'rmwc/List';
+
 type HistoryStepProps = {
   callback: (nbr) => void
   token: QueryToken
@@ -22,10 +32,14 @@ const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, toke
     else callback(0)
   }
   return (
-    <div style={s.container}>
-      <button onClick={handler} style={merge(s.button, idx <= selIdx && s.activeButton)}>{print(token)}</button>
-      <span style={s.description}>{describe(token)}</span>
-    </div>
+    <SimpleListItem onClick={handler} graphic={idx <= selIdx && s.activeButton ? 'check_box' : 'check_box_outline_blank'} text={print(token)} secondaryText={describe(token)} />
+
+
+
+    // <div style={s.container}>
+    //   <button onClick={handler} style={merge(s.button, idx <= selIdx && s.activeButton)}>{print(token)}</button>
+    //   <span style={s.description}>{describe(token)}</span>
+    // </div>
   );
 };
 
@@ -35,7 +49,7 @@ function print(token: QueryToken): string {
   switch(token.type){
     case TokenType.tag: return (token as TagToken).name;
     case TokenType.universal: return '*';
-    case TokenType.start: return 'START';
+    case TokenType.start: return ':root';
     case TokenType.child: return '>';
     case TokenType.descendant: return '_';
     case TokenType.attribute: {

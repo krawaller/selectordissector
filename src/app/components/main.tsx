@@ -13,6 +13,20 @@ import matcher from '../../matcher';
 import validator from '../../validator';
 import {getDescendantPaths} from '../../helpers';
 
+import {
+  Toolbar,
+  ToolbarRow,
+  ToolbarTitle,
+} from 'rmwc/Toolbar';
+import { TextField } from 'rmwc/TextField';
+import { FormField } from 'rmwc/FormField';
+import {
+  List
+} from 'rmwc/List';
+import { Typography } from 'rmwc/Typography';
+import { Elevation } from 'rmwc/Elevation';
+import { Grid, GridCell } from 'rmwc/Grid';
+
 const tree = div({lang:'sv'},[
   h1('Wow this is cool'),
   div([
@@ -39,24 +53,23 @@ export default class Main extends React.Component<{}, MainState> {
     super(props);
     this.updateSelector = this.updateSelector.bind(this);
     this.updateIdx = this.updateIdx.bind(this);
-    this.state = {selector: '', message: 'Welcome! Enter a selector and prepare for MAGIC OMG OMG!', idx: 0, selectorTokens: []};
+    this.state = {selector: '', message: '', idx: 0, selectorTokens: []};
   }
   updateIdx(nbr){
     this.setState({idx: nbr});
   }
-  updateSelector(str){
-    let valError = validator(str);
+  updateSelector(selector){
+    this.setState({ selector })
+    let valError = validator(selector);
     if (!valError){
-      const tokens = parser(str)[0];
+      const tokens = parser(selector)[0];
       this.setState({
-        selector: str,
-        message: 'Current selector: ' + str,
+        message: '',
         selectorTokens: tokens,
         idx: tokens.length // not -1 since we'll add start later
       });
     } else {
       this.setState({
-        selector: '',
         message: 'Error! ' + valError[0] + (valError[1] ? ' (' + valError[1] + ')' : ''),
         selectorTokens: [],
         idx: 0
@@ -77,19 +90,47 @@ export default class Main extends React.Component<{}, MainState> {
     }
     return (
       <div style={mainStyles}>
-        <Form callback={this.updateSelector} />
-        {this.state.message}
-        {
-          history.length > 0 && (
-            <React.Fragment>
-              <hr/>
-              <h3>Click the buttons to see selection result during the various steps of the selection!</h3>
-              {history.map((h,n) => <HistoryStep key={n} token={h.token} coll={h.coll} idx={n} selIdx={this.state.idx} callback={this.updateIdx} />)}
-            </React.Fragment>
-          ) 
-        }
-        <hr/>
-        <Element elem={tree} currColl={coll} />
+        <Toolbar>
+          <ToolbarRow>
+            <ToolbarTitle>Selector Dissector</ToolbarTitle>
+          </ToolbarRow>
+        </Toolbar>
+        <div className="content">
+          <TextField box withLeadingIcon="zoom_in" label="CSS selector to dissect" onInput={event => this.updateSelector(event.target.value)} />
+          {this.state.message}
+
+          {!history.length && <Typography use="title">Welcome! Enter a selector above to get started.</Typography>}
+
+          <Grid>
+            {
+              !!history.length && (
+                <GridCell span="6">
+                  <Typography use="title">Selection steps</Typography>
+                  <List>
+                    {history.map((h, n) => (
+                      <HistoryStep
+                        key={n}
+                        token={h.token}
+                        coll={h.coll}
+                        idx={n}
+                        selIdx={this.state.idx}
+                        callback={this.updateIdx}
+                      />
+                    ))}
+                  </List>
+                </GridCell>
+              )
+            }
+            {
+              !!history.length && (
+                <GridCell span="6">
+                  <Typography use="title">Selection result</Typography>
+                  <Element elem={tree} currColl={coll} />
+                </GridCell>
+              )
+            }
+          </Grid>
+        </div>
       </div>
     );
   }
