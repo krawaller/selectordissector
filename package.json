@@ -17,7 +17,8 @@
     "tslint": "5.9.1",
     "typescript": "2.7.1",
     "webpack": "3.10.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack-dev-server": "^2.11.1",
+    "webpack-notifier": "^1.5.1"
   },
   "scripts": {
     "build": "node setupdist && webpack",

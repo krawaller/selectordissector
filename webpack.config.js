@@ -1,4 +1,5 @@
 var path = require("path");
+var WebpackNotifierPlugin = require('webpack-notifier');
 
 module.exports = {
   devtool: 'eval',
@@ -20,5 +21,8 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     port: 9000
-  }
+  },
+  plugins: [
+    new WebpackNotifierPlugin({alwaysNotify: true})
+  ]
 };
