@@ -1,3 +1,5 @@
+var path = require("path");
+
 module.exports = {
   devtool: 'eval',
   entry: __dirname + '/src/app/index.tsx',
@@ -14,5 +16,9 @@ module.exports = {
       loader: 'ts-loader',
       exclude: /node_modules/
     }]
+  },
+  devServer: {
+    contentBase: path.join(__dirname, "dist"),
+    port: 9000
   }
 };
