@@ -39,7 +39,7 @@ function print(token: QueryToken): string {
   switch(token.type){
     case TokenType.tag: return (token as TagToken).name;
     case TokenType.universal: return '*';
-    case TokenType.start: return ':root';
+    case TokenType.start: return '*';
     case TokenType.child: return '>';
     case TokenType.descendant: return '_';
     case TokenType.attribute: {
