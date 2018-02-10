@@ -1,8 +1,8 @@
-import * as test from 'tape';
+import * as test from "tape";
 
-import {VirtualElement, SiblingToken, Path, Collection, TokenType} from '../../src/types';
-import {div} from '../../src/builder';
-import matcher from '../../src/matcher';
+import {div} from "../../src/builder";
+import matcher from "../../src/matcher";
+import {Collection, Path, SiblingToken, TokenType, VirtualElement} from "../../src/types";
 
 const tree = (
   div([
@@ -10,52 +10,51 @@ const tree = (
       div,
       div,
       div(
-        div
-      )
+        div,
+      ),
     ]),
     div(
       div(
-        div
-      )
-    )
+        div,
+      ),
+    ),
   ])
 );
 
-test('Sibling combinator yields correct matches', t => {
+test("Sibling combinator yields correct matches", (t) => {
   type TestCase = [Path, Collection, string];
   const siblingComps: TestCase[] = [
     [
       [],
       [],
-      'from the top of the pyramid we get nothing'
+      "from the top of the pyramid we get nothing",
     ],
     [
-      [0,2],
+      [0, 2],
       [],
-      'youngest sibling yields nothing'
+      "youngest sibling yields nothing",
     ],
     [
-      [0,0],
+      [0, 0],
       [
-        [0,1],
-        [0,2],
+        [0, 1],
+        [0, 2],
       ],
-      'oldest sibling yields all younger sibling '
+      "oldest sibling yields all younger sibling ",
     ],
     [
-      [0,1],
+      [0, 1],
       [
-        [0,2]
+        [0, 2],
       ],
-      'middle sibling yields younger sibling'
-    ]
+      "middle sibling yields younger sibling",
+    ],
   ];
   const siblingCombinator: SiblingToken = {type: TokenType.sibling};
   siblingComps.forEach(([path, result, description]) => t.deepEqual(
     matcher(tree, [path], siblingCombinator).result,
     result,
-    description
+    description,
   ));
   t.end();
 });
-

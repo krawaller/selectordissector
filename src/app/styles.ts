@@ -1,68 +1,68 @@
 export const elemStyles = {
-  matched: {
-    color: 'white',
-    backgroundColor: '#A261FF',
-    borderColor: '#7400FF'
-  },
-  mayMatch: {
-    transition: 'color 0.5s ease-in-out, background-color 0.5s ease-in-out, border-color 0.5s ease-in-out',
+  child: {
+    marginLeft: "2em",
   },
   element: {
-    fontFamily: 'monospace',
-    borderRadius: '5px',
-    margin: '1px',
-    padding: '1px',
-    border: '1px solid transparent',
-    borderColor: 'transparent'
+    border: "1px solid transparent",
+    borderColor: "transparent",
+    borderRadius: "5px",
+    fontFamily: "monospace",
+    margin: "1px",
+    padding: "1px",
   },
-  singleLine: {
-    display: 'inline-block'
+  matched: {
+    backgroundColor: "#A261FF",
+    borderColor: "#7400FF",
+    color: "white",
   },
-  child: {
-    marginLeft: '2em'
-  },
-  tag: {
-    borderRadius: '5px',
-    margin: '1px',
-    padding: '1px',
-    border: '1px solid transparent',
-    borderColor: 'transparent'
+  mayMatch: {
+    transition: "color 0.5s ease-in-out, background-color 0.5s ease-in-out, border-color 0.5s ease-in-out",
   },
   ownLineEndTag: {
-    //opacity: 0.4
+    // opacity: 0.4
+  },
+  singleLine: {
+    display: "inline-block",
+  },
+  tag: {
+    border: "1px solid transparent",
+    borderColor: "transparent",
+    borderRadius: "5px",
+    margin: "1px",
+    padding: "1px",
   },
   text: {
-    //fontStyle: 'italic' as 'italic',
-    //color: '#777'
-  }
+    // fontStyle: 'italic' as 'italic',
+    // color: '#777'
+  },
 };
 
 export const formStyles = {
+  button: {},
   container: {
-    display: 'inline-block',
+    display: "inline-block",
   },
   input: {},
-  button: {},
 };
 
 export const historyStyles = {
-  container: {},
-  button: {
-    width: '120px',
-    display: 'inline-block',
-    marginRight: '5px'
-  },
   activeButton: {
-    boxShadow: 'inset 1px 1px 10px #333'
+    boxShadow: "inset 1px 1px 10px #333",
   },
-  description: {}
+  button: {
+    display: "inline-block",
+    marginRight: "5px",
+    width: "120px",
+  },
+  container: {},
+  description: {},
 };
 
 export const mainStyles = {
   container: {},
   link: {
-    color: 'white'
-  }
+    color: "white",
+  },
 };
 
-export const merge = (...objs) => Object.assign.apply(Object,[{}].concat(objs));
+export const merge = (...objs) => Object.assign.apply(Object, [{}].concat(objs));

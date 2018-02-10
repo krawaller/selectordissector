@@ -1,36 +1,36 @@
-import * as test from 'tape';
+import * as test from "tape";
 
-import parser from '../../src/parser';
-import {VirtualElement, ElementToken, Path} from '../../src/types';
-import {div, span} from '../../src/builder';
-import matcher from '../../src/matcher';
+import {div, span} from "../../src/builder";
+import matcher from "../../src/matcher";
+import parser from "../../src/parser";
+import {ElementToken, Path, VirtualElement} from "../../src/types";
 
-test('Element tester returns correct result for class selector', t => {
+test("Element tester returns correct result for class selector", (t) => {
   const tree = div([
-    span({class:"foo bar"}),
-    span({class:"foo bar baz"}),
-    span({class:"bar foo"}),
-    span({class:"bar"}),
-    span({class:"barb baz"}),
-    span({class:"foo barb baz"}),
-    span({class:"foo gbar"})
+    span({class: "foo bar"}),
+    span({class: "foo bar baz"}),
+    span({class: "bar foo"}),
+    span({class: "bar"}),
+    span({class: "barb baz"}),
+    span({class: "foo barb baz"}),
+    span({class: "foo gbar"}),
   ]);
   type TestCase = [Path, boolean, string];
   const classComps: TestCase[] = [
-    [[], false, 'we return false if element has no class attribute'],
-    [[0], true, 'we return true if element class attribute has the class in the end'],
-    [[1], true, 'we return true if element class attribute is the middle'],
-    [[2], true, 'we return true if element class attribute has the class in the beginning'],
-    [[3], true, 'we return true if element class attribute is the class'],
-    [[4], false, 'we return false if element class attribute lacks the class, even though first class resembles'],
-    [[5], false, 'we return false if element class attribute lacks the class, even though middle class resembles'],
-    [[6], false, 'we return false if element class attribute lacks the class, even though last class resembles'],
+    [[], false, "we return false if element has no class attribute"],
+    [[0], true, "we return true if element class attribute has the class in the end"],
+    [[1], true, "we return true if element class attribute is the middle"],
+    [[2], true, "we return true if element class attribute has the class in the beginning"],
+    [[3], true, "we return true if element class attribute is the class"],
+    [[4], false, "we return false if element class attribute lacks the class, even though first class resembles"],
+    [[5], false, "we return false if element class attribute lacks the class, even though middle class resembles"],
+    [[6], false, "we return false if element class attribute lacks the class, even though last class resembles"],
   ];
-  const hasBarClass = <ElementToken>parser('.bar')[0][0];
+  const hasBarClass = parser(".bar")[0][0] as ElementToken;
   classComps.forEach(([path, shouldMatch, description]) => t.deepEqual(
     matcher(tree, [path], hasBarClass).result,
     shouldMatch ? [path] : [],
-    description
+    description,
   ));
   t.end();
 });

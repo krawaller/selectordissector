@@ -2,5 +2,5 @@
 
 var fs = require("fs-extra");
 
-fs.emptyDirSync(__dirname + '/dist');
-fs.copySync(__dirname + '/src/app/index.html', __dirname + '/dist/index.html');
+fs.emptyDirSync(__dirname + "/dist");
+fs.copySync(__dirname + "/src/app/index.html", __dirname + "/dist/index.html");

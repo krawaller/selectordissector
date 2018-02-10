@@ -1,49 +1,49 @@
 export enum TokenType {
-  start = 'start',
-  descendant = 'descendant',
-  child = 'child',
-  parent = 'parent',
-  sibling = 'sibling',
-  adjacent = 'adjacent',
-  tag = 'tag',
-  universal = 'universal',
-  pseudo = 'pseudo',
-  attribute = 'attribute'
+  start = "start",
+  descendant = "descendant",
+  child = "child",
+  parent = "parent",
+  sibling = "sibling",
+  adjacent = "adjacent",
+  tag = "tag",
+  universal = "universal",
+  pseudo = "pseudo",
+  attribute = "attribute",
 }
 
 export type UniversalToken = {
-  type: TokenType.universal
+  type: TokenType.universal,
 };
 
 export type TagToken = {
   type: TokenType.tag
-  name: string
+  name: string,
 };
 
 export enum PseudoName {
-  firstOfType = 'first-of-type',
-  lastOfType = 'last-of-type',
-  onlyOfType = 'only-of-type',
-  empty = 'empty',
-  firstChild = 'first-child',
-  lastChild = 'last-child',
-  nthOfType = 'nth-of-type',
-  nthChild = 'nth-child',
-  onlyChild = 'only-child',
+  firstOfType = "first-of-type",
+  lastOfType = "last-of-type",
+  onlyOfType = "only-of-type",
+  empty = "empty",
+  firstChild = "first-child",
+  lastChild = "last-child",
+  nthOfType = "nth-of-type",
+  nthChild = "nth-child",
+  onlyChild = "only-child",
 }
 
 export type PseudoToken = {
   type: TokenType.pseudo
   name: PseudoName
-  data?: any
+  data?: any,
 };
 
 export enum AttributeAction {
-  equals = 'equals',
-  exists = 'exists',
-  start = 'start',
-  end = 'end',
-  element = 'element'  // element means it is a class test
+  equals = "equals",
+  exists = "exists",
+  start = "start",
+  end = "end",
+  element = "element",  // element means it is a class test
 }
 
 export type AttributeToken = {
@@ -51,34 +51,34 @@ export type AttributeToken = {
   name: string
   action: AttributeAction
   value?: string
-  ignoreCase?: boolean
-}
+  ignoreCase?: boolean,
+};
 
 export type ElementToken = UniversalToken | TagToken | PseudoToken | AttributeToken;
 
 export type StartToken = {
-  type: TokenType.start
-}
+  type: TokenType.start,
+};
 
 export type DescendantToken = {
-  type: TokenType.descendant
+  type: TokenType.descendant,
 };
 
 export type ChildToken = {
-  type: TokenType.child
-}
+  type: TokenType.child,
+};
 
 export type SiblingToken = {
-  type: TokenType.sibling
-}
+  type: TokenType.sibling,
+};
 
 export type AdjacentToken = {
-  type: TokenType.adjacent
-}
+  type: TokenType.adjacent,
+};
 
 export type ParentToken = {
-  type: TokenType.parent
-}
+  type: TokenType.parent,
+};
 
 export type CombinatorToken = DescendantToken | ChildToken | SiblingToken | AdjacentToken | ParentToken;
 

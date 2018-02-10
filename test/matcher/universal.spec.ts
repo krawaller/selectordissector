@@ -1,16 +1,16 @@
-import * as test from 'tape';
+import * as test from "tape";
 
-import {VirtualElement, UniversalToken, TokenType, ContentNode} from '../../src/types';
-import {div,span} from '../../src/builder';
-import matcher from '../../src/matcher';
+import {div, span} from "../../src/builder";
+import matcher from "../../src/matcher";
+import {ContentNode, TokenType, UniversalToken, VirtualElement} from "../../src/types";
 
-test('Element tester returns true for universal token', t => {
+test("Element tester returns true for universal token", (t) => {
   const tagComps: VirtualElement[] = [div(), span()];
   const univ: UniversalToken = {type: TokenType.universal};
-  tagComps.forEach(elem => t.deepEqual(
+  tagComps.forEach((elem) => t.deepEqual(
     matcher(elem, [[]], univ).result,
     [[]],
-    `Tag comparison ${elem.type} gives true for universal`
+    `Tag comparison ${elem.type} gives true for universal`,
   ));
   t.end();
 });
