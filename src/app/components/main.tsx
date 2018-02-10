@@ -98,7 +98,6 @@ export default class Main extends React.Component<{}, MainState> {
               <ToolbarTitle>Selector Dissector</ToolbarTitle>
             </ToolbarSection>
             <ToolbarSection alignEnd>
-              <Typography use="caption">Crafted with &hearts; by <a style={mainStyles.link} href="http://edument.se?ref=seldis">Edument</a></Typography>
               <ToolbarIcon
                 tag="a"
                 href="https://github.com/krawaller/selectordissector"
