@@ -21,7 +21,7 @@
     "webpack-notifier": "^1.5.1"
   },
   "scripts": {
-    "lint": "tslint --exclude node_modules --project .",
+    "lint": "tslint --exclude node_modules --exclude dist --project .",
     "build": "node setupdist && webpack",
     "start:dev": "node setupdist && webpack-dev-server",
     "test": "ts-node node_modules/tape/bin/tape test/***/*.spec.ts | tap-diff"
