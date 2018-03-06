@@ -96,39 +96,33 @@ export default class Main extends React.Component<{}, MainState> {
         <Header openInfoDialog={this.toggleDialog} />
         <div className="content">
           <TextField box withLeadingIcon="zoom_in" label="CSS selector to dissect" onInput={(event) => this.updateSelector(event.target.value)} />
-
-          {this.state.error ? <ErrorComp error={this.state.error}/> : this.state.message}
-
-          {!history.length && <Typography use="title">Welcome! Enter a selector above to get started.</Typography>}
-
           <Grid>
-            {
-              !!history.length && (
-                <GridCell span="6">
-                  <Typography use="title">Selection steps</Typography>
-                  <List>
-                    {history.map((h, n) => (
-                      <HistoryStepComp
-                        key={n}
-                        token={h.token}
-                        coll={h.coll}
-                        idx={n}
-                        selIdx={this.state.idx}
-                        callback={this.updateIdx}
-                      />
-                    ))}
-                  </List>
-                </GridCell>
-              )
-            }
-            {
-              !!history.length && (
-                <GridCell span="6">
-                  <Typography use="title">Selection result</Typography>
-                  <Element elem={tree} currColl={coll} />
-                </GridCell>
-              )
-            }
+            <GridCell span="6">
+              <Typography use="title">Selection steps</Typography><br/>
+              {
+                this.state.error
+                ? <ErrorComp error={this.state.error}/>
+                : !history.length
+                  ? <Typography>Welcome! Enter a selector above to get started.</Typography>
+                  : this.state.message
+              }
+              <List>
+                {history.map((h, n) => (
+                  <HistoryStepComp
+                    key={n}
+                    token={h.token}
+                    coll={h.coll}
+                    idx={n}
+                    selIdx={this.state.idx}
+                    callback={this.updateIdx}
+                  />
+                ))}
+              </List>
+            </GridCell>
+            <GridCell span="6">
+              <Typography use="title">Selection result</Typography>
+              <Element elem={tree} currColl={coll} />
+            </GridCell>
           </Grid>
         </div>
         <InfoDialog isOpen={this.state.InfoDialogOpen} close={this.toggleDialog} />
