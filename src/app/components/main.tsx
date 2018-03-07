@@ -66,9 +66,13 @@ export default class Main extends React.Component<{}, MainState> {
     const valError = validator(selector);
     if (!valError) {
       const tokens = parser(selector)[0];
+      const idx =
+        tokens.length && tokens[tokens.length - 1].type === TokenType.wip
+          ? tokens.length - 1
+          : tokens.length; // not -1 since we'll add start later
       this.setState({
         error: null,
-        idx: tokens.length, // not -1 since we'll add start later
+        idx,
         message: "",
         selectorTokens: tokens,
       });

@@ -4,6 +4,7 @@ import {classifyFormula} from "../helpers";
 
 export function describeToken(token: QueryToken): string {
   switch (token.type) {
+    case TokenType.wip: return `Ignoring WIP part "${token.value}"`;
     case TokenType.start: return `Start with all elements in the entire document.`;
     case TokenType.tag: return `Keep only the elements where the type is "${(token as TagToken).name}".`;
     case TokenType.universal: return `Keep all of those elements.`;

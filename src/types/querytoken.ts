@@ -9,6 +9,7 @@ export enum TokenType {
   universal = "universal",
   pseudo = "pseudo",
   attribute = "attribute",
+  wip = "wip",
 }
 
 export type UniversalToken = {
@@ -80,6 +81,11 @@ export type ParentToken = {
   type: TokenType.parent,
 };
 
+export type WipToken = {
+  type: TokenType.wip,
+  value: string,
+};
+
 export type CombinatorToken = DescendantToken | ChildToken | SiblingToken | AdjacentToken | ParentToken;
 
-export type QueryToken = CombinatorToken | ElementToken | StartToken;
+export type QueryToken = CombinatorToken | ElementToken | StartToken | WipToken;

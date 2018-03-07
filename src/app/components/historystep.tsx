@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { classifyFormula, describeToken, printToken } from "../../helpers";
-import { Collection, QueryToken } from "../../types";
+import { Collection, QueryToken, TokenType } from "../../types";
 
 import {
   List,
@@ -23,10 +23,23 @@ type HistoryStepProps = {
 
 const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, token, coll, idx, selIdx}) => {
   const handler = () => {
-    if (idx > selIdx) { callback(idx); } else if (idx < selIdx) { callback(idx); } else if (idx === selIdx && idx > 0) { callback(idx - 1); } else { callback(0); }
+    if (token.type === TokenType.wip) {
+      return;
+    } else if (idx > selIdx || idx < selIdx) {
+      callback(idx);
+    } else if (idx === selIdx && idx > 0) {
+      callback(idx - 1);
+    } else {
+      callback(0);
+    }
   };
+  const graphic = token.type === TokenType.wip
+    ? "check_box_disabled"
+    : idx <= selIdx
+      ? "check_box"
+      : "check_box_outline_blank";
   return (
-    <SimpleListItem onClick={handler} graphic={idx <= selIdx ? "check_box" : "check_box_outline_blank"} text={printToken(token)} secondaryText={describeToken(token)} />
+    <SimpleListItem onClick={handler} graphic={graphic} text={printToken(token)} secondaryText={describeToken(token)} />
   );
 };
 

@@ -23,3 +23,27 @@ test("Parser yields correct Selector", (t) => {
   ));
   t.end();
 });
+
+test("Parser catches in progress stuff", (t) => {
+  type TestCase = [string, Selector, string];
+  const wips: TestCase[] = [
+    [
+      "div.", [
+        {type: TokenType.tag, name: "div"},
+        {type: TokenType.wip, value: "."},
+      ], "we handle WIP classes",
+    ],
+    [
+      "div#", [
+        {type: TokenType.tag, name: "div"},
+        {type: TokenType.wip, value: "#"},
+      ], "we handle WIP id:s",
+    ],
+  ];
+  wips.forEach(([input, selector, description]) => t.deepEqual(
+    parser(input),
+    [selector],
+    description,
+  ));
+  t.end();
+});
