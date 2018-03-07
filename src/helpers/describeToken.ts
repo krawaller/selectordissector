@@ -15,7 +15,10 @@ export function describeToken(token: QueryToken): string {
       switch (t.action) {
         case AttributeAction.element: return `Keep all elements where the "class" attribute contains the word "${t.value}".`;
         case AttributeAction.exists: return `Keep all elements that have the attribute "${t.name}".`;
-        case AttributeAction.equals: return `Keep all elements where the attribute "${t.name}" equals "${t.value}".`;
+        case AttributeAction.equals:
+          return t.name === "id"
+            ? `Keep all elements with id "${t.value}"`
+            : `Keep all elements where the attribute "${t.name}" equals "${t.value}".`;
         default: return `[[[ description for this type not created yet, sorry ]]]`;
       }
     }
