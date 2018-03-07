@@ -1,4 +1,4 @@
-import {Path, QueryToken} from "./";
+import {Path, Selector} from "./";
 
 export enum QueryError {
   parseError = "parseError",
@@ -12,6 +12,6 @@ export enum QueryError {
   extraneousParens = "extraneousParens",
 }
 
-export type ValidationDetailedError = [QueryError, QueryToken[], Path];
+export type ValidationDetailedError = [QueryError, Selector, Path];
 
 export type ValidationError = [QueryError.parseError] | ValidationDetailedError;

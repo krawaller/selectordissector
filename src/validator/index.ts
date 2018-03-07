@@ -1,6 +1,6 @@
 import {classifyFormula, isCombinatorToken} from "../helpers";
 import parser from "../parser";
-import {FormulaType, Path, PseudoName, QueryError, QueryToken, TokenType, ValidationDetailedError, ValidationError} from "../types";
+import {ErrorToken, FormulaType, Path, PseudoName, QueryError, QueryToken, Selector, TokenType, ValidationDetailedError, ValidationError} from "../types";
 
 const usesFormula = [PseudoName.nthChild, PseudoName.nthOfType];
 const needsParens = [PseudoName.nthChild, PseudoName.nthOfType];
@@ -17,7 +17,7 @@ function fail(error: QueryError, context: Context): ValidationDetailedError {
   return [error, context.tokens, context.path.concat(context.pos)];
 }
 
-function val(context: Context): ValidationError {
+function val(context: Context): ValidationDetailedError {
   if (context.remaining.length === 0) {
     return null;
   }
@@ -57,6 +57,10 @@ function val(context: Context): ValidationError {
     }
   }
 
+  if (token.type === TokenType.error) {
+    return fail(token.name, context);
+  }
+
   return val({
     path: context.path,
     pos: context.pos + 1,
@@ -66,17 +70,23 @@ function val(context: Context): ValidationError {
   });
 }
 
-export default function validate(query: string): ValidationError | null {
-  try {
-    const q = parser(query)[0]; // TODO - handle multiple!
-    return val({
-      path: [],
-      pos: 0,
-      previous: null,
-      remaining: q,
-      tokens: q,
-    });
-  } catch (e) {
-    return [QueryError.parseError];
-  }
+export function validateSelector(sel: Selector): ValidationDetailedError {
+  return val({
+    path: [],
+    pos: 0,
+    previous: null,
+    remaining: sel,
+    tokens: sel,
+  });
+}
+
+export default function validateQuery(query: string): ValidationError | null {
+  const q = parser(query)[0]; // TODO - handle multiple!
+  return val({
+    path: [],
+    pos: 0,
+    previous: null,
+    remaining: q,
+    tokens: q,
+  });
 }

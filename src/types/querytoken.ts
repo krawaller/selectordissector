@@ -1,3 +1,5 @@
+import {QueryError} from "./";
+
 export enum TokenType {
   start = "start",
   descendant = "descendant",
@@ -10,6 +12,7 @@ export enum TokenType {
   pseudo = "pseudo",
   attribute = "attribute",
   wip = "wip",
+  error = "error",
 }
 
 export type UniversalToken = {
@@ -86,6 +89,12 @@ export type WipToken = {
   value: string,
 };
 
+export type ErrorToken = {
+  type: TokenType.error,
+  name: QueryError,
+  value: string | QueryToken,
+};
+
 export type CombinatorToken = DescendantToken | ChildToken | SiblingToken | AdjacentToken | ParentToken;
 
-export type QueryToken = CombinatorToken | ElementToken | StartToken | WipToken;
+export type QueryToken = CombinatorToken | ElementToken | StartToken | WipToken | ErrorToken;

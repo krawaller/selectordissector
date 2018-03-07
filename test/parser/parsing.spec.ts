@@ -1,6 +1,6 @@
 import * as test from "tape";
 
-import {AttributeAction, Selector, TokenType} from "../../src/types";
+import {AttributeAction, ErrorToken, QueryError, Selector, TokenType} from "../../src/types";
 
 import parser from "../../src/parser";
 
@@ -44,6 +44,23 @@ test("Parser catches in progress stuff", (t) => {
     parser(input),
     [selector],
     description,
+  ));
+  t.end();
+});
+
+test("Parsing nonsense yields an error token", (t) => {
+  type TestCase = [string, ErrorToken, string];
+  const nonsenses: TestCase[] = [
+    [
+      ":#",
+      {type: TokenType.error, name: QueryError.parseError, value: ":#"},
+      "we correctly cast nonsense to parserror token",
+    ],
+  ];
+  nonsenses.forEach(([input, error, desc]) => t.deepEqual(
+    parser(input),
+    [[error]],
+    desc,
   ));
   t.end();
 });
