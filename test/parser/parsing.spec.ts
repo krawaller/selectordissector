@@ -100,6 +100,15 @@ test("Parsing errors are added to selector", (t) => {
       ],
       "we correctly get error replacement",
     ],
+    [
+      ">",
+      [
+        {name: QueryError.leadingCombinator, type: TokenType.error, value: {
+          type: TokenType.child,
+        }},
+      ],
+      "we get leadingCombinator error before ending",
+    ],
   ];
   errors.forEach(([input, selector, desc]) => t.deepEqual(
     parser(input),
