@@ -13,6 +13,7 @@ export enum TokenType {
   attribute = "attribute",
   wip = "wip",
   error = "error",
+  unparsed = "unparsed",
 }
 
 export type UniversalToken = {
@@ -92,9 +93,14 @@ export type WipToken = {
 export type ErrorToken = {
   type: TokenType.error,
   name: QueryError,
-  value: string | QueryToken,
+  value: QueryToken,
 };
+
+export type UnparsedToken = {
+  type: TokenType.unparsed,
+  value: string,
+}
 
 export type CombinatorToken = DescendantToken | ChildToken | SiblingToken | AdjacentToken | ParentToken;
 
-export type QueryToken = CombinatorToken | ElementToken | StartToken | WipToken | ErrorToken;
+export type QueryToken = CombinatorToken | ElementToken | StartToken | WipToken | ErrorToken | UnparsedToken;
