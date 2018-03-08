@@ -31,16 +31,16 @@ function val(context: Context): ValidationDetailedError {
     return fail(QueryError.parentCombinator, context);
   }
 
+  if (isCombinatorToken(token) && isCombinatorToken(context.previous)) {
+    return fail(QueryError.adjacentCombinators, context);
+  }
+
   if (context.remaining.length === 1 && isCombinatorToken(token)) {
     return fail(QueryError.endingCombinator, context);
   }
 
   if (context.pos === 0 && isCombinatorToken(token)) {
     return fail(QueryError.leadingCombinator, context);
-  }
-
-  if (isCombinatorToken(token) && isCombinatorToken(context.previous)) {
-    return fail(QueryError.adjacentCombinators, context);
   }
 
   if (token.type === TokenType.pseudo && needsParens.indexOf(token.name) > -1 && token.data === null) {
