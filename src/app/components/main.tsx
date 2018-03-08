@@ -62,7 +62,7 @@ export default class Main extends React.Component<{}, MainState> {
     this.setState({ selector });
     const tokens = parser(selector)[0];
     const idx =
-      tokens.length && tokens[tokens.length - 1].type === TokenType.wip
+      tokens.length && (tokens[tokens.length - 1].type === TokenType.wip || tokens[tokens.length - 1].type === TokenType.error)
         ? tokens.length - 1
         : tokens.length; // not -1 since we'll add start later
     this.setState({
