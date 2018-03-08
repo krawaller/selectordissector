@@ -99,7 +99,7 @@ export type ErrorToken = {
 export type UnparsedToken = {
   type: TokenType.unparsed,
   value: string,
-}
+};
 
 export type CombinatorToken = DescendantToken | ChildToken | SiblingToken | AdjacentToken | ParentToken;
 
