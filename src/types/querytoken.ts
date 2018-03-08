@@ -85,9 +85,18 @@ export type ParentToken = {
   type: TokenType.parent,
 };
 
+export enum WipType {
+  class = "class",
+  id = "id",
+  pseudo = "pseudo",
+  attr = "attr",
+  pseudoArg = "pseudoarg",
+}
+
 export type WipToken = {
   type: TokenType.wip,
   value: string,
+  name: WipType,
 };
 
 export type ErrorToken = {

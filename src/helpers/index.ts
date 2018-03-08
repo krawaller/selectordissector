@@ -6,6 +6,8 @@ export * from "./describeToken";
 export * from "./printToken";
 export * from "./classifyFormula";
 export * from "./describeError";
+export * from "./describeWip";
+export * from "./matchWipType";
 
 export function isCombinatorToken(token: QueryToken): token is CombinatorToken {
   return token && [

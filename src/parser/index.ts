@@ -1,18 +1,17 @@
 import * as cssWhat from "css-what";
 
-import {ErrorToken, QueryError, Selector, TokenType} from "../types";
-
-import {travelArray} from "../helpers";
-
+import {matchWipType, travelArray} from "../helpers";
+import {ErrorToken, QueryError, Selector, TokenType, WipType} from "../types";
 import {validateSelector} from "../validator";
 
-const residue = /\.$|\:$|\[[^\]]*$|#$/g;
+const residue = /\.$|\:$|\[[^\]]*$|#$|\:[^ ]*\([^)]*$/g;
 
 export default function(query: string): Selector[] {
   const wip = query.match(residue);
+  const shortQuery = query.replace(residue, "");
   let result: Selector[];
   try {
-    result = cssWhat(query.replace(residue, ""));
+    result = cssWhat(shortQuery);
   } catch (e) {
     return [[{
       name: QueryError.parseError,
@@ -32,7 +31,11 @@ export default function(query: string): Selector[] {
       value: travelArray(selector, path),
     } as ErrorToken);
   } else if (wip) {
+    if (shortQuery.substr(shortQuery.length - 1) === " ") {
+      result[0].push({type: TokenType.descendant});
+    }
     result[0].push({
+      name: matchWipType(wip[0]),
       type: TokenType.wip,
       value: wip[0],
     });

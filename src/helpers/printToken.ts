@@ -1,8 +1,8 @@
-import {AttributeAction, AttributeToken, QueryToken, TagToken, TokenType} from "../types";
+import {AttributeAction, AttributeToken, PseudoToken, QueryError, QueryToken, TagToken, TokenType } from "../types";
 
 export function printToken(token: QueryToken): string {
   switch (token.type) {
-    case TokenType.error: return printToken(token.value);
+    case TokenType.error: return printToken(token.value) + (token.name === QueryError.extraneousParens && !(token.value as PseudoToken).data ? "()" : "");
     case TokenType.wip: return token.value;
     case TokenType.tag: return (token as TagToken).name;
     case TokenType.universal: return "*";

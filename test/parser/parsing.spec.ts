@@ -1,6 +1,6 @@
 import * as test from "tape";
 
-import {AttributeAction, ErrorToken, QueryError, Selector, TokenType} from "../../src/types";
+import {AttributeAction, ErrorToken, QueryError, Selector, TokenType, WipType} from "../../src/types";
 
 import parser from "../../src/parser";
 
@@ -30,14 +30,33 @@ test("Parser catches in progress stuff", (t) => {
     [
       "div.", [
         {type: TokenType.tag, name: "div"},
-        {type: TokenType.wip, value: "."},
+        {type: TokenType.wip, value: ".", name: WipType.class},
       ], "we handle WIP classes",
     ],
     [
       "div#", [
         {type: TokenType.tag, name: "div"},
-        {type: TokenType.wip, value: "#"},
+        {type: TokenType.wip, value: "#", name: WipType.id},
       ], "we handle WIP id:s",
+    ],
+    [
+      "div:", [
+        {type: TokenType.tag, name: "div"},
+        {type: TokenType.wip, value: ":", name: WipType.pseudo},
+      ], "we handle WIP pseudos",
+    ],
+    [
+      "div:foo(", [
+        {type: TokenType.tag, name: "div"},
+        {type: TokenType.wip, value: ":foo(", name: WipType.pseudoArg},
+      ], "we handle WIP pseudo args",
+    ],
+    [
+      "div .", [
+        {type: TokenType.tag, name: "div"},
+        {type: TokenType.descendant},
+        {type: TokenType.wip, value: ".", name: WipType.class},
+      ], "we handle descendant combinator before the wip part",
     ],
   ];
   wips.forEach(([input, selector, description]) => t.deepEqual(
