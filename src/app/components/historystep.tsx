@@ -33,7 +33,7 @@ const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, toke
       callback(0);
     }
   };
-  const graphic = token.type === TokenType.wip
+  const graphic = (token.type === TokenType.wip || token.type === TokenType.error)
     ? "check_box_disabled"
     : idx <= selIdx
       ? "check_box"

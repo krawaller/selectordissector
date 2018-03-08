@@ -1,11 +1,10 @@
 import * as React from "react";
 
-import { Collection, QueryToken, TokenType, ValidationError } from "../../types";
+import { Collection, QueryToken, TokenType } from "../../types";
 
 import Factory, {div, h1, li, p, span, strong, ul} from "../../builder";
 import { mainStyles } from "../styles";
 import Element from "./element";
-import ErrorComp from "./error";
 import Form from "./form";
 import Header from "./header";
 import HistoryStepComp from "./historystep";
@@ -14,7 +13,6 @@ import InfoDialog from "./infodialog";
 import { getDescendantPaths } from "../../helpers";
 import matcher from "../../matcher";
 import parser from "../../parser";
-import validator from "../../validator";
 
 import { Button } from "rmwc/Button";
 import { Elevation } from "rmwc/Elevation";
@@ -42,7 +40,6 @@ type MainState = {
   selector: string,
   selectorTokens: QueryToken[],
   message: string,
-  error?: ValidationError,
   idx: number,
   InfoDialogOpen: boolean,
 };
@@ -63,31 +60,22 @@ export default class Main extends React.Component<{}, MainState> {
   }
   public updateSelector(selector) {
     this.setState({ selector });
-    const valError = validator(selector);
-    if (!valError) {
-      const tokens = parser(selector)[0];
-      const idx =
-        tokens.length && tokens[tokens.length - 1].type === TokenType.wip
-          ? tokens.length - 1
-          : tokens.length; // not -1 since we'll add start later
-      this.setState({
-        error: null,
-        idx,
-        message: "",
-        selectorTokens: tokens,
-      });
-    } else {
-      this.setState({
-        error: valError,
-        message: "",
-      });
-    }
+    const tokens = parser(selector)[0];
+    const idx =
+      tokens.length && tokens[tokens.length - 1].type === TokenType.wip
+        ? tokens.length - 1
+        : tokens.length; // not -1 since we'll add start later
+    this.setState({
+      idx,
+      message: "",
+      selectorTokens: tokens,
+    });
   }
   public render() {
     let coll = [[666]];
     type HistoryStep = {token: QueryToken, coll: Collection};
     let history: HistoryStep[] = [];
-    if (this.state.selector !== "" && !this.state.error) {
+    if (this.state.selector !== "") {
       const start: QueryToken = {type: TokenType.start};
       history = this.state.selectorTokens.reduce( (acc, token) => acc.concat({
         coll: matcher(tree, acc[acc.length - 1].coll, token).result,
@@ -104,9 +92,7 @@ export default class Main extends React.Component<{}, MainState> {
             <GridCell span="6">
               <Typography use="title">Selection steps</Typography><br/>
               {
-                this.state.error
-                ? <ErrorComp error={this.state.error}/>
-                : !history.length
+                !history.length
                   ? <Typography>Welcome! Enter a selector above to get started.</Typography>
                   : this.state.message
               }
