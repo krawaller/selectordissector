@@ -1,9 +1,10 @@
 import {AttributeAction, AttributeToken, FormulaType, PseudoName, QueryToken, TagToken, TokenType} from "../types";
 
-import {classifyFormula} from "../helpers";
+import {classifyFormula, describeError} from "../helpers";
 
 export function describeToken(token: QueryToken): string {
   switch (token.type) {
+    case TokenType.error: return describeError(token.name, token.value );
     case TokenType.wip: return `Ignoring WIP part "${token.value}"`;
     case TokenType.start: return `Start with all elements in the entire document.`;
     case TokenType.tag: return `Keep only the elements where the type is "${(token as TagToken).name}".`;

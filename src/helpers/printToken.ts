@@ -2,10 +2,14 @@ import {AttributeAction, AttributeToken, QueryToken, TagToken, TokenType} from "
 
 export function printToken(token: QueryToken): string {
   switch (token.type) {
+    case TokenType.error: return printToken(token.value);
+    case TokenType.wip: return token.value;
     case TokenType.tag: return (token as TagToken).name;
     case TokenType.universal: return "*";
     case TokenType.start: return "*";
     case TokenType.child: return ">";
+    case TokenType.parent: return "<";
+    case TokenType.unparsed: return token.value;
     case TokenType.descendant: return "_";
     case TokenType.attribute: {
       const t = token as AttributeToken;
