@@ -32,6 +32,13 @@ test("Parser catches in progress stuff", (t) => {
       ], "we handle WIP pseudo args",
     ],
     [
+      "div :foo(", [
+        {type: TokenType.tag, name: "div"},
+        {type: TokenType.descendant},
+        {type: TokenType.wip, value: ":foo(", name: WipType.pseudoArg},
+      ], "we handle WIP pseudo args preceeded by space",
+    ],
+    [
       "div .", [
         {type: TokenType.tag, name: "div"},
         {type: TokenType.descendant},

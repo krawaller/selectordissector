@@ -4,26 +4,52 @@ import {isCombinatorToken, matchWipType, travelArray} from "../helpers";
 import {ErrorToken, QueryError, Selector, TokenType, WipType} from "../types";
 import {validateSelector} from "../validator";
 
-const residue = /\.$|\:$|\[[^\]]*$|#$|\:[^ ]*\([^)]*$/g;
+const wipMatcher = /^\.$|^\:$|^\[[^\]]*$|^#$|^\:[^ ]*\([^)]*$/g;
 
 export default function(query: string): Selector[] {
-  const wip = query.match(residue);
-  const shortQuery = query.replace(residue, "");
   let result: Selector[];
-  try {
-    result = cssWhat(shortQuery);
-  } catch (e) {
-    return [[{
-      name: QueryError.parseError,
-      type: TokenType.error,
-      value: {
-        type: TokenType.unparsed,
-        value: query,
-      },
-    }]];
+  let usedQuery = query;
+  while (!result && usedQuery.length) {
+    try {
+      result = cssWhat(usedQuery);
+    } catch (e) {
+      usedQuery = usedQuery.substr(0, usedQuery.length - 1);
+    }
   }
+  if (!result) {
+    result = [[]];
+  }
+  let residue = query.substr(usedQuery.length);
+  const finalPseudo = usedQuery.match(/\:[^ \()]*$/);
+  if (residue.match(/^\([^\)]*$/) && finalPseudo) {
+    // we want to treat ":foo(" as WIP parens before anything else
+    residue = finalPseudo[0] + residue;
+    usedQuery = usedQuery.substr(0, usedQuery.length - finalPseudo[0].length);
+    result[0].pop();
+  }
+  const endingWithComb = result[0].length && isCombinatorToken(result[0][result[0].length - 1]);
   const validation = validateSelector(result[0]);
-  const endingWithComb = isCombinatorToken(result[0][result[0].length - 1]);
+  if (residue) {
+    if (!endingWithComb && usedQuery.substr(usedQuery.length - 1) === " ") {
+      result[0].push({type: TokenType.descendant});
+    }
+    if (residue.match(wipMatcher)) {
+      result[0].push({
+        name: matchWipType(residue),
+        type: TokenType.wip,
+        value: residue,
+      });
+    } else {
+      result[0].push({
+        name: QueryError.parseError,
+        type: TokenType.error,
+        value: {
+          type: TokenType.unparsed,
+          value: residue,
+        },
+      });
+    }
+  }
   if (validation) {
     const [error, selector, path] = validation;
     result[0] = result[0].slice(0, path[0]).concat({
@@ -31,16 +57,8 @@ export default function(query: string): Selector[] {
       type: TokenType.error,
       value: travelArray(selector, path),
     } as ErrorToken);
-  } else if (wip) {
-    if (!endingWithComb && shortQuery.substr(shortQuery.length - 1) === " ") {
-      result[0].push({type: TokenType.descendant});
-    }
-    result[0].push({
-      name: matchWipType(wip[0]),
-      type: TokenType.wip,
-      value: wip[0],
-    });
-  } else if (endingWithComb) {
+  }
+  if (endingWithComb && !residue && result[0].length > 1) {
     result[0].push({type: TokenType.wip, name: WipType.followComb, value: ""});
   }
   return result;

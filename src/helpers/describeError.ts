@@ -3,7 +3,7 @@ import {PseudoToken, QueryError, QueryToken} from "../types";
 export function describeError(error: QueryError, token: QueryToken): string {
   const t = token as PseudoToken;
   switch (error) {
-    case QueryError.parseError: return `Couldn't parse the selector`;
+    case QueryError.parseError: return `Couldn't parse this part`;
     case QueryError.adjacentCombinators: return `A combinator cannot follow on another combinator`;
     case QueryError.leadingCombinator: return `Your selector cannot begin with a combinator`;
     case QueryError.parentCombinator: return `We have chosen not to implement the parent combinator`;

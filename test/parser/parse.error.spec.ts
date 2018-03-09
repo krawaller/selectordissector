@@ -24,6 +24,30 @@ test("Parsing nonsense yields an error token", (t) => {
   t.end();
 });
 
+test("We keep valid stuff before nonsense", (t) => {
+  type TestCase = [string, Selector, string];
+  const nonsenses: TestCase[] = [
+    [
+      "div :#",
+      [
+        {type: TokenType.tag, name: "div"},
+        {type: TokenType.descendant},
+        {name: QueryError.parseError, type: TokenType.error, value: {
+          type: TokenType.unparsed,
+          value: ":#",
+        }},
+      ],
+      "we keep stuff before the nonsense",
+    ],
+  ];
+  nonsenses.forEach(([input, selector, desc]) => t.deepEqual(
+    parser(input),
+    [selector],
+    desc,
+  ));
+  t.end();
+});
+
 test("Parsing errors are added to selector", (t) => {
   type TestCase = [string, Selector, string];
   const errors: TestCase[] = [
