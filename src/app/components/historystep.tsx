@@ -4,14 +4,15 @@ import { classifyFormula, describeToken, printToken } from "../../helpers";
 import { Collection, QueryToken, TokenType } from "../../types";
 
 import {
-  List,
   ListItem,
   ListItemGraphic,
-  ListItemMeta,
   ListItemSecondaryText,
   ListItemText,
-  SimpleListItem,
 } from "rmwc/List";
+
+import {
+  Radio,
+} from "rmwc/Radio";
 
 type HistoryStepProps = {
   callback: (nbr) => void
@@ -25,21 +26,23 @@ const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, toke
   const handler = () => {
     if (token.type === TokenType.wip) {
       return;
-    } else if (idx > selIdx || idx < selIdx) {
-      callback(idx);
-    } else if (idx === selIdx && idx > 0) {
-      callback(idx - 1);
-    } else {
-      callback(0);
     }
+    callback(idx);
   };
-  const graphic = (token.type === TokenType.wip || token.type === TokenType.error)
-    ? "check_box_disabled"
-    : idx <= selIdx
-      ? "check_box"
-      : "check_box_outline_blank";
   return (
-    <SimpleListItem onClick={handler} graphic={graphic} text={printToken(token)} secondaryText={describeToken(token)} />
+    <ListItem onClick={handler}>
+      <ListItemGraphic>
+        {token.type === TokenType.wip || token.type === TokenType.error ? (
+          <span>error</span>
+        ) : (
+          <Radio checked={idx === selIdx} onChange={() => {return; }} />
+        )}
+      </ListItemGraphic>
+      <ListItemText>
+        {printToken(token)}
+        <ListItemSecondaryText>{describeToken(token)}</ListItemSecondaryText>
+      </ListItemText>
+    </ListItem>
   );
 };
 
