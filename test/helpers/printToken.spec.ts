@@ -1,7 +1,7 @@
 import * as test from "tape";
 
 import {printToken} from "../../src/helpers";
-import {PseudoName, QueryError, QueryToken, TokenType } from "../../src/types";
+import {PseudoName, QueryError, QueryToken, TokenType, WipType } from "../../src/types";
 
 test("The printToken helper", (t) => {
   type TestCase = [QueryToken, string, string];
@@ -17,6 +17,15 @@ test("The printToken helper", (t) => {
       },
       ":first-child()",
       "we get empty parens showing",
+    ],
+    [
+      {
+        name: WipType.followComb,
+        type: TokenType.wip,
+        value: "",
+      },
+      "…",
+      "We get ellipsis for WIP after combinator",
     ],
   ];
   prints.forEach(([token, result, desc]) => {

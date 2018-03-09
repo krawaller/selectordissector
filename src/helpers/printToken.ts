@@ -1,9 +1,14 @@
-import {AttributeAction, AttributeToken, PseudoToken, QueryError, QueryToken, TagToken, TokenType } from "../types";
+import {AttributeAction, AttributeToken, PseudoToken, QueryError, QueryToken, TagToken, TokenType, WipType } from "../types";
 
 export function printToken(token: QueryToken): string {
   switch (token.type) {
     case TokenType.error: return printToken(token.value) + (token.name === QueryError.extraneousParens && !(token.value as PseudoToken).data ? "()" : "");
-    case TokenType.wip: return token.value;
+    case TokenType.wip: {
+      switch (token.name) {
+        case WipType.followComb: return "…";
+        default: return token.value;
+      }
+    }
     case TokenType.tag: return (token as TagToken).name;
     case TokenType.universal: return "*";
     case TokenType.start: return "*";
