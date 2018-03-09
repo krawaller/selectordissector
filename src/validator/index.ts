@@ -23,6 +23,10 @@ function val(context: Context): ValidationDetailedError {
   }
   const token = context.remaining[0];
 
+  if (context.previous && !isCombinatorToken(context.previous) && (token.type === TokenType.tag || token.type === TokenType.universal)) {
+    return fail(QueryError.faultyTypePosition, context);
+  }
+
   if (token.type === TokenType.pseudo && Object.keys(PseudoName).map((k) => PseudoName[k]).indexOf(token.name) === -1) {
     return fail(QueryError.unknownPseudoSelector, context);
   }

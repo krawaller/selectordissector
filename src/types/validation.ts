@@ -9,6 +9,7 @@ export enum QueryError {
   faultyFormula = "faultyFormula",
   missingParens = "missingParens",
   extraneousParens = "extraneousParens",
+  faultyTypePosition = "faultyTypePosition",
 }
 
 export type ValidationDetailedError = [QueryError, Selector, Path];
