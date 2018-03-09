@@ -1,6 +1,5 @@
 import * as test from "tape";
 
-import {QueryError} from "../../src/types";
 import validator from "../../src/validator";
 
 test(`Correct queries don't yield error`, (t) => {

@@ -1,4 +1,4 @@
-import { Collection, History, HistoryStep, QueryToken, Selector, TokenType, VirtualElement } from "../types";
+import { HistoryStep, QueryToken, Selector, TokenType, VirtualElement } from "../types";
 
 import matcher from "../matcher";
 import {getDescendantPaths} from "./";

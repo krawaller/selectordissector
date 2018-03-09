@@ -3,7 +3,7 @@ import * as test from "tape";
 import {div, span} from "../../src/builder";
 import matcher from "../../src/matcher";
 import parser from "../../src/parser";
-import {ElementToken, Path, VirtualElement} from "../../src/types";
+import {ElementToken, Path} from "../../src/types";
 
 test("Element tester returns correct result for class selector", (t) => {
   const tree = div([

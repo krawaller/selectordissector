@@ -1,5 +1,5 @@
 import {getDescendantPaths, travelTree} from "../helpers";
-import {CombinatorToken, ContentNode, TokenType, VirtualElement} from "../types";
+import {CombinatorToken, ContentNode, TokenType} from "../types";
 
 export default function combineFromPath(tree: ContentNode, path: number[], token: CombinatorToken) {
   switch (token.type) {

@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import {
-  DefaultDialogTemplate,
   Dialog,
   DialogBackdrop,
   DialogBody,
@@ -11,8 +10,6 @@ import {
   DialogHeaderTitle,
   DialogSurface,
 } from "rmwc/Dialog";
-
-import { Button } from "rmwc/Button";
 
 type InfoDialogProps = {
   isOpen: boolean,

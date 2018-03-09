@@ -1,6 +1,6 @@
 import * as test from "tape";
 
-import {AttributeAction, ErrorToken, QueryError, Selector, TokenType, WipType} from "../../src/types";
+import {Selector, TokenType, WipType} from "../../src/types";
 
 import parser from "../../src/parser";
 

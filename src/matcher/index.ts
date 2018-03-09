@@ -1,5 +1,5 @@
 import {isTextNode} from "../builder";
-import {Collection, CombinatorToken, ElementToken, MatchResult, Path, QueryToken, VirtualElement} from "../types";
+import {Collection, CombinatorToken, ElementToken, MatchResult, QueryToken, VirtualElement} from "../types";
 
 import {isCombinatorToken} from "../helpers";
 

@@ -1,6 +1,6 @@
 import {classifyFormula, isCombinatorToken} from "../helpers";
 import parser from "../parser";
-import {ErrorToken, FormulaType, Path, PseudoName, QueryError, QueryToken, Selector, TokenType, ValidationDetailedError, ValidationError} from "../types";
+import {FormulaType, PseudoName, QueryError, QueryToken, Selector, TokenType, ValidationDetailedError, ValidationError} from "../types";
 
 const usesFormula = [PseudoName.nthChild, PseudoName.nthOfType];
 const needsParens = [PseudoName.nthChild, PseudoName.nthOfType];

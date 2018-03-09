@@ -1,7 +1,7 @@
 import * as React from "react";
 import Spinner from "react-spinner-material";
 
-import { classifyFormula, describeToken, printToken } from "../../helpers";
+import { describeToken, printToken } from "../../helpers";
 import { Collection, QueryToken, TokenType } from "../../types";
 
 import {

@@ -1,6 +1,6 @@
 import {isTextNode, TEXTNODE} from "../builder";
 import {classifyFormula, travelTree} from "../helpers";
-import {AttributeAction, ContentNode, ElementToken, FormulaType, Path, PseudoName, PseudoToken, TextNode, TokenType, VirtualElement} from "../types";
+import {AttributeAction, ContentNode, ElementToken, FormulaType, Path, PseudoName, PseudoToken, TokenType} from "../types";
 
 export default function testElement(tree: ContentNode, path: Path, token: ElementToken) {
   const elem = travelTree(tree, path);

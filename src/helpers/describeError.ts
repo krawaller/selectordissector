@@ -1,5 +1,4 @@
-import {travelArray} from "../helpers";
-import {PseudoToken, QueryError, QueryToken, ValidationDetailedError, ValidationError} from "../types";
+import {PseudoToken, QueryError, QueryToken} from "../types";
 
 export function describeError(error: QueryError, token: QueryToken): string {
   const t = token as PseudoToken;

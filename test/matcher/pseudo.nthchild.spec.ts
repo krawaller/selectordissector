@@ -4,7 +4,7 @@ import {div, span} from "../../src/builder";
 import {getDescendantPaths} from "../../src/helpers";
 import matcher from "../../src/matcher";
 import parser from "../../src/parser";
-import {Collection, Path, PseudoName, PseudoToken, TokenType, VirtualElement} from "../../src/types";
+import {Collection, VirtualElement} from "../../src/types";
 
 const commonTree = (
   div([

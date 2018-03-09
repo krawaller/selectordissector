@@ -2,7 +2,7 @@ import * as test from "tape";
 
 import {div, span} from "../../src/builder";
 import matcher from "../../src/matcher";
-import {ElementToken, Path, TokenType, VirtualElement} from "../../src/types";
+import {ElementToken, Path, TokenType} from "../../src/types";
 
 test("Element tester returns correct result for tag comparison", (t) => {
   type TestCase = [Path, boolean, string];

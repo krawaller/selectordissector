@@ -3,7 +3,7 @@
 import * as test from "tape";
 
 import builderFactory, {div, isElem, TEXTNODE} from "../../src/builder";
-import {ContentNode, VirtualElement} from "../../src/types";
+import {ContentNode} from "../../src/types";
 
 test("The isElem tester", (t) => {
   t.equal(isElem({foo: "bar"}), false, "returns false for regular object");

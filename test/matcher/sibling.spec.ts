@@ -2,7 +2,7 @@ import * as test from "tape";
 
 import {div} from "../../src/builder";
 import matcher from "../../src/matcher";
-import {Collection, Path, SiblingToken, TokenType, VirtualElement} from "../../src/types";
+import {Collection, Path, SiblingToken, TokenType} from "../../src/types";
 
 const tree = (
   div([

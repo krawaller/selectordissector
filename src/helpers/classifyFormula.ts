@@ -5,7 +5,6 @@ import {FormulaClassification, FormulaType} from "../types";
 export function classifyFormula(formula: string): FormulaClassification {
   let match;
   if ((match = formula.match(/^-n\+([0-9]+)$/))) { // -n+2
-    const max = +match[1];
     return [FormulaType.negAndOffset, match[1]];
   } else if ((match = formula.match(/^[1-9][0-9]*$/))) { // 5
     return [FormulaType.exact, +formula];

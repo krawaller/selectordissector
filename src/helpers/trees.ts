@@ -1,4 +1,4 @@
-import Factory, {div, h1, li, p, span, strong, ul} from "../builder";
+import Factory, {div, h1, li, p, strong, ul} from "../builder";
 
 export const basicTree = div({lang: "sv"}, [
   h1("Wow this is cool"),

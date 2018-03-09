@@ -3,7 +3,6 @@ import {ContentNode, TextNode, VirtualElement} from "../types";
 const elemProto = {};
 
 type Child = VirtualElement | Builder | string;
-type ChildList = Child[];
 
 type AttrParamType = {[key: string]: string};
 type ChildrenParamType = Child[] | Child | string;

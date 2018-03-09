@@ -14,7 +14,6 @@ import { basicTree, makeHistory } from "../../helpers";
 import parser from "../../parser";
 
 import { Grid, GridCell } from "rmwc/Grid";
-import { TextField } from "rmwc/TextField";
 import { Typography } from "rmwc/Typography";
 
 type MainState = {
