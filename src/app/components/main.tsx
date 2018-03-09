@@ -19,7 +19,6 @@ import { Typography } from "rmwc/Typography";
 type MainState = {
   query: string,
   selectorTokens: QueryToken[],
-  message: string,
   idx: number,
   InfoDialogOpen: boolean,
 };
@@ -30,7 +29,7 @@ export default class Main extends React.Component<{}, MainState> {
     this.updateSelector = this.updateSelector.bind(this);
     this.updateIdx = this.updateIdx.bind(this);
     this.toggleDialog = this.toggleDialog.bind(this);
-    this.state = {query: "", message: "", idx: 0, selectorTokens: [], InfoDialogOpen: false};
+    this.state = {query: "", idx: 0, selectorTokens: [], InfoDialogOpen: false};
   }
   public toggleDialog() {
     this.setState({InfoDialogOpen: !this.state.InfoDialogOpen});
@@ -47,7 +46,6 @@ export default class Main extends React.Component<{}, MainState> {
         : tokens.length; // not -1 since makeHistory adds start token
     this.setState({
       idx,
-      message: "",
       selectorTokens: tokens,
     });
   }
@@ -69,13 +67,12 @@ export default class Main extends React.Component<{}, MainState> {
               {
                 !history.length
                   ? <Typography>Welcome! Enter a selector above to get started.</Typography>
-                  : this.state.message
+                  : <HistoryListComp
+                      idx = {this.state.idx}
+                      updateIdx = {this.updateIdx}
+                      history = {history}
+                    />
               }
-              <HistoryListComp
-                idx = {this.state.idx}
-                updateIdx = {this.updateIdx}
-                history = {history}
-              />
             </GridCell>
             <GridCell span="6">
               <Typography use="title">Selection result</Typography>
