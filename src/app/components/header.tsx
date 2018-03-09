@@ -36,6 +36,7 @@ const Header: React.StatelessComponent<HeaderProps> = ({openInfoDialog}) => (
         <ToolbarIcon
           tag="a"
           href="https://github.com/krawaller/selectordissector"
+          target="_blank"
           use={
             <svg
               style={{ width: "24px", height: "24px" }}
