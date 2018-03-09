@@ -16,9 +16,10 @@ export function printToken(token: QueryToken): string {
       switch (t.action) {
         case AttributeAction.element: return `.${t.value}`;
         case AttributeAction.exists: return `[${t.name}]`;
-        case AttributeAction.equals:
-          return t.name === "id" ? `#${t.value}` : `[${t.name}=${t.value}]`;
-        // TODO - start and end etc
+        case AttributeAction.equals: return t.name === "id" ? `#${t.value}` : `[${t.name}=${t.value}]`;
+        case AttributeAction.start: return `[${t.name}^=${t.value}]`;
+        case AttributeAction.end: return `[${t.name}$=${t.value}]`;
+        // TODO - word, search, until hyphen
       }
     }
     case TokenType.adjacent: return "+";
