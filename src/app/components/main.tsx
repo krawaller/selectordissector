@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 
 import { History, QueryToken, TokenType } from "../../types";
 
@@ -8,12 +7,12 @@ import Element from "./element";
 import Header from "./header";
 import HistoryListComp from "./historylist";
 import InfoDialog from "./infodialog";
+import SelectorFieldComp from "./selectorfield";
 
 import { basicTree, makeHistory } from "../../helpers";
 
 import parser from "../../parser";
 
-import { FormField } from "rmwc/FormField";
 import { Grid, GridCell } from "rmwc/Grid";
 import { TextField } from "rmwc/TextField";
 import { Typography } from "rmwc/Typography";
@@ -27,17 +26,12 @@ type MainState = {
 };
 
 export default class Main extends React.Component<{}, MainState> {
-  private field: TextField;
   constructor(props) {
     super(props);
     this.updateSelector = this.updateSelector.bind(this);
     this.updateIdx = this.updateIdx.bind(this);
     this.toggleDialog = this.toggleDialog.bind(this);
     this.state = {query: "", message: "", idx: 0, selectorTokens: [], InfoDialogOpen: false};
-  }
-  public componentDidMount() {
-    const input: HTMLInputElement = ReactDOM.findDOMNode(this.field).querySelector("input[type=text]");
-    input.focus();
   }
   public toggleDialog() {
     this.setState({InfoDialogOpen: !this.state.InfoDialogOpen});
@@ -51,7 +45,7 @@ export default class Main extends React.Component<{}, MainState> {
     const idx =
       tokens.length && (tokens[tokens.length - 1].type === TokenType.wip || tokens[tokens.length - 1].type === TokenType.error)
         ? tokens.length - 1
-        : tokens.length; // not -1 since we'll add start later
+        : tokens.length; // not -1 since makeHistory adds start token
     this.setState({
       idx,
       message: "",
@@ -69,13 +63,7 @@ export default class Main extends React.Component<{}, MainState> {
       <div style={mainStyles}>
         <Header openInfoDialog={this.toggleDialog} />
         <div className="content">
-          <TextField
-            box
-            ref={(field) => this.field = field}
-            withLeadingIcon="zoom_in"
-            label="CSS selector to dissect"
-            onInput={(event) => this.updateSelector(event.target.value)}
-          />
+          <SelectorFieldComp onUpdate={this.updateSelector} />
           <Grid>
             <GridCell span="6">
               <Typography use="title">Selection steps</Typography><br/>
