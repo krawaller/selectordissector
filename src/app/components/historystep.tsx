@@ -16,7 +16,7 @@ import {
 } from "rmwc/Radio";
 
 type HistoryStepProps = {
-  callback: (nbr) => void
+  callback: () => void
   token: QueryToken
   coll: Collection
   idx: number
@@ -28,7 +28,7 @@ const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, toke
     if (token.type === TokenType.wip || token.type === TokenType.error) {
       return;
     }
-    callback(idx);
+    callback();
   };
   return (
     <ListItem onClick={handler}>

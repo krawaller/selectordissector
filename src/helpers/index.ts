@@ -8,6 +8,8 @@ export * from "./classifyFormula";
 export * from "./describeError";
 export * from "./describeWip";
 export * from "./matchWipType";
+export * from "./makeHistory";
+export * from "./trees";
 
 export function isCombinatorToken(token: QueryToken): token is CombinatorToken {
   return token && [

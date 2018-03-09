@@ -1,43 +1,25 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { Collection, QueryToken, TokenType } from "../../types";
+import { History, QueryToken, TokenType } from "../../types";
 
-import Factory, {div, h1, li, p, span, strong, ul} from "../../builder";
 import { mainStyles } from "../styles";
 import Element from "./element";
 import Header from "./header";
-import HistoryStepComp from "./historystep";
+import HistoryListComp from "./historylist";
 import InfoDialog from "./infodialog";
 
-import { getDescendantPaths } from "../../helpers";
-import matcher from "../../matcher";
+import { basicTree, makeHistory } from "../../helpers";
+
 import parser from "../../parser";
 
-import { Button } from "rmwc/Button";
-import { Elevation } from "rmwc/Elevation";
 import { FormField } from "rmwc/FormField";
 import { Grid, GridCell } from "rmwc/Grid";
-import { List } from "rmwc/List";
 import { TextField } from "rmwc/TextField";
 import { Typography } from "rmwc/Typography";
 
-const tree = div({lang: "sv"}, [
-  h1("Wow this is cool"),
-  div([
-    p("yeah, well, hihi!"),
-    p(["This is", strong("really"), "dumb!"]),
-    Factory("hr")(),
-    ul([
-      li("make the bed"),
-      li({class: "important"}, strong("DO THE DISHES")),
-      li("take out trash"),
-    ]),
-  ]),
-]);
-
 type MainState = {
-  selector: string,
+  query: string,
   selectorTokens: QueryToken[],
   message: string,
   idx: number,
@@ -51,7 +33,7 @@ export default class Main extends React.Component<{}, MainState> {
     this.updateSelector = this.updateSelector.bind(this);
     this.updateIdx = this.updateIdx.bind(this);
     this.toggleDialog = this.toggleDialog.bind(this);
-    this.state = {selector: "", message: "", idx: 0, selectorTokens: [], InfoDialogOpen: false};
+    this.state = {query: "", message: "", idx: 0, selectorTokens: [], InfoDialogOpen: false};
   }
   public componentDidMount() {
     const input: HTMLInputElement = ReactDOM.findDOMNode(this.field).querySelector("input[type=text]");
@@ -63,9 +45,9 @@ export default class Main extends React.Component<{}, MainState> {
   public updateIdx(nbr) {
     this.setState({idx: nbr});
   }
-  public updateSelector(selector) {
-    this.setState({ selector });
-    const tokens = parser(selector)[0];
+  public updateSelector(query) {
+    this.setState({ query });
+    const tokens = parser(query)[0];
     const idx =
       tokens.length && (tokens[tokens.length - 1].type === TokenType.wip || tokens[tokens.length - 1].type === TokenType.error)
         ? tokens.length - 1
@@ -78,14 +60,9 @@ export default class Main extends React.Component<{}, MainState> {
   }
   public render() {
     let coll = [[666]];
-    type HistoryStep = {token: QueryToken, coll: Collection};
-    let history: HistoryStep[] = [];
-    if (this.state.selector !== "") {
-      const start: QueryToken = {type: TokenType.start};
-      history = this.state.selectorTokens.reduce( (acc, token) => acc.concat({
-        coll: matcher(tree, acc[acc.length - 1].coll, token).result,
-        token,
-      }), [{token: start, coll: getDescendantPaths(tree, [])} as HistoryStep] );
+    let history: History = [];
+    if (this.state.query !== "") {
+      history = makeHistory(this.state.selectorTokens, basicTree);
       coll = history[this.state.idx].coll;
     }
     return (
@@ -107,26 +84,15 @@ export default class Main extends React.Component<{}, MainState> {
                   ? <Typography>Welcome! Enter a selector above to get started.</Typography>
                   : this.state.message
               }
-              <List>
-                {history.map((h, n) => (
-                  <React.Fragment key={n}>
-                    <HistoryStepComp
-                      token={h.token}
-                      coll={h.coll}
-                      idx={n}
-                      selIdx={this.state.idx}
-                      callback={this.updateIdx}
-                    />
-                    {n === 0 && (
-                      <li role="separator" className="mdc-list-divider"></li>
-                    )}
-                  </React.Fragment>
-                ))}
-              </List>
+              <HistoryListComp
+                idx = {this.state.idx}
+                updateIdx = {this.updateIdx}
+                history = {history}
+              />
             </GridCell>
             <GridCell span="6">
               <Typography use="title">Selection result</Typography>
-              <Element elem={tree} currColl={coll} />
+              <Element elem={basicTree} currColl={coll} />
             </GridCell>
           </Grid>
         </div>

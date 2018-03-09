@@ -18,7 +18,7 @@ export function isTextNode(elem): elem is TextNode {
   return elem.type === TEXTNODE;
 }
 
-const builderFactory: Factory = (type) => (attrParam = {}, childrenParam = []) => {
+const builderFactory: Factory = (type) => (attrParam = {}, childrenParam = []): VirtualElement => {
   let children: Child[];
   if (Array.isArray(attrParam) || typeof attrParam === "string" || isElem(attrParam) || typeof attrParam === "function") {
     childrenParam = attrParam;

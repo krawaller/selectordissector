@@ -13,3 +13,6 @@ export type Selector = QueryToken[];
 export type MatchResult = {
   result: Collection,
 };
+
+export type HistoryStep = {token: QueryToken, coll: Collection};
+export type History = HistoryStep[];
