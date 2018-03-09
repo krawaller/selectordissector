@@ -24,6 +24,7 @@ export default function testElement(tree: ContentNode, path: Path, token: Elemen
           return typeof value === "string" && !!value.match(new RegExp(`^${token.value} |^${token.value}$| ${token.value} | ${token.value}$`));
         }
         case AttributeAction.any: return value.match(token.value);
+        case AttributeAction.hyphen: return value.replace(/\-.*$/, "") === token.value;
       }
     }
     case TokenType.pseudo: {

@@ -27,7 +27,7 @@ export function printToken(token: QueryToken): string {
         case AttributeAction.start: return `[${t.name}^=${t.value}]`;
         case AttributeAction.end: return `[${t.name}$=${t.value}]`;
         case AttributeAction.any: return `[${t.name}*=${t.value}]`;
-        // TODO - word, search, until hyphen
+        case AttributeAction.hyphen: return `[${t.name}|=${t.value}]`;
       }
     }
     case TokenType.adjacent: return "+";

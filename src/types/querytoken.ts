@@ -61,7 +61,8 @@ export enum AttributeAction {
   start = "start",
   end = "end",
   any = "any",
-  element = "element",  // element means it is a class test
+  element = "element", // element means it is a class test
+  hyphen = "hyphen",
 }
 
 export type AttributeToken = {

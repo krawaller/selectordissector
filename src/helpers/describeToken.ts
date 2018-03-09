@@ -23,7 +23,7 @@ export function describeToken(token: QueryToken): string {
         case AttributeAction.start: return `Keep all elements where the "${t.name}" attribute value starts with "${t.value}".`;
         case AttributeAction.end: return `Keep all elements where the "${t.name}" attribute value ends with "${t.value}".`;
         case AttributeAction.any: return `Keep all elements where the "${t.name}" attribute value contains "${t.value}".`;
-        default: return `[[[ description for this type not created yet, sorry ]]]`;
+        case AttributeAction.hyphen: return `Elements where "${t.name}" attribute value is "${t.value}" until hyphen or end.`;
       }
     }
     case TokenType.adjacent: return `Now take all adjacent younger siblings of those elements.`;
