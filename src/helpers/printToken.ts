@@ -10,7 +10,7 @@ export function printToken(token: QueryToken): string {
     case TokenType.child: return ">";
     case TokenType.parent: return "<";
     case TokenType.unparsed: return token.value;
-    case TokenType.descendant: return "_";
+    case TokenType.descendant: return "(space)";
     case TokenType.attribute: {
       const t = token as AttributeToken;
       switch (t.action) {
