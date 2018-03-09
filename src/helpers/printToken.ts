@@ -19,7 +19,9 @@ export function printToken(token: QueryToken): string {
     case TokenType.attribute: {
       const t = token as AttributeToken;
       switch (t.action) {
-        case AttributeAction.element: return `.${t.value}`;
+        case AttributeAction.element: {
+          return t.name === "class" ? `.${t.value}` : `[${t.name}~=${t.value}]`;
+        }
         case AttributeAction.exists: return `[${t.name}]`;
         case AttributeAction.equals: return t.name === "id" ? `#${t.value}` : `[${t.name}=${t.value}]`;
         case AttributeAction.start: return `[${t.name}^=${t.value}]`;

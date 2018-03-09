@@ -32,6 +32,16 @@ test("The printToken helper", (t) => {
       "[foo*=bar]",
       "We can print attr any token",
     ],
+    [
+      {type: TokenType.attribute, name: "class", action: AttributeAction.element, value: "bar", ignoreCase: false},
+      ".bar",
+      "We show class matching as class",
+    ],
+    [
+      {type: TokenType.attribute, name: "foo", action: AttributeAction.element, value: "bar", ignoreCase: false},
+      "[foo~=bar]",
+      "We show element matching when name isnt class",
+    ],
   ];
   prints.forEach(([token, result, desc]) => {
     t.deepEqual(

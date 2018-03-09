@@ -23,6 +23,14 @@ test("Parser yields correct Selector", (t) => {
       ],
       "we can parse an action matching token correctly",
     ],
+    [
+      "div[foo~=bar]",
+      [
+        {type: TokenType.tag, name: "div"},
+        {type: TokenType.attribute, name: "foo", action: AttributeAction.element, value: "bar", ignoreCase: false},
+      ],
+      "we can parse an action matching word correctly",
+    ],
   ];
   selectors.forEach(([input, selector, description]) => t.deepEqual(
     parser(input),
