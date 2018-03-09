@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import autobind from "autobind-decorator";
+
 import { History, QueryToken, TokenType } from "../../types";
 
 import { mainStyles } from "../styles";
@@ -26,17 +28,17 @@ type MainState = {
 export default class Main extends React.Component<{}, MainState> {
   constructor(props) {
     super(props);
-    this.updateSelector = this.updateSelector.bind(this);
-    this.updateIdx = this.updateIdx.bind(this);
-    this.toggleDialog = this.toggleDialog.bind(this);
     this.state = {query: "", idx: 0, selectorTokens: [], InfoDialogOpen: false};
   }
+  @autobind
   public toggleDialog() {
     this.setState({InfoDialogOpen: !this.state.InfoDialogOpen});
   }
+  @autobind
   public updateIdx(nbr) {
     this.setState({idx: nbr});
   }
+  @autobind
   public updateSelector(query) {
     this.setState({ query });
     const tokens = parser(query)[0];

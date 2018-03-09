@@ -21,7 +21,7 @@ const HistoryList: React.StatelessComponent<HistoryListProps> = ({history, idx, 
             coll={h.coll}
             idx={n}
             selIdx={idx}
-            callback={() => this.updateIdx(n)}
+            callback={() => updateIdx(n)}
           />
           {n === 0 && (
             <li role="separator" className="mdc-list-divider"></li>
