@@ -10,6 +10,7 @@ import Header from "./header";
 import HistoryListComp from "./historylist";
 import InfoDialog from "./infodialog";
 import SelectorFieldComp from "./selectorfield";
+import WelcomeComp from "./welcome";
 
 import { basicTree, makeHistory } from "../../helpers";
 
@@ -65,10 +66,10 @@ export default class Main extends React.Component<{}, MainState> {
           <SelectorFieldComp onUpdate={this.updateSelector} />
           <Grid>
             <GridCell span="6">
-              <Typography use="title">Selection steps</Typography><br/>
+              <Typography use="headline">Selection steps</Typography><br/>
               {
                 !history.length
-                  ? <Typography>Welcome! Enter a selector above to get started.</Typography>
+                  ? <WelcomeComp />
                   : <HistoryListComp
                       idx = {this.state.idx}
                       updateIdx = {this.updateIdx}
@@ -77,7 +78,7 @@ export default class Main extends React.Component<{}, MainState> {
               }
             </GridCell>
             <GridCell span="6">
-              <Typography use="title">Selection result</Typography>
+              <Typography use="headline">Selection result</Typography>
               <Element elem={basicTree} currColl={coll} />
             </GridCell>
           </Grid>
