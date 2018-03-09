@@ -91,6 +91,7 @@ export enum WipType {
   pseudo = "pseudo",
   attr = "attr",
   pseudoArg = "pseudoarg",
+  followComb = "followcomb",
 }
 
 export type WipToken = {

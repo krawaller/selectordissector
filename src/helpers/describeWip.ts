@@ -8,5 +8,6 @@ export function describeWip(token: WipToken): string {
     case WipType.id: return `Waiting for id`;
     case WipType.pseudo: return `Waiting for pseudo class name`;
     case WipType.pseudoArg: return `Waiting for closing parens`;
+    case WipType.followComb: return `Must have something after combinator`;
   }
 }

@@ -39,10 +39,6 @@ function val(context: Context): ValidationDetailedError {
     return fail(QueryError.leadingCombinator, context);
   }
 
-  if (context.remaining.length === 1 && isCombinatorToken(token)) {
-    return fail(QueryError.endingCombinator, context);
-  }
-
   if (token.type === TokenType.pseudo && needsParens.indexOf(token.name) > -1 && token.data === null) {
     return fail(QueryError.missingParens, context);
   }

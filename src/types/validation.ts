@@ -4,7 +4,6 @@ export enum QueryError {
   parseError = "parseError",
   parentCombinator = "parentCombinator",
   adjacentCombinators = "adjacentCombinators",
-  endingCombinator = "endingCombinator",
   leadingCombinator = "leadingCombinator",
   unknownPseudoSelector = "unknownPseudoSelector",
   faultyFormula = "faultyFormula",

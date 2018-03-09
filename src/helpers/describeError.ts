@@ -6,7 +6,6 @@ export function describeError(error: QueryError, token: QueryToken): string {
   switch (error) {
     case QueryError.parseError: return `Couldn't parse the selector`;
     case QueryError.adjacentCombinators: return `A combinator cannot follow on another combinator`;
-    case QueryError.endingCombinator: return `Your selector cannot end with a combinator`;
     case QueryError.leadingCombinator: return `Your selector cannot begin with a combinator`;
     case QueryError.parentCombinator: return `We have chosen not to implement the parent combinator`;
     case QueryError.faultyFormula: return `The :${t.name} pseudo selector argument is invalid`;

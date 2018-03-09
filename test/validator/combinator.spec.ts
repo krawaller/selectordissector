@@ -30,20 +30,6 @@ test(`Adjacent combinators aren't allowed`, (t) => {
   t.end();
 });
 
-test(`Combinators are not allowed at end of queries`, (t) => {
-  type TestCase = [string, number[]];
-  const ending: TestCase[] = [
-    ["table div >", [3]],
-    ["span +", [1]],
-  ];
-  ending.forEach(([query, position]) => t.deepEqual(
-    validator(query)[0],
-    QueryError.endingCombinator,
-    `Query ${query} gives ending combinator error for position ${position}`,
-  ));
-  t.end();
-});
-
 test(`Combinators are not allowed at beginning of queries`, (t) => {
   type TestCase = [string, number[]];
   const ending: TestCase[] = [

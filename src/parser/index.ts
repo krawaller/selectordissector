@@ -23,8 +23,8 @@ export default function(query: string): Selector[] {
     }]];
   }
   const validation = validateSelector(result[0]);
-
-  if (validation && !(wip && validation[0] === QueryError.endingCombinator)) {
+  const endingWithComb = isCombinatorToken(result[0][result[0].length - 1]);
+  if (validation) {
     const [error, selector, path] = validation;
     result[0] = result[0].slice(0, path[0]).concat({
       name: error,
@@ -32,7 +32,7 @@ export default function(query: string): Selector[] {
       value: travelArray(selector, path),
     } as ErrorToken);
   } else if (wip) {
-    if (shortQuery.substr(shortQuery.length - 1) === " " && !isCombinatorToken(result[0][result[0].length - 1])) {
+    if (!endingWithComb && shortQuery.substr(shortQuery.length - 1) === " ") {
       result[0].push({type: TokenType.descendant});
     }
     result[0].push({
@@ -40,6 +40,8 @@ export default function(query: string): Selector[] {
       type: TokenType.wip,
       value: wip[0],
     });
+  } else if (endingWithComb) {
+    result[0].push({type: TokenType.wip, name: WipType.followComb, value: ""});
   }
   return result;
 }
