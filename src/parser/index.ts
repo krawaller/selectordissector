@@ -27,7 +27,8 @@ export default function(query: string): Selector[] {
     usedQuery = usedQuery.substr(0, usedQuery.length - finalPseudo[0].length);
     result[0].pop();
   }
-  const endingWithComb = result[0].length && isCombinatorToken(result[0][result[0].length - 1]);
+  const last = result[0].length && result[0][result[0].length - 1];
+  const endingWithComb = last && isCombinatorToken(last) && last.type !== TokenType.parent;
   const validation = validateSelector(result[0]);
   if (residue) {
     if (!endingWithComb && usedQuery.substr(usedQuery.length - 1) === " ") {

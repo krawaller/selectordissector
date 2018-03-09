@@ -1,6 +1,6 @@
 import * as test from "tape";
 
-import {Selector, TokenType, WipType} from "../../src/types";
+import {QueryError, Selector, TokenType, WipType} from "../../src/types";
 
 import parser from "../../src/parser";
 
@@ -86,6 +86,14 @@ test("We add WIP after ending combinator if nothing else typed", (t) => {
         {type: TokenType.wip, value: "", name: WipType.followComb},
       ],
       "WIP added afer ending combinator",
+    ],
+    [
+      "div < ",
+      [
+        {type: TokenType.tag, name: "div"},
+        {name: QueryError.parentCombinator, type: TokenType.error, value: {type: TokenType.parent}},
+      ],
+      "But not after parent combinator since that is error",
     ],
   ];
   wips.forEach(([input, selector, desc]) => t.deepEqual(
