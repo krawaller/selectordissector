@@ -1,7 +1,10 @@
 import * as React from "react";
 
 import autobind from "autobind-decorator";
+import { Grid, GridCell } from "rmwc/Grid";
 
+import { basicTree, makeHistory } from "../../helpers";
+import parser from "../../parser";
 import { History, QueryToken, TokenType } from "../../types";
 
 import { mainStyles } from "../styles";
@@ -11,13 +14,6 @@ import HistoryListComp from "./historylist";
 import InfoDialog from "./infodialog";
 import SelectorFieldComp from "./selectorfield";
 import WelcomeComp from "./welcome";
-
-import { basicTree, makeHistory } from "../../helpers";
-
-import parser from "../../parser";
-
-import { Grid, GridCell } from "rmwc/Grid";
-import { Typography } from "rmwc/Typography";
 
 type MainState = {
   query: string,
@@ -66,7 +62,6 @@ export default class Main extends React.Component<{}, MainState> {
           <SelectorFieldComp onUpdate={this.updateSelector} />
           <Grid>
             <GridCell span="6">
-              <Typography use="headline">Selection steps</Typography><br/>
               {
                 !history.length
                   ? <WelcomeComp />
@@ -78,7 +73,6 @@ export default class Main extends React.Component<{}, MainState> {
               }
             </GridCell>
             <GridCell span="6">
-              <Typography use="headline">Selection result</Typography>
               <Element elem={basicTree} currColl={coll} />
             </GridCell>
           </Grid>
