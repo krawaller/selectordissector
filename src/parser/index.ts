@@ -39,6 +39,15 @@ export default function(query: string): Selector[] {
         type: TokenType.wip,
         value: residue,
       });
+    } else if (residue === "::") {
+      result[0].push({
+        name: QueryError.pseudoElement,
+        type: TokenType.error,
+        value: {
+          name: "",
+          type: TokenType.pseudoElement,
+        },
+      });
     } else {
       result[0].push({
         name: QueryError.parseError,

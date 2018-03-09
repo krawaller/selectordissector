@@ -10,6 +10,7 @@ export enum QueryError {
   missingParens = "missingParens",
   extraneousParens = "extraneousParens",
   faultyTypePosition = "faultyTypePosition",
+  pseudoElement = "pseudoElement",
 }
 
 export type ValidationDetailedError = [QueryError, Selector, Path];

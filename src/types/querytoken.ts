@@ -14,6 +14,7 @@ export enum TokenType {
   wip = "wip",
   error = "error",
   unparsed = "unparsed",
+  pseudoElement = "pseudo-element",
 }
 
 export type UniversalToken = {
@@ -43,6 +44,11 @@ export type PseudoToken = {
   data?: any,
 };
 
+export type PseudoElementToken = {
+  type: TokenType.pseudoElement,
+  name: string,
+};
+
 export enum AttributeAction {
   equals = "equals",
   exists = "exists",
@@ -59,7 +65,7 @@ export type AttributeToken = {
   ignoreCase?: boolean,
 };
 
-export type ElementToken = UniversalToken | TagToken | PseudoToken | AttributeToken;
+export type ElementToken = UniversalToken | TagToken | PseudoToken | AttributeToken | PseudoElementToken;
 
 export type StartToken = {
   type: TokenType.start,

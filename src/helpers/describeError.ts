@@ -11,6 +11,7 @@ export function describeError(error: QueryError, token: QueryToken): string {
     case QueryError.missingParens: return `The :${t.name} pseudo selector should have parenthesis`;
     case QueryError.extraneousParens: return `The :${t.name} pseudo selector should not have parenthesis`;
     case QueryError.unknownPseudoSelector: return `We haven't implemented the :${t.name} pseudo selector`;
-    case QueryError.faultyTypePosition: return `Types are only allowed after a combinator`;
+    case QueryError.faultyTypePosition: return `Types are only allowed at start or after combinator`;
+    case QueryError.pseudoElement: return `Sorry, no pseudo elements allowed!`;
   }
 }

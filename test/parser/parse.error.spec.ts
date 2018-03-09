@@ -101,3 +101,26 @@ test("Out-of-place types are called out", (t) => {
   ));
   t.end();
 });
+
+test("We dont deal with pseudo elements", (t) => {
+  type TestCase = [string, Selector, string];
+  const pseudos: TestCase[] = [
+    [
+      "span ::foo",
+      [
+        {type: TokenType.tag, name: "span"},
+        {type: TokenType.descendant},
+        {name: QueryError.pseudoElement, type: TokenType.error, value: {
+          name: "foo", type: TokenType.pseudoElement,
+        }},
+      ],
+      "we dont like pseudo elements",
+    ],
+  ];
+  pseudos.forEach(([input, selector, desc]) => t.deepEqual(
+    parser(input),
+    [selector],
+    desc,
+  ));
+  t.end();
+});

@@ -24,5 +24,6 @@ export function printToken(token: QueryToken): string {
     case TokenType.adjacent: return "+";
     case TokenType.sibling: return "~";
     case TokenType.pseudo: return `:${token.name}` + (token.data ? `(${token.data})` : "");
+    case TokenType.pseudoElement: return `::${token.name}`;
   }
 }
