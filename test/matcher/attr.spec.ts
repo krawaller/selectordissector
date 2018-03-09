@@ -71,3 +71,22 @@ test("Element tester returns correct result for attributes with end action", (t)
   ));
   t.end();
 });
+
+test("Element tester returns correct result for attributes with any action", (t) => {
+  type TestCase = [VirtualElement, boolean, string];
+  const attrComps: TestCase[] = [
+    [div({baz: "bar"}), false, "we return false if element does not have attribute"],
+    [div({foo: null}), false, "we return false if attribute is empty"],
+    [div({foo: "barbaz"}), true, "we return true if attribute begins with right thing"],
+    [div({foo: "bar"}), true, "we return true if attribute equals value"],
+    [div({foo: "bazbar"}), true, "we return true if attribute ends with right thing"],
+    [div({foo: "bazbarbin"}), true, "we return true if attribute contains right thing"],
+  ];
+  const fooContainsBar: AttributeToken = {type: TokenType.attribute, name: "foo", action: AttributeAction.any, value: "bar"};
+  attrComps.forEach(([elem, shouldMatch, description]) => t.deepEqual(
+    matcher(elem, [[]], fooContainsBar).result,
+    shouldMatch ? [[]] : [],
+    description,
+  ));
+  t.end();
+});

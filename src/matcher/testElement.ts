@@ -14,7 +14,7 @@ export default function testElement(tree: ContentNode, path: Path, token: Elemen
       if (!elem.attrs || !elem.attrs.hasOwnProperty(token.name)) {
         return false;
       }
-      const value = elem.attrs[token.name];
+      const value = elem.attrs[token.name] || "";
       switch (token.action) {
         case AttributeAction.exists: return true;
         case AttributeAction.equals: return value === token.value;
@@ -23,6 +23,7 @@ export default function testElement(tree: ContentNode, path: Path, token: Elemen
         case AttributeAction.element: { // means querying for class!
           return typeof value === "string" && !!value.match(new RegExp(`^${token.value} |^${token.value}$| ${token.value} | ${token.value}$`));
         }
+        case AttributeAction.any: return value.match(token.value);
       }
     }
     case TokenType.pseudo: {

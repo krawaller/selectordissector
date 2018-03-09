@@ -1,7 +1,7 @@
 import * as test from "tape";
 
 import {printToken} from "../../src/helpers";
-import {PseudoName, QueryError, QueryToken, TokenType, WipType } from "../../src/types";
+import {AttributeAction, PseudoName, QueryError, QueryToken, TokenType, WipType } from "../../src/types";
 
 test("The printToken helper", (t) => {
   type TestCase = [QueryToken, string, string];
@@ -26,6 +26,11 @@ test("The printToken helper", (t) => {
       },
       "…",
       "We get ellipsis for WIP after combinator",
+    ],
+    [
+      {type: TokenType.attribute, name: "foo", action: AttributeAction.any, value: "bar", ignoreCase: false},
+      "[foo*=bar]",
+      "We can print attr any token",
     ],
   ];
   prints.forEach(([token, result, desc]) => {

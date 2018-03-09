@@ -60,6 +60,7 @@ export enum AttributeAction {
   exists = "exists",
   start = "start",
   end = "end",
+  any = "any",
   element = "element",  // element means it is a class test
 }
 

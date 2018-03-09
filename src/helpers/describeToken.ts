@@ -22,6 +22,7 @@ export function describeToken(token: QueryToken): string {
             : `Keep all elements where the attribute "${t.name}" equals "${t.value}".`;
         case AttributeAction.start: return `Keep all elements where the "${t.name}" attribute value starts with "${t.value}".`;
         case AttributeAction.end: return `Keep all elements where the "${t.name}" attribute value ends with "${t.value}".`;
+        case AttributeAction.any: return `Keep all elements where the "${t.name}" attribute value contains "${t.value}".`;
         default: return `[[[ description for this type not created yet, sorry ]]]`;
       }
     }
