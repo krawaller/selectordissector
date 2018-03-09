@@ -5,7 +5,6 @@ import { Collection, QueryToken, TokenType } from "../../types";
 import Factory, {div, h1, li, p, span, strong, ul} from "../../builder";
 import { mainStyles } from "../styles";
 import Element from "./element";
-import Form from "./form";
 import Header from "./header";
 import HistoryStepComp from "./historystep";
 import InfoDialog from "./infodialog";
