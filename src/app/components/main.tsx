@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 
 import { Collection, QueryToken, TokenType } from "../../types";
 
@@ -44,12 +45,17 @@ type MainState = {
 };
 
 export default class Main extends React.Component<{}, MainState> {
+  private field: TextField;
   constructor(props) {
     super(props);
     this.updateSelector = this.updateSelector.bind(this);
     this.updateIdx = this.updateIdx.bind(this);
     this.toggleDialog = this.toggleDialog.bind(this);
     this.state = {selector: "", message: "", idx: 0, selectorTokens: [], InfoDialogOpen: false};
+  }
+  public componentDidMount() {
+    const input: HTMLInputElement = ReactDOM.findDOMNode(this.field).querySelector("input[type=text]");
+    input.focus();
   }
   public toggleDialog() {
     this.setState({InfoDialogOpen: !this.state.InfoDialogOpen});
@@ -86,7 +92,13 @@ export default class Main extends React.Component<{}, MainState> {
       <div style={mainStyles}>
         <Header openInfoDialog={this.toggleDialog} />
         <div className="content">
-          <TextField box withLeadingIcon="zoom_in" label="CSS selector to dissect" onInput={(event) => this.updateSelector(event.target.value)} />
+          <TextField
+            box
+            ref={(field) => this.field = field}
+            withLeadingIcon="zoom_in"
+            label="CSS selector to dissect"
+            onInput={(event) => this.updateSelector(event.target.value)}
+          />
           <Grid>
             <GridCell span="6">
               <Typography use="title">Selection steps</Typography><br/>
