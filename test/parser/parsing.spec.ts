@@ -117,3 +117,24 @@ test("Parsing errors are added to selector", (t) => {
   ));
   t.end();
 });
+
+test("We don't get endingComb error when we have WIP", (t) => {
+  type TestCase = [string, Selector, string];
+  const wips: TestCase[] = [
+    [
+      "div > .",
+      [
+        {type: TokenType.tag, name: "div"},
+        {type: TokenType.child},
+        {type: TokenType.wip, value: ".", name: WipType.class},
+      ],
+      "WIP superseeds endingComb error",
+    ],
+  ];
+  wips.forEach(([input, selector, desc]) => t.deepEqual(
+    parser(input),
+    [selector],
+    desc,
+  ));
+  t.end();
+});
