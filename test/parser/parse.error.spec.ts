@@ -124,3 +124,26 @@ test("We dont deal with pseudo elements", (t) => {
   ));
   t.end();
 });
+
+test("We handle unimplemented pseudo selectors", (t) => {
+  type TestCase = [string, Selector, string];
+  const pseudos: TestCase[] = [
+    [
+      "span :foo",
+      [
+        {type: TokenType.tag, name: "span"},
+        {type: TokenType.descendant},
+        {name: QueryError.unknownPseudoSelector, type: TokenType.error, value: {
+          data: null, name: "foo", type: TokenType.pseudo,
+        }},
+      ],
+      "we get correct unimplemented error",
+    ],
+  ];
+  pseudos.forEach(([input, selector, desc]) => t.deepEqual(
+    parser(input),
+    [selector],
+    desc,
+  ));
+  t.end();
+});

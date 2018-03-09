@@ -23,7 +23,17 @@ export function printToken(token: QueryToken): string {
     }
     case TokenType.adjacent: return "+";
     case TokenType.sibling: return "~";
-    case TokenType.pseudo: return `:${token.name}` + (token.data ? `(${token.data})` : "");
+    case TokenType.pseudo: {
+      let parens = "";
+      if (token.data) {
+        if (token.name === "has" || token.name === "not") {
+          parens = token.data[0].reduce((m, t) => m + printToken(t), "");
+        } else {
+          parens = token.data;
+        }
+      }
+      return `:${token.name}${parens && `(${parens})`}`;
+    }
     case TokenType.pseudoElement: return `::${token.name}`;
   }
 }

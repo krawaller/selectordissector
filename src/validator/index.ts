@@ -47,15 +47,15 @@ function val(context: Context): ValidationDetailedError {
     return fail(QueryError.leadingCombinator, context);
   }
 
-  if (token.type === TokenType.pseudo && needsParens.indexOf(token.name) > -1 && token.data === null) {
+  if (token.type === TokenType.pseudo && needsParens.indexOf(token.name as PseudoName) > -1 && token.data === null) {
     return fail(QueryError.missingParens, context);
   }
 
-  if (token.type === TokenType.pseudo && needsParens.indexOf(token.name) === -1 && token.data !== null) {
+  if (token.type === TokenType.pseudo && needsParens.indexOf(token.name as PseudoName) === -1 && token.data !== null) {
     return fail(QueryError.extraneousParens, context);
   }
 
-  if (token.type === TokenType.pseudo && usesFormula.indexOf(token.name) > -1) {
+  if (token.type === TokenType.pseudo && usesFormula.indexOf(token.name as PseudoName) > -1) {
     if (classifyFormula(token.data)[0] === FormulaType.unknown) {
       return fail(QueryError.faultyFormula, context);
     }

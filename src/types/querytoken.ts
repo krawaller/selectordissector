@@ -44,6 +44,12 @@ export type PseudoToken = {
   data?: any,
 };
 
+export type UnknownPseudoToken = {
+  type: TokenType.pseudo
+  name: string,
+  data?: any,
+};
+
 export type PseudoElementToken = {
   type: TokenType.pseudoElement,
   name: string,
@@ -65,7 +71,7 @@ export type AttributeToken = {
   ignoreCase?: boolean,
 };
 
-export type ElementToken = UniversalToken | TagToken | PseudoToken | AttributeToken | PseudoElementToken;
+export type ElementToken = UniversalToken | TagToken | PseudoToken | AttributeToken | PseudoElementToken | UnknownPseudoToken;
 
 export type StartToken = {
   type: TokenType.start,

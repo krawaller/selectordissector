@@ -3,6 +3,7 @@
   "rules": {
     "interface-over-type-literal": false,
     "max-line-length": false,
-    "no-unused-variable": true
+    "no-unused-variable": true,
+    "arrow-parens": false
   }
 }
