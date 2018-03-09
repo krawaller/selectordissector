@@ -109,14 +109,18 @@ export default class Main extends React.Component<{}, MainState> {
               }
               <List>
                 {history.map((h, n) => (
-                  <HistoryStepComp
-                    key={n}
-                    token={h.token}
-                    coll={h.coll}
-                    idx={n}
-                    selIdx={this.state.idx}
-                    callback={this.updateIdx}
-                  />
+                  <React.Fragment key={n}>
+                    <HistoryStepComp
+                      token={h.token}
+                      coll={h.coll}
+                      idx={n}
+                      selIdx={this.state.idx}
+                      callback={this.updateIdx}
+                    />
+                    {n === 0 && (
+                      <li role="separator" className="mdc-list-divider"></li>
+                    )}
+                  </React.Fragment>
                 ))}
               </List>
             </GridCell>
