@@ -34,7 +34,7 @@ export const elemStyles = {
     display: "inline-block",
     padding: "1px",
     ...(kind === "end" && empty) && {
-      marginLeft: "-4px", // prevent an empty element to look like it might contain a space
+      marginLeft: "-3px", // prevent an empty element to look like it might contain a space
     },
     ...alone && {
       // For multiline elements we put the match stuff on the opening and closing tag
@@ -52,7 +52,7 @@ export const elemStyles = {
       case "attrName": color = "green"; break; // the name of an attribute
       case "attrEq": color = "magenta"; break; // the equal sign before an attribute value
       case "attrDelim": color = "gold"; break; // the quotes around an attribute value
-      case "attrVal": color = "cyan"; break; // the attribute value within quotes
+      case "attrVal": color = "#FFC107"; break; // the attribute value within quotes
     }
     return {
       color: matched ? "white" : color,
