@@ -27,7 +27,7 @@ const Element: React.StatelessComponent<ElementProps> = ({indent= 0, elem, currC
     );
   } else if (!elem.children || !elem.children.length) {
     return (
-      <div><div style={merge(styles, s.singleLine, s.mayMatch, matched && s.matched)}><StartTag elem={elem}/><EndTag elem={elem}/></div></div>
+      <div><div style={merge(styles, s.singleLine, s.mayMatch, matched && s.matched)}><StartTag elem={elem}/><EndTag elem={elem} empty={true}/></div></div>
     );
   } else {
     return (
@@ -50,6 +50,7 @@ type TagType = {
 
 type EndTagType = TagType & {
   ownLine?: boolean,
+  empty?: boolean,
 };
 
 const StartTag: React.StatelessComponent<TagType> = ({elem, matched, mayMatch}) => {
@@ -57,6 +58,6 @@ const StartTag: React.StatelessComponent<TagType> = ({elem, matched, mayMatch}) 
   return <span style={merge(s.tag, mayMatch && s.mayMatch, matched && s.matched)}>{`<${elem.type}${attrs}>`}</span>;
 };
 
-const EndTag: React.StatelessComponent<EndTagType> = ({elem, matched, mayMatch, ownLine}) => {
-  return <span style={merge(s.tag, ownLine && s.ownLineEndTag, mayMatch && s.mayMatch, matched && s.matched)}>{`</${elem.type}>`}</span>;
+const EndTag: React.StatelessComponent<EndTagType> = ({elem, matched, mayMatch, ownLine, empty}) => {
+  return <span style={merge(s.tag, ownLine && s.ownLineEndTag, mayMatch && s.mayMatch, matched && s.matched, empty && s.tagEndEmpty)}>{`</${elem.type}>`}</span>;
 };

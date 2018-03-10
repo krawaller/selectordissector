@@ -7,6 +7,7 @@ export const elemStyles = {
     borderColor: "transparent",
     borderRadius: "5px",
     fontFamily: "monospace",
+    fontSize: "12px",
     margin: "1px",
     padding: "1px",
   },
@@ -30,6 +31,9 @@ export const elemStyles = {
     borderRadius: "5px",
     margin: "1px",
     padding: "1px",
+  },
+  tagEndEmpty: {
+    marginLeft: "-4px",
   },
   text: {
     // fontStyle: 'italic' as 'italic',
