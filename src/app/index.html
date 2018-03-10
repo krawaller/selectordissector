@@ -10,23 +10,13 @@
   <link rel="stylesheet" href="https://unpkg.com/material-components-web@0.30.0/dist/material-components-web.min.css"/>
   <style>
     body { margin: 0; }
-    .content { margin: 0 24px; }
-    .content > * {
-      margin: 0.4rem 0 0.8rem;
+
+    /* hack to make textfield a block, rmwc forgot to allow custom styles there */
+    .textfieldhacktarget {
       display: block;
+      margin: 0.4rem 0 0.8rem;
     }
-    /* hacking to allow list items to wrap */
-    body .mdc-list-item {
-      height: initial;
-      min-height: 48px;
-      margin-top: 5px;
-      margin-bottom: 5px;
-    }
-    body .mdc-list-item__secondary-text, body .mdc-list-item__text {
-      text-overflow: initial;
-      white-space: initial;
-      overflow: initial;
-    }
+
   </style>
 </head>
 <body class="mdc-typography">

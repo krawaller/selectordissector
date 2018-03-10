@@ -4,6 +4,8 @@ import Spinner from "react-spinner-material";
 import { describeToken, printToken } from "../../helpers";
 import { Collection, QueryToken, TokenType } from "../../types";
 
+import { listItemStyles, listTextStyles } from "../styles";
+
 import {
   ListItem,
   ListItemGraphic,
@@ -38,7 +40,7 @@ const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, toke
     callback();
   };
   return (
-    <ListItem onClick={selectHandler}>
+    <ListItem onClick={selectHandler} style={listItemStyles}>
       <ListItemGraphic>
         {token.type === TokenType.wip ? (
           <Spinner
@@ -52,9 +54,9 @@ const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, toke
           <Radio checked={idx === selIdx} onChange={() => {return; }} />
         )}
       </ListItemGraphic>
-      <ListItemText>
+      <ListItemText style={listTextStyles}>
         {print}
-        <ListItemSecondaryText>{description}</ListItemSecondaryText>
+        <ListItemSecondaryText style={listTextStyles}>{description}</ListItemSecondaryText>
       </ListItemText>
     </ListItem>
   );

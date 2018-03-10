@@ -21,6 +21,7 @@ export default class SelectorField extends React.Component<SelectorFieldProps, n
         withLeadingIcon="zoom_in"
         label="CSS selector to dissect"
         onInput={(event) => this.props.onUpdate(event.target.value)}
+        className="textfieldhacktarget"
       />
     );
   }

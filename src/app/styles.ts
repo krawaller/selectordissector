@@ -37,32 +37,21 @@ export const elemStyles = {
   },
 };
 
-export const formStyles = {
-  button: {},
-  container: {
-    display: "inline-block",
-  },
-  input: {},
+export const listItemStyles = {
+  height: "initial",
+  marginBottom: "5px",
+  marginTop: "5px",
+  minHeight: "48px",
 };
 
-export const historyStyles = {
-  activeButton: {
-    boxShadow: "inset 1px 1px 10px #333",
-  },
-  button: {
-    display: "inline-block",
-    marginRight: "5px",
-    width: "120px",
-  },
-  container: {},
-  description: {},
+export const listTextStyles = {
+  overflow: "initial",
+  textOverflow: "initial",
+  whiteSpace: "initial",
 };
 
-export const mainStyles = {
-  container: {},
-  link: {
-    color: "white",
-  },
+export const contentContainerStyles = {
+  margin: "0 24px",
 };
 
 export const merge = (...objs) => Object.assign.apply(Object, [{}].concat(objs));

@@ -9,7 +9,8 @@ import { basicTree, makeHistory } from "../../helpers";
 import parser from "../../parser";
 import { History, QueryToken, TokenType } from "../../types";
 
-import { mainStyles } from "../styles";
+import { contentContainerStyles } from "../styles";
+
 import Element from "./element";
 import Header from "./header";
 import HistoryListComp from "./historylist";
@@ -78,9 +79,9 @@ export default class Main extends React.Component<{}, MainState> {
       coll = history[this.state.idx].coll;
     }
     return (
-      <div style={mainStyles}>
+      <div>
         <Header />
-        <div className="content">
+        <div style={contentContainerStyles}>
           <SelectorFieldComp onUpdate={this.updateSelector} />
           <Grid>
             <GridCell span="6">
