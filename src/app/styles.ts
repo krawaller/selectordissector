@@ -8,20 +8,25 @@ const transitions = {
   transition: "color 0.5s ease-in-out, background-color 0.5s ease-in-out, border-color 0.5s ease-in-out",
 };
 
+const potentialMatchStyles = {
+  border: "1px solid transparent",
+  borderColor: "transparent",
+  borderRadius: "5px",
+  ...transitions,
+};
+
 export const elemStyles = {
   container: (singleLine: boolean, matched: boolean, child: boolean) => ({
     fontFamily: "monospace",
     fontSize: "12px",
     ...child && {
-      marginLeft: "2em",
+      marginLeft: "1.5em",
     },
     ...singleLine && {
-      border: "1px solid transparent",
-      borderColor: "transparent",
-      borderRadius: "5px",
       display: "inline-block",
       marginBottom: "1px",
-      ...transitions,
+      // If the element is on one line, we put the match stuff directly on the container
+      ...potentialMatchStyles,
       ...matched && matchedStyles,
     },
   }),
@@ -29,14 +34,12 @@ export const elemStyles = {
     display: "inline-block",
     padding: "1px",
     ...(kind === "end" && empty) && {
-      marginLeft: "-4px",
+      marginLeft: "-4px", // prevent an empty element to look like it might contain a space
     },
     ...alone && {
-      border: "1px solid transparent",
-      borderColor: "transparent",
-      borderRadius: "5px",
+      // For multiline elements we put the match stuff on the opening and closing tag
       marginBottom: "1px",
-      ...transitions,
+      ...potentialMatchStyles,
       ...matched && matchedStyles,
     },
   }),
