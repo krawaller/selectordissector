@@ -24,7 +24,7 @@ const Header: React.StatelessComponent<{}> = (props, context) => (
       </ToolbarSection>
       <ToolbarSection alignEnd>
         <ToolbarIcon
-          onClick={() => context.openDialog(GeneralInfo)}
+          onClick={() => context.openDialog("What's this?", GeneralInfo)}
           use={
             <svg
               style={{ width: "24px", height: "24px" }}

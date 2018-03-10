@@ -21,8 +21,9 @@ type MainState = {
   query: string,
   selectorTokens: QueryToken[],
   idx: number,
+  infoDialogHeadline?: string,
   infoDialogOpen: boolean,
-  infoDialogContent: ReactElement<any>,
+  infoDialogContent?: ReactElement<any>,
 };
 
 export default class Main extends React.Component<{}, MainState> {
@@ -31,15 +32,16 @@ export default class Main extends React.Component<{}, MainState> {
   };
   constructor(props) {
     super(props);
-    this.state = {query: "", idx: 0, selectorTokens: [], infoDialogOpen: false, infoDialogContent: null};
+    this.state = {query: "", idx: 0, selectorTokens: [], infoDialogOpen: false};
   }
   public getChildContext() {
     return {openDialog: this.openDialog};
   }
   @autobind
-  public openDialog(elem: ReactElement<any>) {
+  public openDialog(title: string, elem: ReactElement<any>) {
     this.setState({
       infoDialogContent: elem,
+      infoDialogHeadline: title,
       infoDialogOpen: true,
     });
   }
@@ -93,7 +95,12 @@ export default class Main extends React.Component<{}, MainState> {
             </GridCell>
           </Grid>
         </div>
-        <InfoDialog isOpen={this.state.infoDialogOpen} close={this.closeDialog} content={this.state.infoDialogContent} />
+        <InfoDialog
+          isOpen={this.state.infoDialogOpen}
+          close={this.closeDialog}
+          content={this.state.infoDialogContent}
+          headline={this.state.infoDialogHeadline}
+        />
       </div>
     );
   }

@@ -16,22 +16,23 @@ type InfoDialogProps = {
   isOpen: boolean,
   content: ReactElement<any>,
   close: () => void,
+  headline: string,
 };
 
-const InfoDialog: React.StatelessComponent<InfoDialogProps> = ({isOpen, close, content}) => (
+const InfoDialog: React.StatelessComponent<InfoDialogProps> = ({isOpen, close, content, headline}) => (
   <Dialog
     open={isOpen}
     onClose={close}
   >
     <DialogSurface>
       <DialogHeader>
-        <DialogHeaderTitle>What's this?</DialogHeaderTitle>
+        <DialogHeaderTitle>{headline}</DialogHeaderTitle>
       </DialogHeader>
       <DialogBody>
         {content}
       </DialogBody>
       <DialogFooter>
-          <DialogFooterButton accept>Ok</DialogFooterButton>
+        <DialogFooterButton accept>Ok</DialogFooterButton>
       </DialogFooter>
     </DialogSurface>
     <DialogBackdrop />
