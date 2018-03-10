@@ -38,6 +38,7 @@ export const elemStyles = {
 };
 
 export const listItemStyles = {
+  cursor: "pointer",
   height: "initial",
   marginBottom: "5px",
   marginTop: "5px",
