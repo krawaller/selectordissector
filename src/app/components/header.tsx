@@ -1,3 +1,5 @@
+import * as PropTypes from "prop-types";
+import {ReactElement} from "react";
 import * as React from "react";
 
 import {
@@ -8,11 +10,13 @@ import {
   ToolbarTitle,
 } from "rmwc/Toolbar";
 
-type HeaderProps = {
-  openInfoDialog: () => void,
-};
+const GeneralInfo = (
+  <React.Fragment>
+    Crafted with &hearts; by <a href="http://edument.se" target="_blank">Edument</a>
+  </React.Fragment>
+);
 
-const Header: React.StatelessComponent<HeaderProps> = ({openInfoDialog}) => (
+const Header: React.StatelessComponent<{}> = (props, context) => (
   <Toolbar>
     <ToolbarRow>
       <ToolbarSection alignStart>
@@ -20,7 +24,7 @@ const Header: React.StatelessComponent<HeaderProps> = ({openInfoDialog}) => (
       </ToolbarSection>
       <ToolbarSection alignEnd>
         <ToolbarIcon
-          onClick={openInfoDialog}
+          onClick={() => context.openDialog(GeneralInfo)}
           use={
             <svg
               style={{ width: "24px", height: "24px" }}
@@ -53,5 +57,9 @@ const Header: React.StatelessComponent<HeaderProps> = ({openInfoDialog}) => (
     </ToolbarRow>
   </Toolbar>
 );
+
+Header.contextTypes = {
+  openDialog: PropTypes.func,
+};
 
 export default Header;

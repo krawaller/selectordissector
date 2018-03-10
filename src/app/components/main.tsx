@@ -1,3 +1,4 @@
+import * as PropTypes from "prop-types";
 import {ReactElement} from "react";
 import * as React from "react";
 
@@ -25,9 +26,15 @@ type MainState = {
 };
 
 export default class Main extends React.Component<{}, MainState> {
+  public static childContextTypes = {
+    openDialog: PropTypes.func,
+  };
   constructor(props) {
     super(props);
     this.state = {query: "", idx: 0, selectorTokens: [], infoDialogOpen: false, infoDialogContent: null};
+  }
+  public getChildContext() {
+    return {openDialog: this.openDialog};
   }
   @autobind
   public openDialog(elem: ReactElement<any>) {
@@ -66,7 +73,7 @@ export default class Main extends React.Component<{}, MainState> {
     }
     return (
       <div style={mainStyles}>
-        <Header openInfoDialog={this.openDialog} />
+        <Header />
         <div className="content">
           <SelectorFieldComp onUpdate={this.updateSelector} />
           <Grid>

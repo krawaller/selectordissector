@@ -2,12 +2,14 @@
   "dependencies": {
     "autobind-decorator": "^2.1.0",
     "css-what": "2.1.0",
+    "prop-types": "^15.6.1",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-spinner-material": "^1.0.16",
     "rmwc": "^1.1.2"
   },
   "devDependencies": {
+    "@types/prop-types": "^15.5.2",
     "@types/react": "16.0.36",
     "@types/react-dom": "16.0.3",
     "@types/tape": "4.2.31",
