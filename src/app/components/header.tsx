@@ -12,7 +12,21 @@ import {
 
 const GeneralInfo = (
   <React.Fragment>
-    Crafted with &hearts; by <a href="http://edument.se" target="_blank">Edument</a>
+    <p>
+      Crafted by <a href="http://blog.krawaller.se" target="_blank">Krawaller</a> using <a href="https://reactjs.org/" target="_blank">React</a>
+      , <a href="https://jamesmfriedman.github.io/rmwc/" target="_blank">RMWC</a>
+      , <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a> and &hearts;.
+    </p>
+    <p>
+      Come see us at <a href="http://edument.se" target="_blank">Edument</a> for high-quality training
+      in all of the above techniques. For example you can treat your team to
+      a <a href="https://edument.se/en/education/categories/web-development-courses/reactjs-prague">weekend of React and beer in Prague</a>!
+    </p>
+    <p>
+      Found something amiss in the app, or want to contribute? Head over to
+      the <a href="https://github.com/krawaller/selectordissector" target="_blank">repo</a> and
+      file an issue or make a PR!
+    </p>
   </React.Fragment>
 );
 
