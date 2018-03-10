@@ -32,8 +32,26 @@ export const elemStyles = {
     margin: "1px",
     padding: "1px",
   },
+  tagAttributeEquals: { /* the equal sign before an attribute value */
+    color: "magenta",
+  },
+  tagAttributeName: { /* the name of an attribute */
+    color: "green",
+  },
+  tagAttributeValue: { /* the attribute value inside quotes */
+    color: "brown",
+  },
+  tagAttributeValueDelimiter: { /* the quote around an attribute value */
+    color: "gold",
+  },
+  tagDelimiter: { /* the < and </ and > parts */
+    color: "red",
+  },
   tagEndEmpty: {
     marginLeft: "-4px",
+  },
+  tagType: { /* the type of an element inside a tag */
+    color: "blue",
   },
   text: {
     // fontStyle: 'italic' as 'italic',
