@@ -47,12 +47,12 @@ export const elemStyles = {
     // TODO - make this pretty :P
     let color;
     switch (part) {
-      case "type": color = "blue"; break; // the type of an element inside a tag
-      case "delimeter": color = "red"; break; // the < and </ and > parts
-      case "attrName": color = "green"; break; // the name of an attribute
-      case "attrEq": color = "magenta"; break; // the equal sign before an attribute value
-      case "attrDelim": color = "gold"; break; // the quotes around an attribute value
-      case "attrVal": color = "#FFC107"; break; // the attribute value within quotes
+      case "type": color = "#9b165e"; break; // the type of an element inside a tag
+      case "delimeter": color = "#823aff"; break; // the < and </ and > parts
+      case "attrName": color = "#ff5563"; break; // the name of an attribute
+      case "attrEq": color = "#823aff"; break; // the equal sign before an attribute value
+      case "attrDelim": color = "#823aff"; break; // the quotes around an attribute value
+      case "attrVal": color = "#823aff"; break; // the attribute value within quotes
     }
     return {
       color: matched ? "white" : color,
@@ -60,7 +60,8 @@ export const elemStyles = {
     };
   },
   textNode: (matched: boolean) => ({
-
+    ...transitions,
+    color: matched ? "white" : "#0a0402",
   }),
 };
 
