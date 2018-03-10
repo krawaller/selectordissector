@@ -1,5 +1,4 @@
 import * as PropTypes from "prop-types";
-import {ReactElement} from "react";
 import * as React from "react";
 
 import {

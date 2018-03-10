@@ -9,14 +9,9 @@ import { listItemStyles, listTextStyles } from "../styles";
 import {
   ListItem,
   ListItemGraphic,
-  ListItemMeta,
   ListItemSecondaryText,
   ListItemText,
 } from "rmwc/List";
-
-import {
-  Card,
-} from "rmwc/Card";
 
 import {
   Radio,
