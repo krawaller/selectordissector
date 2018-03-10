@@ -1,62 +1,64 @@
+const matchedStyles = {
+  backgroundColor: "#A261FF",
+  borderColor: "#7400FF",
+  color: "white",
+};
+
+const transitions = {
+  transition: "color 0.5s ease-in-out, background-color 0.5s ease-in-out, border-color 0.5s ease-in-out",
+};
+
 export const elemStyles = {
-  child: {
-    marginLeft: "2em",
-  },
-  element: {
-    border: "1px solid transparent",
-    borderColor: "transparent",
-    borderRadius: "5px",
+  container: (singleLine: boolean, matched: boolean, child: boolean) => ({
     fontFamily: "monospace",
     fontSize: "12px",
-    margin: "1px",
-    padding: "1px",
-  },
-  matched: {
-    backgroundColor: "#A261FF",
-    borderColor: "#7400FF",
-    color: "white",
-  },
-  mayMatch: {
-    transition: "color 0.5s ease-in-out, background-color 0.5s ease-in-out, border-color 0.5s ease-in-out",
-  },
-  ownLineEndTag: {
-    // opacity: 0.4
-  },
-  singleLine: {
+    ...child && {
+      marginLeft: "2em",
+    },
+    ...singleLine && {
+      border: "1px solid transparent",
+      borderColor: "transparent",
+      borderRadius: "5px",
+      display: "inline-block",
+      marginBottom: "1px",
+      ...transitions,
+      ...matched && matchedStyles,
+    },
+  }),
+  tag: (kind: "start" | "end", alone: boolean, matched: boolean, empty?: boolean) => ({
     display: "inline-block",
-  },
-  tag: {
-    border: "1px solid transparent",
-    borderColor: "transparent",
-    borderRadius: "5px",
-    margin: "1px",
     padding: "1px",
+    ...(kind === "end" && empty) && {
+      marginLeft: "-4px",
+    },
+    ...alone && {
+      border: "1px solid transparent",
+      borderColor: "transparent",
+      borderRadius: "5px",
+      marginBottom: "1px",
+      ...transitions,
+      ...matched && matchedStyles,
+    },
+  }),
+  tagPart: (kind: "start" | "end", matched: boolean, part: "type" | "delimeter" | "attrName" | "attrVal" | "attrEq" | "attrDelim") => {
+    // TODO - make this pretty :P
+    let color;
+    switch (part) {
+      case "type": color = "blue"; break; // the type of an element inside a tag
+      case "delimeter": color = "red"; break; // the < and </ and > parts
+      case "attrName": color = "green"; break; // the name of an attribute
+      case "attrEq": color = "magenta"; break; // the equal sign before an attribute value
+      case "attrDelim": color = "gold"; break; // the quotes around an attribute value
+      case "attrVal": color = "cyan"; break; // the attribute value within quotes
+    }
+    return {
+      color: matched ? "white" : color,
+      ...transitions,
+    };
   },
-  tagAttributeEquals: { /* the equal sign before an attribute value */
-    color: "magenta",
-  },
-  tagAttributeName: { /* the name of an attribute */
-    color: "green",
-  },
-  tagAttributeValue: { /* the attribute value inside quotes */
-    color: "brown",
-  },
-  tagAttributeValueDelimiter: { /* the quote around an attribute value */
-    color: "gold",
-  },
-  tagDelimiter: { /* the < and </ and > parts */
-    color: "red",
-  },
-  tagEndEmpty: {
-    marginLeft: "-4px",
-  },
-  tagType: { /* the type of an element inside a tag */
-    color: "blue",
-  },
-  text: {
-    // fontStyle: 'italic' as 'italic',
-    // color: '#777'
-  },
+  textNode: (matched: boolean) => ({
+
+  }),
 };
 
 export const listItemStyles = {
