@@ -1,10 +1,10 @@
 /* tslint:disable object-literal-sort-keys */
 
-var path = require("path");
-var WebpackNotifierPlugin = require("webpack-notifier");
+const path = require("path");
+const WebpackNotifierPlugin = require("webpack-notifier");
 
 module.exports = {
-  devtool: "eval-source-map",
+  mode: "production",
   entry: __dirname + "/src/app/index.tsx",
   output: {
     path: __dirname + "/dist/",
@@ -13,10 +13,14 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
+  optimization: {
+    minimize: true,
+  },
   module: {
     rules: [{
       test: /\.tsx?$/,
       loader: "ts-loader",
+      include: path.resolve(__dirname, "src"),
       exclude: /node_modules/,
     }],
   },
