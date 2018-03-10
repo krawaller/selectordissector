@@ -1,3 +1,4 @@
+import {ReactElement} from "react";
 import * as React from "react";
 
 import autobind from "autobind-decorator";
@@ -19,17 +20,25 @@ type MainState = {
   query: string,
   selectorTokens: QueryToken[],
   idx: number,
-  InfoDialogOpen: boolean,
+  infoDialogOpen: boolean,
+  infoDialogContent: ReactElement<any>,
 };
 
 export default class Main extends React.Component<{}, MainState> {
   constructor(props) {
     super(props);
-    this.state = {query: "", idx: 0, selectorTokens: [], InfoDialogOpen: false};
+    this.state = {query: "", idx: 0, selectorTokens: [], infoDialogOpen: false, infoDialogContent: null};
   }
   @autobind
-  public toggleDialog() {
-    this.setState({InfoDialogOpen: !this.state.InfoDialogOpen});
+  public openDialog(elem: ReactElement<any>) {
+    this.setState({
+      infoDialogContent: elem,
+      infoDialogOpen: true,
+    });
+  }
+  @autobind
+  public closeDialog() {
+    this.setState({infoDialogOpen: false});
   }
   @autobind
   public updateIdx(nbr) {
@@ -57,7 +66,7 @@ export default class Main extends React.Component<{}, MainState> {
     }
     return (
       <div style={mainStyles}>
-        <Header openInfoDialog={this.toggleDialog} />
+        <Header openInfoDialog={this.openDialog} />
         <div className="content">
           <SelectorFieldComp onUpdate={this.updateSelector} />
           <Grid>
@@ -77,7 +86,7 @@ export default class Main extends React.Component<{}, MainState> {
             </GridCell>
           </Grid>
         </div>
-        <InfoDialog isOpen={this.state.InfoDialogOpen} close={this.toggleDialog} />
+        <InfoDialog isOpen={this.state.infoDialogOpen} close={this.closeDialog} content={this.state.infoDialogContent} />
       </div>
     );
   }

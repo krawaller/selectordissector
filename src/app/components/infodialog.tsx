@@ -1,3 +1,4 @@
+import {ReactElement} from "react";
 import * as React from "react";
 
 import {
@@ -13,10 +14,11 @@ import {
 
 type InfoDialogProps = {
   isOpen: boolean,
+  content: ReactElement<any>,
   close: () => void,
 };
 
-const InfoDialog: React.StatelessComponent<InfoDialogProps> = ({isOpen, close}) => (
+const InfoDialog: React.StatelessComponent<InfoDialogProps> = ({isOpen, close, content}) => (
   <Dialog
     open={isOpen}
     onClose={close}
@@ -26,7 +28,7 @@ const InfoDialog: React.StatelessComponent<InfoDialogProps> = ({isOpen, close}) 
         <DialogHeaderTitle>What's this?</DialogHeaderTitle>
       </DialogHeader>
       <DialogBody>
-        Crafted with &hearts; by <a href="http://edument.se" target="_blank">Edument</a>.
+        {content}
       </DialogBody>
       <DialogFooter>
           <DialogFooterButton accept>Ok</DialogFooterButton>
