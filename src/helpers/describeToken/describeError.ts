@@ -1,6 +1,6 @@
-import {PseudoToken, QueryError, QueryToken} from "../types";
+import {PseudoToken, QueryError, QueryToken} from "../../types";
 
-export function describeError(error: QueryError, token: QueryToken): string {
+export default function describeError(error: QueryError, token: QueryToken): string {
   const t = token as PseudoToken;
   switch (error) {
     case QueryError.parseError: return `Couldn't parse this part`;

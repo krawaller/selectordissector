@@ -5,8 +5,6 @@ import {isTextNode} from "../builder";
 export * from "./describeToken";
 export * from "./printToken";
 export * from "./classifyFormula";
-export * from "./describeError";
-export * from "./describeWip";
 export * from "./matchWipType";
 export * from "./makeHistory";
 export * from "./trees";

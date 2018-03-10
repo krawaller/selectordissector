@@ -1,6 +1,6 @@
-import {WipToken, WipType} from "../types";
+import {WipToken, WipType} from "../../types";
 
-export function describeWip(token: WipToken): string {
+export default function describeWip(token: WipToken): string {
   switch (token.name) {
     case WipType.attr: return `Waiting for attribute condition`;
     case WipType.class: return `Waiting for class`;
