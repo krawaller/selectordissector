@@ -26,6 +26,10 @@ type MainState = {
   infoDialogContent?: ReactElement<any>,
 };
 
+export type DialogContext = {
+  openDialog: (header: string, elem: ReactElement<any>) => void,
+};
+
 export default class Main extends React.Component<{}, MainState> {
   public static childContextTypes = {
     openDialog: PropTypes.func,
