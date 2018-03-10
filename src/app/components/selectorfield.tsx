@@ -20,8 +20,6 @@ export default class SelectorField extends React.Component<SelectorFieldProps, n
     setTimeout(() => {
       if (this.props.query) {
         label.classList.add("mdc-text-field__label--float-above");
-      } else {
-        label.classList.remove("mdc-text-field__label--float-above");
       }
     }, 50);
   }
