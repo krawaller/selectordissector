@@ -58,6 +58,14 @@ test("The builder factory", (t) => {
         txt("meep"),
       ]},
       "b([...children]) can include strings",
+    ], [
+      p(strong("baz"), "meep", {baz: "bin"}, strong, {foo: "bar"}),
+      {type: "p", attrs: {foo: "bar", baz: "bin"}, children: [
+        {type: "strong", attrs: {}, children: [txt("baz")]},
+        txt("meep"),
+        {type: "strong", attrs: {}, children: []},
+      ]},
+      "b(...children) can have multiple arguments",
     ],
   ];
   builds.forEach(([input, output, desc]) => t.deepEqual(input, output, desc));
