@@ -29,6 +29,7 @@
     "lint": "tslint --project .",
     "build": "node setupdist && webpack",
     "start:dev": "node setupdist && webpack-dev-server",
-    "test": "ts-node node_modules/tape/bin/tape test/***/*.spec.ts | tap-diff"
+    "test": "ts-node node_modules/tape/bin/tape test/***/*.spec.ts | tap-diff",
+    "profile": "webpack --profile --json > stats.json && echo 'Now upload stats.json at https://alexkuz.github.io/webpack-chart/'"
   }
 }
