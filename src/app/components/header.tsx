@@ -12,7 +12,7 @@ import {
 const GeneralInfo = (
   <React.Fragment>
     <p>
-      Crafted by <a href="http://blog.krawaller.se" target="_blank">Krawaller</a> using <a href="https://reactjs.org/" target="_blank">React</a>
+      Crafted by <a href="http://blog.krawaller.se" target="_blank">Krawaller</a> and <a href="https://twitter.com/litenjacob">LitenJacob</a> using <a href="https://reactjs.org/" target="_blank">React</a>
       , <a href="https://jamesmfriedman.github.io/rmwc/" target="_blank">RMWC</a>
       , <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a> and &hearts;.
     </p>
