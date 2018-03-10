@@ -1,4 +1,3 @@
-import * as PropTypes from "prop-types";
 import * as React from "react";
 import Spinner from "react-spinner-material";
 
@@ -13,7 +12,9 @@ import {
   ListItemText,
 } from "rmwc/List";
 
-import { Typography } from "rmwc/Typography";
+import {
+  Card,
+} from "rmwc/Card";
 
 import {
   Radio,
@@ -27,7 +28,7 @@ type HistoryStepProps = {
   selIdx: number,
 };
 
-const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, token, coll, idx, selIdx}, {openDialog}) => {
+const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, token, coll, idx, selIdx}) => {
   const print = printToken(token);
   const description = describeToken(token);
   const selectHandler = () => {
@@ -36,11 +37,6 @@ const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, toke
     }
     callback();
   };
-  const infoHandler = () => openDialog( print, (
-    <React.Fragment>
-      <Typography use="body1">{description}</Typography>
-    </React.Fragment>
-  ));
   return (
     <ListItem onClick={selectHandler}>
       <ListItemGraphic>
@@ -60,15 +56,8 @@ const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, toke
         {print}
         <ListItemSecondaryText>{description}</ListItemSecondaryText>
       </ListItemText>
-      <ListItemMeta onClick={infoHandler}>
-        <span>info</span>
-      </ListItemMeta>
     </ListItem>
   );
-};
-
-HistoryStep.contextTypes = {
-  openDialog: PropTypes.func,
 };
 
 export default HistoryStep;

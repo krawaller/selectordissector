@@ -15,6 +15,18 @@
       margin: 0.4rem 0 0.8rem;
       display: block;
     }
+    /* hacking to allow list items to wrap */
+    body .mdc-list-item {
+      height: initial;
+      min-height: 48px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+    body .mdc-list-item__secondary-text, body .mdc-list-item__text {
+      text-overflow: initial;
+      white-space: initial;
+      overflow: initial;
+    }
   </style>
 </head>
 <body class="mdc-typography">
