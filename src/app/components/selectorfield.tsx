@@ -5,6 +5,7 @@ import { TextField } from "rmwc/TextField";
 
 type SelectorFieldProps = {
   onUpdate: (query: string) => void,
+  query: string,
 };
 
 export default class SelectorField extends React.Component<SelectorFieldProps, null> {
@@ -22,6 +23,7 @@ export default class SelectorField extends React.Component<SelectorFieldProps, n
         label="CSS selector to dissect"
         onInput={(event) => this.props.onUpdate(event.target.value)}
         className="textfieldhacktarget"
+        value={this.props.query}
       />
     );
   }
