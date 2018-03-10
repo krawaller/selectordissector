@@ -1,3 +1,4 @@
+import * as PropTypes from "prop-types";
 import * as React from "react";
 import Spinner from "react-spinner-material";
 
@@ -7,9 +8,12 @@ import { Collection, QueryToken, TokenType } from "../../types";
 import {
   ListItem,
   ListItemGraphic,
+  ListItemMeta,
   ListItemSecondaryText,
   ListItemText,
 } from "rmwc/List";
+
+import { Typography } from "rmwc/Typography";
 
 import {
   Radio,
@@ -23,15 +27,22 @@ type HistoryStepProps = {
   selIdx: number,
 };
 
-const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, token, coll, idx, selIdx}) => {
-  const handler = () => {
+const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, token, coll, idx, selIdx}, {openDialog}) => {
+  const print = printToken(token);
+  const description = describeToken(token);
+  const selectHandler = () => {
     if (token.type === TokenType.wip || token.type === TokenType.error) {
       return;
     }
     callback();
   };
+  const infoHandler = () => openDialog( print, (
+    <React.Fragment>
+      <Typography use="body1">{description}</Typography>
+    </React.Fragment>
+  ));
   return (
-    <ListItem onClick={handler}>
+    <ListItem onClick={selectHandler}>
       <ListItemGraphic>
         {token.type === TokenType.wip ? (
           <Spinner
@@ -46,11 +57,18 @@ const HistoryStep: React.StatelessComponent<HistoryStepProps> = ({callback, toke
         )}
       </ListItemGraphic>
       <ListItemText>
-        {printToken(token)}
-        <ListItemSecondaryText>{describeToken(token)}</ListItemSecondaryText>
+        {print}
+        <ListItemSecondaryText>{description}</ListItemSecondaryText>
       </ListItemText>
+      <ListItemMeta onClick={infoHandler}>
+        <span>info</span>
+      </ListItemMeta>
     </ListItem>
   );
+};
+
+HistoryStep.contextTypes = {
+  openDialog: PropTypes.func,
 };
 
 export default HistoryStep;
