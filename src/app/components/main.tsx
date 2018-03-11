@@ -5,7 +5,7 @@ import * as React from "react";
 import autobind from "autobind-decorator";
 import { Grid, GridCell } from "rmwc/Grid";
 
-import { bigTable, makeHistory } from "../../helpers";
+import { articlePage, makeHistory } from "../../helpers";
 import parser from "../../parser";
 import { History, QueryToken, TokenType } from "../../types";
 
@@ -75,7 +75,7 @@ export default class Main extends React.Component<{}, MainState> {
     let coll = [[666]];
     let history: History = [];
     if (this.state.query !== "") {
-      history = makeHistory(this.state.selectorTokens, bigTable);
+      history = makeHistory(this.state.selectorTokens, articlePage);
       coll = history[this.state.idx].coll;
     }
     return (
@@ -96,7 +96,7 @@ export default class Main extends React.Component<{}, MainState> {
               }
             </GridCell>
             <GridCell span="6">
-              <Element elem={bigTable} currColl={coll} />
+              <Element elem={articlePage} currColl={coll} />
             </GridCell>
           </Grid>
         </div>

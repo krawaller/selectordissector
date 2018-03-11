@@ -5,7 +5,7 @@ const elemProto = {};
 type Child = VirtualElement | Builder | string;
 
 type Argument = Child | Child[] | Attributes;
-type Attributes = {[key: string]: string};
+type Attributes = {[key: string]: string | number};
 type Builder = (...args: Argument[]) => ContentNode;
 type Factory = (type: string) => Builder;
 
@@ -43,16 +43,25 @@ export function isElem(elem): elem is VirtualElement {
   return elemProto.isPrototypeOf(elem);
 }
 
+export const article = builderFactory("article");
+export const blockquote = builderFactory("blockquote");
+export const dd = builderFactory("dd");
 export const div = builderFactory("div");
-export const span = builderFactory("span");
-export const p = builderFactory("p");
-export const strong = builderFactory("strong");
+export const dl = builderFactory("dl");
+export const dt = builderFactory("dt");
+export const footer = builderFactory("footer");
 export const h1 = builderFactory("h1");
-export const ul = builderFactory("ul");
+export const h2 = builderFactory("h2");
+export const hr = builderFactory("hr");
+export const img = builderFactory("img");
 export const li = builderFactory("li");
-export const tr = builderFactory("tr");
-export const td = builderFactory("td");
+export const p = builderFactory("p");
+export const span = builderFactory("span");
+export const strong = builderFactory("strong");
 export const table = builderFactory("table");
 export const tbody = builderFactory("tbody");
-export const thead = builderFactory("thead");
+export const td = builderFactory("td");
 export const th = builderFactory("th");
+export const thead = builderFactory("thead");
+export const tr = builderFactory("tr");
+export const ul = builderFactory("ul");
