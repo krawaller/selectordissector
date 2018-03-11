@@ -82,9 +82,9 @@ export default class Main extends React.Component<{}, MainState> {
       <div>
         <Header />
         <div style={contentContainerStyles}>
-          <SelectorFieldComp onUpdate={this.updateSelector} query={this.state.query}/>
           <Grid>
             <GridCell span="6">
+              <SelectorFieldComp onUpdate={this.updateSelector} query={this.state.query}/>
               {
                 !history.length
                   ? <WelcomeComp />
