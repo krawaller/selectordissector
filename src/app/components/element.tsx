@@ -17,7 +17,7 @@ const Element: React.StatelessComponent<ElementProps> = ({indent= 0, elem, currC
   if (isTextNode(elem)) {
     // Printing a lone text node that has other siblings
     return (
-      <div><div style={s.container(true, false, indent > 0)}><span style={s.textNode(matched)}>{elem.content}</span></div></div>
+      <div><div style={s.container(true, false, indent > 0)}><span style={s.textNode(false)}>{elem.content}</span></div></div>
     );
   } else if (elem.children.length === 1 && isTextNode(elem.children[0])) {
     // Printing an element containing just a text node
