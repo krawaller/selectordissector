@@ -1,5 +1,4 @@
-import {classifyFormula} from "../";
-import {AttributeAction, AttributeToken, FormulaType, PseudoName, PseudoToken, QueryToken, TagToken, TokenType} from "../../types";
+import {PseudoToken, QueryToken, TagToken, TokenType} from "../../types";
 import describeAttribute from "./describeAttribute";
 import describeError from "./describeError";
 import describePseudo from "./describePseudo";

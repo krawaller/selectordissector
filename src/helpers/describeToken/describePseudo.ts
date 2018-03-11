@@ -1,5 +1,5 @@
 import {classifyFormula} from "../";
-import {FormulaType, PseudoName, PseudoToken, QueryError, QueryToken} from "../../types";
+import {FormulaType, PseudoName, PseudoToken} from "../../types";
 
 export default function describePseudo(token: PseudoToken) {
   switch (token.name) {
