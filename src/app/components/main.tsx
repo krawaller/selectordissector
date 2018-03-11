@@ -5,9 +5,9 @@ import * as React from "react";
 import autobind from "autobind-decorator";
 import { Grid, GridCell } from "rmwc/Grid";
 
-import { articlePage, makeHistory } from "../../helpers";
+import { articlePage, bigTable, makeHistory } from "../../helpers";
 import parser from "../../parser";
-import { History, QueryToken, TokenType } from "../../types";
+import { History, QueryToken, TokenType, VirtualElement } from "../../types";
 
 import { contentContainerStyles } from "../styles";
 
@@ -21,10 +21,12 @@ import WelcomeComp from "./welcome";
 type MainState = {
   query: string,
   selectorTokens: QueryToken[],
+  history: History,
   idx: number,
   infoDialogHeadline?: string,
   infoDialogOpen: boolean,
   infoDialogContent?: ReactElement<any>,
+  tree: VirtualElement,
 };
 
 export type DialogContext = {
@@ -37,7 +39,7 @@ export default class Main extends React.Component<{}, MainState> {
   };
   constructor(props) {
     super(props);
-    this.state = {query: "", idx: 0, selectorTokens: [], infoDialogOpen: false};
+    this.state = {query: "", idx: 0, selectorTokens: [], infoDialogOpen: false, history: [], tree: articlePage};
   }
   public getChildContext() {
     return {openDialog: this.openDialog};
@@ -67,17 +69,13 @@ export default class Main extends React.Component<{}, MainState> {
         ? tokens.length - 1
         : tokens.length; // not -1 since makeHistory adds start token
     this.setState({
+      history: query ? makeHistory(tokens, this.state.tree) : [],
       idx,
       selectorTokens: tokens,
     });
   }
   public render() {
-    let coll = [[666]];
-    let history: History = [];
-    if (this.state.query !== "") {
-      history = makeHistory(this.state.selectorTokens, articlePage);
-      coll = history[this.state.idx].coll;
-    }
+    const coll = (this.state.history[this.state.idx] || {coll: null}).coll || [[666]];
     return (
       <div>
         <Header />
@@ -86,17 +84,17 @@ export default class Main extends React.Component<{}, MainState> {
             <GridCell span="6">
               <SelectorFieldComp onUpdate={this.updateSelector} query={this.state.query}/>
               {
-                !history.length
+                !this.state.history.length
                   ? <WelcomeComp />
                   : <HistoryListComp
                       idx = {this.state.idx}
                       updateIdx = {this.updateIdx}
-                      history = {history}
+                      history = {this.state.history}
                     />
               }
             </GridCell>
             <GridCell span="6">
-              <Element elem={articlePage} currColl={coll} />
+              <Element elem={this.state.tree} currColl={coll} />
             </GridCell>
           </Grid>
         </div>
