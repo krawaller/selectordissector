@@ -16,3 +16,6 @@ export type MatchResult = {
 
 export type HistoryStep = {token: QueryToken, coll: Collection};
 export type History = HistoryStep[];
+
+import {treesByName} from "../helpers";
+export type TreeName = keyof typeof treesByName;

@@ -1,4 +1,6 @@
-import Factory, {article, blockquote, dd, div, dl, dt, footer, h1, h2, hr, img, li, p, span, strong, table, tbody, td, th, thead, tr, ul } from "../builder";
+import {article, blockquote, dd, div, dl, dt, footer, h1, h2, hr, img, p, span, table, tbody, td, th, thead, tr } from "../builder";
+
+import {VirtualElement} from "../types";
 
 export const articlePage = article(
   {lang: "en-us", "data-id": 65473},
@@ -55,3 +57,8 @@ export const bigTable = div(
     ),
   ),
 );
+
+export const treesByName: {[name: string]: VirtualElement} = {
+  article: articlePage,
+  table: bigTable,
+};

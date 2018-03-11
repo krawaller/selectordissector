@@ -5,9 +5,9 @@ import * as React from "react";
 import autobind from "autobind-decorator";
 import { Grid, GridCell } from "rmwc/Grid";
 
-import { articlePage, bigTable, makeHistory } from "../../helpers";
+import { makeHistory, treesByName } from "../../helpers";
 import parser from "../../parser";
-import { History, QueryToken, TokenType, VirtualElement } from "../../types";
+import { History, QueryToken, TokenType, TreeName } from "../../types";
 
 import { contentContainerStyles } from "../styles";
 
@@ -16,6 +16,7 @@ import Header from "./header";
 import HistoryListComp from "./historylist";
 import InfoDialog from "./infodialog";
 import SelectorFieldComp from "./selectorfield";
+import TreeSelect from "./treeselect";
 import WelcomeComp from "./welcome";
 
 type MainState = {
@@ -26,7 +27,7 @@ type MainState = {
   infoDialogHeadline?: string,
   infoDialogOpen: boolean,
   infoDialogContent?: ReactElement<any>,
-  tree: VirtualElement,
+  treeName: TreeName,
 };
 
 export type DialogContext = {
@@ -39,7 +40,7 @@ export default class Main extends React.Component<{}, MainState> {
   };
   constructor(props) {
     super(props);
-    this.state = {query: "", idx: 0, selectorTokens: [], infoDialogOpen: false, history: [], tree: articlePage};
+    this.state = {query: "", idx: 0, selectorTokens: [], infoDialogOpen: false, history: [], treeName: "article"};
   }
   public getChildContext() {
     return {openDialog: this.openDialog};
@@ -61,6 +62,10 @@ export default class Main extends React.Component<{}, MainState> {
     this.setState({idx: nbr});
   }
   @autobind
+  public updateTreeName(name: TreeName) {
+    this.setState({treeName: name});
+  }
+  @autobind
   public updateSelector(query) {
     this.setState({ query });
     const tokens = parser(query)[0];
@@ -69,7 +74,7 @@ export default class Main extends React.Component<{}, MainState> {
         ? tokens.length - 1
         : tokens.length; // not -1 since makeHistory adds start token
     this.setState({
-      history: query ? makeHistory(tokens, this.state.tree) : [],
+      history: query ? makeHistory(tokens, treesByName[this.state.treeName]) : [],
       idx,
       selectorTokens: tokens,
     });
@@ -85,7 +90,10 @@ export default class Main extends React.Component<{}, MainState> {
               <SelectorFieldComp onUpdate={this.updateSelector} query={this.state.query}/>
               {
                 !this.state.history.length
-                  ? <WelcomeComp />
+                  ? <React.Fragment>
+                      <WelcomeComp />
+                      <TreeSelect treeName={this.state.treeName} updateTreeName={this.updateTreeName} />
+                    </React.Fragment>
                   : <HistoryListComp
                       idx = {this.state.idx}
                       updateIdx = {this.updateIdx}
@@ -94,7 +102,7 @@ export default class Main extends React.Component<{}, MainState> {
               }
             </GridCell>
             <GridCell span="6">
-              <Element elem={this.state.tree} currColl={coll} />
+              <Element elem={treesByName[this.state.treeName]} currColl={coll} />
             </GridCell>
           </Grid>
         </div>
