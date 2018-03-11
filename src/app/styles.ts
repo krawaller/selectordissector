@@ -1,14 +1,18 @@
-const matchedStyles = {
+import {CSSProperties} from "react";
+
+type Styles = CSSProperties;
+
+const matchedStyles: Styles = {
   backgroundColor: "#A261FF",
   borderColor: "#7400FF",
   color: "white",
 };
 
-const transitions = {
+const transitions: Styles = {
   transition: "color 0.5s ease-in-out, background-color 0.5s ease-in-out, border-color 0.5s ease-in-out",
 };
 
-const potentialMatchStyles = {
+const potentialMatchStyles: Styles = {
   border: "1px solid transparent",
   borderColor: "transparent",
   borderRadius: "5px",
@@ -16,7 +20,20 @@ const potentialMatchStyles = {
 };
 
 export const elemStyles = {
-  container: (singleLine: boolean, matched: boolean, child: boolean) => ({
+  connector: (matched: boolean): Styles => ({
+    bottom: "18px",
+    left: "5px",
+    position: "absolute",
+    top: "17px",
+    width: "2px",
+    zIndex: 1,
+    ...potentialMatchStyles,
+    ...matched && matchedStyles,
+    borderBottom: "none",
+    borderRadius: "none",
+    borderTop: "none",
+  }),
+  container: (singleLine: boolean, matched: boolean, child: boolean): Styles => ({
     fontFamily: "monospace",
     fontSize: "12px",
     ...child && {
@@ -29,8 +46,11 @@ export const elemStyles = {
       ...potentialMatchStyles,
       ...matched && matchedStyles,
     },
+    ...!singleLine && {
+      position: "relative",
+    },
   }),
-  tag: (kind: "start" | "end", alone: boolean, matched: boolean, empty?: boolean) => ({
+  tag: (kind: "start" | "end", alone: boolean, matched: boolean, empty?: boolean): Styles => ({
     display: "inline-block",
     padding: "1px",
     ...(kind === "end" && empty) && {
@@ -43,7 +63,7 @@ export const elemStyles = {
       ...matched && matchedStyles,
     },
   }),
-  tagPart: (kind: "start" | "end", matched: boolean, part: "type" | "delimeter" | "attrName" | "attrVal" | "attrEq" | "attrDelim") => {
+  tagPart: (kind: "start" | "end", matched: boolean, part: "type" | "delimeter" | "attrName" | "attrVal" | "attrEq" | "attrDelim"): Styles => {
     // TODO - make this pretty :P
     let color;
     switch (part) {
@@ -59,13 +79,13 @@ export const elemStyles = {
       ...transitions,
     };
   },
-  textNode: (matched: boolean) => ({
+  textNode: (matched: boolean): Styles => ({
     ...transitions,
     color: matched ? "white" : "#0a0402",
   }),
 };
 
-export const listItemStyles = {
+export const listItemStyles: Styles = {
   cursor: "pointer",
   height: "initial",
   marginBottom: "5px",
@@ -73,13 +93,13 @@ export const listItemStyles = {
   minHeight: "48px",
 };
 
-export const listTextStyles = {
+export const listTextStyles: Styles = {
   overflow: "initial",
   textOverflow: "initial",
   whiteSpace: "initial",
 };
 
-export const contentContainerStyles = {
+export const contentContainerStyles: Styles = {
   margin: "0 24px",
 };
 

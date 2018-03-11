@@ -45,9 +45,10 @@ const Element: React.StatelessComponent<ElementProps> = ({indent= 0, elem, currC
     // Printing a multiline element
     return (
       <div style={s.container(false, matched, indent > 0)}>
+        <div style={s.connector(matched)}/>
         <StartTag elem={elem} matched={matched} alone/>
           {elem.children.map((child, n) => <Element key={path.concat(n).join("-")} elem={child} indent={indent + 1} path={path.concat(n)} currColl={currColl} />)}
-          <EndTag elem={elem} matched={matched} alone/>
+        <EndTag elem={elem} matched={matched} alone/>
       </div>
     );
   }
