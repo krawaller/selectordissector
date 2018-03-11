@@ -33,11 +33,12 @@ const Element: React.StatelessComponent<ElementProps> = ({indent= 0, elem, currC
     );
   } else if (!elem.children || !elem.children.length) {
     // Printing an empty element
+    const selfClose = ["img", "hr"].indexOf(elem.type) > -1;
     return (
       <div>
         <div style={s.container(true, matched, indent > 0)}>
-          <StartTag elem={elem} matched={matched}/>
-          <EndTag elem={elem} matched={matched} empty/>
+          <StartTag elem={elem} matched={matched} selfClose={selfClose} />
+          {!selfClose && <EndTag elem={elem} matched={matched} empty/>}
         </div>
       </div>
     );
@@ -60,6 +61,7 @@ type TagType = {
   alone?: boolean,
   elem: ContentNode,
   matched?: boolean,
+  selfClose?: boolean,
 };
 
 type EndTagType = TagType & {
@@ -67,7 +69,7 @@ type EndTagType = TagType & {
   empty?: boolean,
 };
 
-const StartTag: React.StatelessComponent<TagType> = ({elem, matched, alone}) => {
+const StartTag: React.StatelessComponent<TagType> = ({elem, matched, alone, selfClose}) => {
   const attrs = Object.keys(elem.attrs).map(name => (
     <React.Fragment>
       <span style={s.tagPart("start", matched, "attrName")}> {name}</span>
@@ -80,12 +82,13 @@ const StartTag: React.StatelessComponent<TagType> = ({elem, matched, alone}) => 
         </React.Fragment>
       )}
     </React.Fragment>
-  )); // " " + (elem.attrs[name] === "null" ? name : `${name}="${elem.attrs[name]}"`)).join("");
+  ));
   return (
     <span style={s.tag("start", alone, matched)}>
       <span style={s.tagPart("start", matched, "delimeter")}>&lt;</span>
       <span style={s.tagPart("start", matched, "type")}>{elem.type}</span>
       {attrs}
+      {selfClose && <span style={s.tagPart("start", matched, "delimeter")}>/</span>}
       <span style={s.tagPart("start", matched, "delimeter")}>&gt;</span>
     </span>
   );
