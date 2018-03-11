@@ -2,9 +2,17 @@ import {CSSProperties} from "react";
 
 type Styles = CSSProperties;
 
+const palette = {
+  htmlAttr: "#ff5563",
+  htmlType: "#9b165e",
+  themePrimary: "#6200ee",
+  themePrimaryLight: "#b37eff",
+  themeText: "rgba(0,0,0,.87)",
+};
+
 const matchedStyles: Styles = {
-  backgroundColor: "#A261FF",
-  borderColor: "#7400FF",
+  backgroundColor: palette.themePrimary,
+  borderColor: "transparent",
   color: "white",
 };
 
@@ -15,16 +23,16 @@ const transitions: Styles = {
 const potentialMatchStyles: Styles = {
   border: "1px solid transparent",
   borderColor: "transparent",
-  borderRadius: "5px",
+  borderRadius: "2px",
   ...transitions,
 };
 
 export const elemStyles = {
   connector: (matched: boolean): Styles => ({
-    bottom: "18px",
-    left: "5px",
+    bottom: "16px",
+    left: "0px",
     position: "absolute",
-    top: "17px",
+    top: "16px",
     width: "1px",
     zIndex: 1,
     ...potentialMatchStyles,
@@ -67,12 +75,12 @@ export const elemStyles = {
     // TODO - make this pretty :P
     let color;
     switch (part) {
-      case "type": color = "#9b165e"; break; // the type of an element inside a tag
-      case "delimeter": color = "#823aff"; break; // the < and </ and > parts
-      case "attrName": color = "#ff5563"; break; // the name of an attribute
-      case "attrEq": color = "#823aff"; break; // the equal sign before an attribute value
-      case "attrDelim": color = "#823aff"; break; // the quotes around an attribute value
-      case "attrVal": color = "#823aff"; break; // the attribute value within quotes
+      case "type": color = palette.htmlType; break; // the type of an element inside a tag
+      case "delimeter": color = palette.themePrimaryLight; break; // the < and </ and > parts
+      case "attrName": color = palette.htmlAttr; break; // the name of an attribute
+      case "attrEq": color = palette.themePrimaryLight; break; // the equal sign before an attribute value
+      case "attrDelim": color = palette.themePrimaryLight; break; // the quotes around an attribute value
+      case "attrVal": color = palette.themePrimary; break; // the attribute value within quotes
     }
     return {
       color: matched ? "white" : color,
@@ -81,8 +89,12 @@ export const elemStyles = {
   },
   textNode: (matched: boolean): Styles => ({
     ...transitions,
-    color: matched ? "white" : "#0a0402",
+    color: matched ? "white" : palette.themeText,
   }),
+};
+
+export const accentTextStyles: Styles = {
+  color: palette.themePrimary,
 };
 
 export const listItemStyles: Styles = {
