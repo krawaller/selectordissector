@@ -25,7 +25,7 @@ export const elemStyles = {
     left: "5px",
     position: "absolute",
     top: "17px",
-    width: "2px",
+    width: "1px",
     zIndex: 1,
     ...potentialMatchStyles,
     ...matched && matchedStyles,
