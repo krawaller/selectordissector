@@ -1,13 +1,16 @@
 import * as React from "react";
-
 import { Typography } from "rmwc/Typography";
+
+const Em: React.StatelessComponent<null> = ({children}) => (
+  <span className="mdc-theme--primary">{children}</span>
+);
 
 const Welcome: React.StatelessComponent<null> = () => (
   <div>
-    <Typography use="title" tag="h2">Welcome!</Typography>
-    <Typography use="body1">
-      Enter a selector to get a step-by-step explanation of how it works,
-      and which elements are caught for each step!
+    <Typography use="title" tag="h3">Hello! :)</Typography>
+    <Typography use="body1" tag="p">
+      <Em>Enter a selector</Em> to get a <Em>step-by-step explanation</Em> of how it works,
+      and see <Em>which elements are caught</Em> for each step!
     </Typography>
   </div>
 );
