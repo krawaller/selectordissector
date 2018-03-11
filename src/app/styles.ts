@@ -9,7 +9,7 @@ const matchedStyles: Styles = {
 };
 
 const transitions: Styles = {
-  transition: "color 0.5s ease-in-out, background-color 0.5s ease-in-out, border-color 0.5s ease-in-out",
+  transition: "color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out",
 };
 
 const potentialMatchStyles: Styles = {
