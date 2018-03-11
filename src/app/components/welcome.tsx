@@ -1,8 +1,10 @@
 import * as React from "react";
 import { Typography } from "rmwc/Typography";
 
+import {accentTextStyles} from "../styles";
+
 const Em: React.StatelessComponent<null> = ({children}) => (
-  <span className="mdc-theme--primary">{children}</span>
+  <span style={accentTextStyles}>{children}</span>
 );
 
 const Welcome: React.StatelessComponent<null> = () => (
